@@ -14,6 +14,6 @@ export default class HelloWorldScene extends Phaser.Scene
 
     create()
     {
-        this.add.image(gameSettings.gameWidth * 0.5, gameSettings.gameHeight * 0.5, TextureKeys.Logo).setScale(0.5)
+        this.add.image(gameSettings.gameWidth / 2, gameSettings.gameHeight / 2, TextureKeys.tilemap)
     }
 }

@@ -18,6 +18,16 @@ export default class Preloader extends Phaser.Scene
             TextureKeys.Logo, 
             'assets/images/logo.jpg'
         )
+
+		this.load.image(
+			TextureKeys.tilemap,
+			'assets/images/tilesmap.png'
+		)
+
+		this.load.image(
+			TextureKeys.platform, 
+			'assets/images/caveFloatingPlatform.png'
+		)
     }
 
     create()

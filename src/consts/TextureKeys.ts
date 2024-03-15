@@ -3,6 +3,8 @@
 enum TextureKeys
 {
     Logo = 'logo',
+	tilemap = 'map',
+	platform = 'platform',
 }
 
 export default TextureKeys
