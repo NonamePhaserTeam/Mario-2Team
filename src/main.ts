@@ -4,6 +4,7 @@ import Jumper from "./scenes/Jumper"
 import Preloader from "./scenes/Preloader"
 
 import { gameSettings } from "./consts/GameSettings"
+import Gioco_prova from "./scenes/Gioco_prova"
 
 const config: Phaser.Types.Core.GameConfig = {
 	type: Phaser.AUTO,
@@ -27,7 +28,8 @@ const config: Phaser.Types.Core.GameConfig = {
 
 	scene: [
 		Preloader,
-		Jumper,
+		//Jumper,
+        Gioco_prova
 	],
 }
 
