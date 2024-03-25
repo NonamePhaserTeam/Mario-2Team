@@ -11,10 +11,12 @@ export default class Preloader extends Phaser.Scene {
     preload() {
         // preload di tutti gli asset
 
-        this.load.image(TextureKeys.player, "assets/images/logo.jpg");
-        this.load.image(TextureKeys.platform, "assets/images/logo.jpg");
-        //this.load.image(TextureKeys.platform, "public/assets/images/caveFloatingPlatform.png");
-        //this.load.image(TextureKeys.tilemap, "public/assets/images/tilesmap.png");
+        this.load.image(TextureKeys.player, "assets/images/player.png");
+        this.load.image(
+            TextureKeys.platform,
+            "assets/images/caveFloatingPlatform.png"
+        );
+        this.load.image(TextureKeys.tilemap, "assets/images/tilemap.png");
     }
 
     create() {
