@@ -11,9 +11,10 @@ export default class Preloader extends Phaser.Scene {
     preload() {
         // preload di tutti gli asset
 
+        //this.load.image(TextureKeys.Logo, 'assets/images/logo.jpg')
         this.load.image(
-            TextureKeys.Logo, 
-            'assets/images/logo.jpg'
+            TextureKeys.player, 
+            'assets/images/player.png'
         )
 
 		this.load.image(
