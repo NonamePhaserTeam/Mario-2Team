@@ -21,7 +21,7 @@ export default class Preloader extends Phaser.Scene
 
 		this.load.image(
 			TextureKeys.tilemap,
-			'assets/images/tilesmap.png'
+			'assets/images/tilemap.png'
 		)
 
 		this.load.image(
