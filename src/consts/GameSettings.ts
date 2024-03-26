@@ -1,8 +1,11 @@
+const WinWidth = window.innerWidth * window.devicePixelRatio;
+const WinHeight = window.innerHeight * window.devicePixelRatio;
+
 export let gameSettings: GameSettings = {
-    gameWidth: window.innerWidth * window.devicePixelRatio,
-    gameHeight: 1080,
-    bgColor: "#ffffff",
-    gravity: {x: 0, y: 200},
+    gameWidth: WinWidth,
+    gameHeight: WinHeight,
+    bgColor: "#000000",
+    gravity: { x: 0, y: 200 },
     debug: true,
-    zoom: 1
-}
+    zoom: 1,
+};

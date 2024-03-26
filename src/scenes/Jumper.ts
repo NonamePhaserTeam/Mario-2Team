@@ -1,9 +1,9 @@
-import { globalEval } from 'jquery'
-import Phaser from 'phaser'
+import { globalEval } from "jquery";
+import Phaser from "phaser";
 
-import { gameSettings } from '../consts/GameSettings'
-import SceneKeys from '../consts/SceneKeys'
-import TextureKeys from '../consts/TextureKeys'
+import { gameSettings } from "../consts/GameSettings";
+import SceneKeys from "../consts/SceneKeys";
+import TextureKeys from "../consts/TextureKeys";
 
 export default class Jumper extends Phaser.Scene
 {
