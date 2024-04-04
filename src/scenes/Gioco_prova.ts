@@ -42,27 +42,50 @@ export default class Gioco_prova extends Phaser.Scene {
     create() {
         this.camera.setBackgroundColor(gameSettings.bgColor); //blu
         this.platforms = this.physics.add.staticGroup();
+        this.CreatePlatform(
+            0.5,
+            3
+        ) //3.5
+        this.y_piattaforme -= gameSettings.gameHeight / 1.3
         for (let i = 0; i < 10; i++) {
-            switch (i) {
-                case 1, 6: // piattaforma singola
-                    this.CreatePlatform(0.5, 3)
-                    this.y_piattaforme -= gameSettings.gameHeight / 1.3
-                case 2, 7: //  piafforma centrale 2 mini mini piattaforme al lato
+            let k = Math.floor(Math.random() * (10 - 2 + 1)) + 1
+            //0 + Math.floor(Math.random() * ((( - 0) / 0.01) + 1)) * 0.01,
+            switch (k) {
+                case 2, 7: //piafforma centrale 2 mini mini piattaforme al lato
                     this.CreatePlatform(0.29, 0.5)  //left 
-                    this.CreatePlatform(0.5, 1)  //middle 
+                    this.CreatePlatform(0.5, 1)  //middle distanza 0.5
                     this.CreatePlatform(0.73, 0.5)  //right 
+
                     this.y_piattaforme -= gameSettings.gameHeight / 1.3
                 case 3, 8: // due piattaforme con spacco al centro
-                    this.CreatePlatform(0.29, 1) //left
-                    this.CreatePlatform(0.73, 1) //right
+                    this.CreatePlatform(
+                        0.29,
+                        1
+                    ) //left 
+                    this.CreatePlatform(
+                        0.73,
+                        1
+                    ) //right 
                     this.y_piattaforme -= gameSettings.gameHeight / 1.3
                 case 4, 9: // due piattaforme con spacco al a sinistra
-                    this.CreatePlatform(0.29, 0.8) //left
-                    this.CreatePlatform(0.73, 2.5) //right
+                    this.CreatePlatform(
+                        0.29,
+                        0.7
+                    ) //left 
+                    this.CreatePlatform(
+                        0.73,
+                        2.3
+                    ) //right 
                     this.y_piattaforme -= gameSettings.gameHeight / 1.3
                 case 5, 10: // due piattaforme con spacco al a destra
-                    this.CreatePlatform(0.29, 2.5) //left
-                    this.CreatePlatform(0.73, 0.8) //right
+                    this.CreatePlatform(
+                        0.29,
+                        2.3
+                    ) //left 
+                    this.CreatePlatform(
+                        0.73,
+                        0.7
+                    ) //right 
                     this.y_piattaforme -= gameSettings.gameHeight / 1.3
             }
         }
@@ -83,7 +106,6 @@ export default class Gioco_prova extends Phaser.Scene {
             .setScale(0.2);
 
         this.camera.startFollow(this.player, true, 1, 1);
-        this.physics.add.collider(this.player, this.platforms)
     }
 
 
@@ -93,7 +115,9 @@ export default class Gioco_prova extends Phaser.Scene {
             this.y_piattaforme,
             'platform'
         ).setScale(scala_immagine, 1).body.updateFromGameObject();
-
+            this.physics.add.overlap(this.player, this.platforms, () => {
+                if (this.player.body.velocity.y >= 0) this.physics.add.collider(this.player, this.platforms)
+            })
     }
 
 
@@ -114,7 +138,7 @@ export default class Gioco_prova extends Phaser.Scene {
             this.player.setVelocityY(this.playerSpeed);
         }
         if (Phaser.Input.Keyboard.JustDown(this.SPACE) && this.player.body.touching.down) {
-            this.player.setVelocityY(-100000);
+            this.player.setVelocityY(-1000);
         }
     }
 }
