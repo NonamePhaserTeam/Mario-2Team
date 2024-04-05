@@ -1,48 +1,65 @@
 import { Callbacks, globalEval } from "jquery";
 import Phaser, { Physics } from "phaser";
+import AlignGrid from "../utilities/alignGrid";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
 
 export default class Gioco_prova extends Phaser.Scene {
     player: Phaser.Physics.Arcade.Sprite;
-    platforms: Phaser.Physics.Arcade.StaticGroup;
+    platforms: Phaser.Physics.Arcade.Group;
     camera: Phaser.Cameras.Scene2D.Camera;
     W: Phaser.Input.Keyboard.Key;
     A: Phaser.Input.Keyboard.Key;
     S: Phaser.Input.Keyboard.Key;
     D: Phaser.Input.Keyboard.Key;
     SPACE: Phaser.Input.Keyboard.Key;
-    playerSpeed = 500;
+    playerSpeed = 250;
     y_piattaforme = gameSettings.gameHeight * 5 - 40
-    constructor() { super(SceneKeys.Game); }
+	aGrid: AlignGrid;
+	touchingDown: boolean = false;
+	worldBounds = {
+		width: gameSettings.gameWidth,
+		height: gameSettings.gameHeight * 3,
+	}
+
+	constructor() { super(SceneKeys.Game); }
+
     init() {
-        this.W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W, true, false);
-        this.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false);
-        this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, true, false);
-        this.D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false);
-        this.SPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE, true, false);
+        this.W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.SPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         //this.add.image(gameSettings.gameWidth * 0.5, gameSettings.gameHeight, "tilemap").setScale(3);
         this.camera = this.cameras.main;
         this.camera.setBounds(
             0,
             0,
-            gameSettings.gameWidth / 4,
-            gameSettings.gameHeight * 5,
-            true
+            this.worldBounds.width,
+            this.worldBounds.height,
         );
         this.physics.world.setBounds(
-            gameSettings.gameWidth * 0.25,
             0,
-            gameSettings.gameWidth / 2,
-            gameSettings.gameHeight * 5,
-        );
+            0,
+			this.worldBounds.width,
+            this.worldBounds.height,
+        ); 
     }
 
     create() {
-        this.camera.setBackgroundColor(gameSettings.bgColor); //blu
-        this.platforms = this.physics.add.staticGroup();
-        for (let i = 0; i < 10; i++) {
+		
+		this.aGrid = new AlignGrid({
+			scene: this,
+			rows: 11,
+			cols: 11,
+			width: this.worldBounds.width,
+			height: this.worldBounds.height,
+		});
+		this.aGrid.show();
+
+        this.platforms = this.physics.add.group();
+        /* for (let i = 0; i < 10; i++) {
             switch (i) {
                 case 1, 6: // piattaforma singola
                     this.CreatePlatform(0.5, 3)
@@ -65,27 +82,54 @@ export default class Gioco_prova extends Phaser.Scene {
                     this.CreatePlatform(0.73, 0.8) //right
                     this.y_piattaforme -= gameSettings.gameHeight / 1.3
             }
-        }
+        } */
 
         this.player = this.physics.add
             .sprite(
-                gameSettings.gameWidth * 0.90,
-                gameSettings.gameHeight * 5 - 70,
-                TextureKeys.player
+                0,
+                0,
+                TextureKeys.player,
             )
-            .setBounce(1, 1)
             .setCollideWorldBounds(true)
-            .setDrag(0.2, 0.2)
-            .setGravity(
-                gameSettings.gravity.x,
-                gameSettings.gravity.y
-            )
-            .setScale(0.2);
+            .setScale(1.2);
 
-        this.camera.startFollow(this.player, true, 1, 1);
-        this.physics.add.collider(this.player, this.platforms)
+		this.aGrid.placeAtIndex(120, this.player);
+		
+		this.CreateAnims();
+
+		this.player.play("idle");
+	
+        this.camera.startFollow(this.player, true);
+        this.physics.add.collider(this.player, this.platforms);
     }
 
+	CreateAnims() {
+		this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 5,
+                end: 12,
+                zeroPad: 1,
+                prefix: 'walk',
+                suffix: '.png'
+            }),
+            frameRate: 8,
+            repeat: -1
+        });
+
+		this.anims.create({
+			key: 'idle',
+			frames: this.anims.generateFrameNames(TextureKeys.player, {
+				start: 0,
+				end: 4,
+				zeroPad: 1,
+				prefix: 'fermo',
+				suffix: '.png'
+			}),
+			frameRate: 10,
+			repeat: -1,
+		});
+	}
 
     CreatePlatform(x_axis: number, scala_immagine: number) {
         this.platforms.create(
@@ -93,28 +137,45 @@ export default class Gioco_prova extends Phaser.Scene {
             this.y_piattaforme,
             'platform'
         ).setScale(scala_immagine, 1).body.updateFromGameObject();
-
     }
 
+	startWalk(walk: boolean) {
+		this.player.anims.stop();
+		walk ? this.player.play("walk") : this.player.play("idle")
+	}
 
     update(time: number, delta: number): void {
         this.player.setVelocity(0);
-        if (this.player.body.y <= gameSettings.gameHeight) {
-            this.player.setY(gameSettings.gameHeight * 5 - 70,)
-        }
+		// this.startWalk(false);
+
         if (this.A.isDown) {
-            this.player.setFlipX(true); this.player.setVelocityX(-this.playerSpeed);
+            this.player.setFlipX(true);
+			this.player.setVelocityX(-this.playerSpeed);
         } else if (this.D.isDown) {
             this.player.setFlipX(false);
             this.player.setVelocityX(this.playerSpeed);
         }
-        if (this.W.isDown) {
-            this.player.setVelocityY(-this.playerSpeed);
-        } else if (this.S.isDown) {
-            this.player.setVelocityY(this.playerSpeed);
-        }
-        if (Phaser.Input.Keyboard.JustDown(this.SPACE) && this.player.body.touching.down) {
-            this.player.setVelocityY(-100000);
-        }
+		if (this.W.isDown) {
+			this.player.setVelocityY(-this.playerSpeed);
+		}
+		else if (this.S.isDown) {
+			this.player.setVelocityY(this.playerSpeed);
+		}
+		if (Phaser.Input.Keyboard.JustDown(this.SPACE) && (this.player.body.touching.down || this.player.body.blocked.down)) {
+			this.player.setVelocityY(-gameSettings.gravity.y)
+		}
+
+		if((this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0)) {
+			if(this.player.anims.currentAnim.key === "idle") {
+				this.player.anims.stop();
+				this.player.play("walk")
+			}
+		}
+		else if(this.player.anims.currentAnim.key === "walk") {
+			this.player.anims.stop();
+			this.player.play("idle")
+		}
+
+		this.player.body.velocity.normalize().scale(this.playerSpeed);
     }
 }

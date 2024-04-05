@@ -12,10 +12,6 @@ export default class Preloader extends Phaser.Scene {
         // preload di tutti gli asset
 
         //this.load.image(TextureKeys.Logo, 'assets/images/logo.jpg')
-        this.load.image(
-            TextureKeys.player, 
-            'assets/images/player.png'
-        )
 
 		this.load.image(
 			TextureKeys.tilemap,
@@ -26,12 +22,17 @@ export default class Preloader extends Phaser.Scene {
 			TextureKeys.platform, 
 			'assets/images/caveFloatingPlatform.png'
 		)
+
+	    this.load.atlas(TextureKeys.player, 'assets/spritesheets/player.png', 'assets/spritesheets/player.json');
+
     }
 
     create() {
         // creazione di tutte le animazioni
 
         this.scene.stop(SceneKeys.Preloader);
-        this.scene.start(SceneKeys.Game);
+        // this.scene.start(SceneKeys.Game);
+		this.scene.start(SceneKeys.Jumper)
+
     }
 }

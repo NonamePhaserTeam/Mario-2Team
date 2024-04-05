@@ -9,15 +9,11 @@ import Gioco_prova from "./scenes/Gioco_prova";
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     backgroundColor: gameSettings.bgColor,
+	width: gameSettings.gameWidth,
+	height: gameSettings.gameHeight,
     pixelArt: true,
+	zoom: gameSettings.zoom,
     parent: "my-game",
-    scale: {
-        mode: Phaser.Scale.FIT,
-        width: gameSettings.gameWidth,
-        height: gameSettings.gameHeight,
-        zoom: gameSettings.zoom,
-    },
-
     physics: {
         default: "arcade",
         arcade: {

@@ -2,7 +2,7 @@
 
 enum SceneKeys {
     Preloader = "preloader",
-    //Game = 'Jumper'
+    Jumper = 'Jumper',
     Game = "Gioco_prova",
 }
 

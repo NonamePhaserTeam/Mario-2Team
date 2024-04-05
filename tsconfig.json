@@ -39,6 +39,7 @@
 	  "esModuleInterop": true, 
 	  "strictNullChecks": false,
 	  "allowUnreachableCode": true,
+	  "allowJs": true,
 	  "sourceMap": true,
 	  "strictPropertyInitialization": false,
 	  "typeRoots": ["node_modules/@types", "typings"],

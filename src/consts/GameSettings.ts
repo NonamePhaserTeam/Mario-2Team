@@ -1,8 +1,8 @@
 export let gameSettings: GameSettings = {
-    gameWidth: window.innerWidth * window.devicePixelRatio,
-    gameHeight: window.innerHeight * window.devicePixelRatio,
+    gameWidth: window.innerWidth,
+    gameHeight: window.innerHeight,
     bgColor: "#3498db", // celestra scuro
-    gravity: { x: 0, y: 800 },
+    gravity: { x: 0, y: 0 },
     debug: true,
     zoom: 1,
 };
