@@ -24,7 +24,7 @@ const config: Phaser.Types.Core.GameConfig = {
 
     scene: [
         Preloader,
-        //Jumper,
+        Jumper,
         Gioco_prova,
     ],
 };

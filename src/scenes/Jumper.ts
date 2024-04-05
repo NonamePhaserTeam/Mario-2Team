@@ -15,9 +15,11 @@ export default class Jumper extends Phaser.Scene {
     D: Phaser.Input.Keyboard.Key;
     SPACE: Phaser.Input.Keyboard.Key;
     playerSpeed = 250;
-    y_piattaforme = gameSettings.gameHeight * 5 - 40
+    // y_piattaforme = gameSettings.gameHeight * 5 - 40
 	aGrid: AlignGrid;
 	touchingDown: boolean = false;
+	isJumping: boolean = false;
+	spaceBarReleased: boolean = false;
 	worldBounds = {
 		width: gameSettings.gameWidth,
 		height: gameSettings.gameHeight * 3,
@@ -59,31 +61,6 @@ export default class Jumper extends Phaser.Scene {
 		this.aGrid.show();
 
         this.platforms = this.physics.add.group();
-        /* for (let i = 0; i < 10; i++) {
-            switch (i) {
-                case 1, 6: // piattaforma singola
-                    this.CreatePlatform(0.5, 3)
-                    this.y_piattaforme -= gameSettings.gameHeight / 1.3
-                case 2, 7: //  piafforma centrale 2 mini mini piattaforme al lato
-                    this.CreatePlatform(0.29, 0.5)  //left 
-                    this.CreatePlatform(0.5, 1)  //middle 
-                    this.CreatePlatform(0.73, 0.5)  //right 
-                    this.y_piattaforme -= gameSettings.gameHeight / 1.3
-                case 3, 8: // due piattaforme con spacco al centro
-                    this.CreatePlatform(0.29, 1) //left
-                    this.CreatePlatform(0.73, 1) //right
-                    this.y_piattaforme -= gameSettings.gameHeight / 1.3
-                case 4, 9: // due piattaforme con spacco al a sinistra
-                    this.CreatePlatform(0.29, 0.8) //left
-                    this.CreatePlatform(0.73, 2.5) //right
-                    this.y_piattaforme -= gameSettings.gameHeight / 1.3
-                case 5, 10: // due piattaforme con spacco al a destra
-                    this.CreatePlatform(0.29, 2.5) //left
-                    this.CreatePlatform(0.73, 0.8) //right
-                    this.y_piattaforme -= gameSettings.gameHeight / 1.3
-            }
-        } */
-
         this.player = this.physics.add
             .sprite(
                 0,
@@ -91,7 +68,7 @@ export default class Jumper extends Phaser.Scene {
                 TextureKeys.player,
             )
             .setCollideWorldBounds(true)
-            .setScale(1.2);
+            .setScale(1.4);
 
 		this.aGrid.placeAtIndex(120, this.player);
 		
@@ -101,14 +78,29 @@ export default class Jumper extends Phaser.Scene {
 	
         this.camera.startFollow(this.player, true);
         this.physics.add.collider(this.player, this.platforms);
+
+		this.SPACE.on("down", () => {
+			console.log("down")
+			this.isJumping = true
+		});
+		this.SPACE.on("up", () => {
+			console.log("released")
+			this.spaceBarReleased = true;
+			setTimeout(() => {
+				this.isJumping = false;
+				this.spaceBarReleased = false;
+			}, 500);
+		});
+		
+
     }
 
 	CreateAnims() {
 		this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 5,
-                end: 12,
+                start: 1,
+                end: 8,
                 zeroPad: 1,
                 prefix: 'walk',
                 suffix: '.png'
@@ -120,8 +112,8 @@ export default class Jumper extends Phaser.Scene {
 		this.anims.create({
 			key: 'idle',
 			frames: this.anims.generateFrameNames(TextureKeys.player, {
-				start: 0,
-				end: 4,
+				start: 1,
+				end: 5,
 				zeroPad: 1,
 				prefix: 'fermo',
 				suffix: '.png'
@@ -129,15 +121,41 @@ export default class Jumper extends Phaser.Scene {
 			frameRate: 10,
 			repeat: -1,
 		});
+
+		this.anims.create({
+			key: 'loadJump',
+			frames: this.anims.generateFrameNames(TextureKeys.player, {
+				start: 1,
+				end: 3,
+				zeroPad: 1,
+				prefix: 'jump',
+				suffix: '.png'
+			}),
+			frameRate: 8,
+			repeat: 0,
+		});
+
+		this.anims.create({
+			key: 'doJump',
+			frames: this.anims.generateFrameNames(TextureKeys.player, {
+				start: 4,
+				end: 8,
+				zeroPad: 1,
+				prefix: 'jump',
+				suffix: '.png'
+			}),
+			frameRate: 6,
+			repeat: 0,
+		});
 	}
 
-    CreatePlatform(x_axis: number, scala_immagine: number) {
+    /* CreatePlatform(x_axis: number, scala_immagine: number) {
         this.platforms.create(
             gameSettings.gameWidth * x_axis,
             this.y_piattaforme,
             'platform'
         ).setScale(scala_immagine, 1).body.updateFromGameObject();
-    }
+    } */
 
 	startWalk(walk: boolean) {
 		this.player.anims.stop();
@@ -160,17 +178,32 @@ export default class Jumper extends Phaser.Scene {
 		else if (this.S.isDown) {
 			this.player.setVelocityY(this.playerSpeed);
 		}
-		if (Phaser.Input.Keyboard.JustDown(this.SPACE) && (this.player.body.touching.down || this.player.body.blocked.down)) {
-			this.player.setVelocityY(-gameSettings.gravity.y)
+		if (this.isJumping || (this.player.body.touching.down || this.player.body.blocked.down)) {
+			console.log(this.player.anims.currentAnim.key);
+			if(this.player.anims.currentAnim.key !== "loadJump" && !this.spaceBarReleased) {
+				this.player.anims.stop()
+				this.player.play("loadJump");	
+			}
+			if(this.spaceBarReleased) {
+				this.player.setVelocityY(-this.playerSpeed)
+				if(this.player.anims.currentAnim.key !== "doJump") {
+					console.log("doJump");
+					this.player.play("doJump");
+				}
+			} 
+			
 		}
 
-		if((this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0)) {
-			if(this.player.anims.currentAnim.key === "idle") {
-				this.startWalk(true);
+		if(!this.isJumping) {
+			if((this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0) ) {
+				// console.log(this.player.anims.currentAnim.key)
+				if(this.player.anims.currentAnim.key === "idle" || (this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump")) {
+					this.startWalk(true);
+				}
 			}
-		}
-		else if(this.player.anims.currentAnim.key === "walk") {
-			this.startWalk(false);
+			else if(this.player.anims.currentAnim.key === "walk" || (this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump")) {
+				this.startWalk(false);
+			}
 		}
 
 		this.player.body.velocity.normalize().scale(this.playerSpeed);
