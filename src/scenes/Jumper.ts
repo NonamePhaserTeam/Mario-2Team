@@ -16,10 +16,15 @@ export default class Jumper extends Phaser.Scene {
     SPACE: Phaser.Input.Keyboard.Key;
     playerSpeed = 250;
     // y_piattaforme = gameSettings.gameHeight * 5 - 40
+
 	aGrid: AlignGrid;
+
 	touchingDown: boolean = false;
+
 	isJumping: boolean = false;
+
 	spaceBarReleased: boolean = false;
+
 	worldBounds = {
 		width: gameSettings.gameWidth,
 		height: gameSettings.gameHeight * 3,
@@ -61,6 +66,7 @@ export default class Jumper extends Phaser.Scene {
 		this.aGrid.show();
 
         this.platforms = this.physics.add.group();
+
         this.player = this.physics.add
             .sprite(
                 0,
@@ -71,21 +77,23 @@ export default class Jumper extends Phaser.Scene {
             .setScale(1.4);
 
 		this.aGrid.placeAtIndex(120, this.player);
-		
-		this.CreateAnims();
-
-		this.player.play("idle");
 	
         this.camera.startFollow(this.player, true);
         this.physics.add.collider(this.player, this.platforms);
+
+        this.CreateAnims();
+
+        this.player.play("idle");
 
 		this.SPACE.on("down", () => {
 			console.log("down")
 			this.isJumping = true
 		});
+
 		this.SPACE.on("up", () => {
 			console.log("released")
 			this.spaceBarReleased = true;
+
 			setTimeout(() => {
 				this.isJumping = false;
 				this.spaceBarReleased = false;
@@ -197,7 +205,7 @@ export default class Jumper extends Phaser.Scene {
 		if(!this.isJumping) {
 			if((this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0) ) {
 				// console.log(this.player.anims.currentAnim.key)
-				if(this.player.anims.currentAnim.key === "idle" || (this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump")) {
+				if(this.player.anims.currentAnim.key === "idle" ||( this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump" )) {
 					this.startWalk(true);
 				}
 			}
