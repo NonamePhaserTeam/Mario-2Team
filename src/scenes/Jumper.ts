@@ -6,20 +6,30 @@ import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
 
 export default class Jumper extends Phaser.Scene {
-    player: Phaser.Physics.Arcade.Sprite;
+   
+	/* ---------- SCENA ---------- */
+	player: Phaser.Physics.Arcade.Sprite;
     platforms: Phaser.Physics.Arcade.Group;
     camera: Phaser.Cameras.Scene2D.Camera;
+	aGrid: AlignGrid;
+	/* ---------- SCENA ---------- */
+	
+	/* ---------- MOVEMENT ---------- */
     W: Phaser.Input.Keyboard.Key;
     A: Phaser.Input.Keyboard.Key;
     S: Phaser.Input.Keyboard.Key;
     D: Phaser.Input.Keyboard.Key;
     SPACE: Phaser.Input.Keyboard.Key;
     playerSpeed = 250;
-    // y_piattaforme = gameSettings.gameHeight * 5 - 40
-	aGrid: AlignGrid;
-	touchingDown: boolean = false;
+	/* ---------- MOVEMENT ---------- */
+	
+	/* -------- FLAGS ---------- */
+	touchingDown: boolean = true;
+	loadingJump: boolean = false;
+	isMoving: boolean = false;
 	isJumping: boolean = false;
-	spaceBarReleased: boolean = false;
+	/* -------- FLAGS ---------- */
+	
 	worldBounds = {
 		width: gameSettings.gameWidth,
 		height: gameSettings.gameHeight * 3,
@@ -50,49 +60,59 @@ export default class Jumper extends Phaser.Scene {
     }
 
     create() {
-		
+
+		/* this.cameras.main.setZoom(.4);
+		this.cameras.main.centerOn(0, 0);
+
+		this.input.on('pointerdown', () => {
+			this.camera = this.cameras.main;
+			this.camera.pan(500, 500, 2000, 'Power2');
+			this.camera.zoomTo(4, 3000);
+		}); */
+
 		this.aGrid = new AlignGrid({
 			scene: this,
-			rows: 11,
+			rows: 22,
 			cols: 11,
 			width: this.worldBounds.width,
 			height: this.worldBounds.height,
 		});
-		this.aGrid.show();
+		// this.aGrid.showNumbers();
 
         this.platforms = this.physics.add.group();
+		this.loopPlatforms(this.platforms)
+		console.log(this.platforms.getChildren()[0].body.position.x, this.platforms.getChildren()[0].body.position.y);
         this.player = this.physics.add
             .sprite(
-                0,
-                0,
+                this.platforms.getChildren()[0].body.position.x + 100,
+                this.platforms.getChildren()[0].body.position.y - 60,
                 TextureKeys.player,
             )
             .setCollideWorldBounds(true)
-            .setScale(1.4);
-
-		this.aGrid.placeAtIndex(120, this.player);
+			.setScale(1.4);
+				
+		// this.aGrid.placeAtIndex(236, this.player);
 		
 		this.CreateAnims();
 
 		this.player.play("idle");
-	
-        this.camera.startFollow(this.player, true);
-        this.physics.add.collider(this.player, this.platforms);
 
 		this.SPACE.on("down", () => {
-			console.log("down")
-			this.isJumping = true
+			// console.log("down")
+			this.loadingJump = true;
 		});
 		this.SPACE.on("up", () => {
-			console.log("released")
-			this.spaceBarReleased = true;
+			// console.log("released")
+			this.SPACE.enabled = false;
+			this.loadingJump = false;
+			this.isJumping = true;
 			setTimeout(() => {
 				this.isJumping = false;
-				this.spaceBarReleased = false;
-			}, 500);
+			}, 1000)
 		});
 		
-
+		this.camera.startFollow(this.player, true);
+		this.physics.add.collider(this.player, this.platforms);
     }
 
 	CreateAnims() {
@@ -139,31 +159,56 @@ export default class Jumper extends Phaser.Scene {
 			key: 'doJump',
 			frames: this.anims.generateFrameNames(TextureKeys.player, {
 				start: 4,
-				end: 8,
+				end: 6,
 				zeroPad: 1,
 				prefix: 'jump',
 				suffix: '.png'
 			}),
-			frameRate: 6,
+			frameRate: 4,
 			repeat: 0,
 		});
 	}
 
-    /* CreatePlatform(x_axis: number, scala_immagine: number) {
-        this.platforms.create(
-            gameSettings.gameWidth * x_axis,
-            this.y_piattaforme,
-            'platform'
-        ).setScale(scala_immagine, 1).body.updateFromGameObject();
-    } */
+	private loopPlatforms(parent: Phaser.Physics.Arcade.Group) {
+		let index = 236;
+		console.log("ada");
+		this.generatePlatform(index, parent);
+		/* for(var i = this.aGrid.config.rows; i > this.aGrid.config.rows / 2; i--) {
+			console.log(i)
+			index += (-2 + Math.random() * (2 - (-2)) - 22);
+			this.generatePlatform(index, parent);
+		} */
+	}
+
+	private generatePlatform(index: number, parent: Phaser.Physics.Arcade.Group): void {
+		let platform = this.physics.add
+			.sprite(
+				0,
+				0,
+				TextureKeys.platform,
+			)
+		// platform.setBodySize()
+		// platform.setFlipY(true)
+		parent.add(platform)
+		this.aGrid.placeAtIndex(index, platform);
+		platform.body.updateFromGameObject();
+		
+		platform.setImmovable();
+		index !== 236 ? platform.setScale(1 + Math.random() * (2 - 1)) : platform.setScale(1.4);
+		platform.body.setAllowGravity(false)
+	}
 
 	startWalk(walk: boolean) {
-		this.player.anims.stop();
 		walk ? this.player.play("walk") : this.player.play("idle")
 	}
 
     update(time: number, delta: number): void {
         this.player.setVelocity(0);
+
+		this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
+		this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
+		// console.log("touching: " + this.touchingDown);
+
 
         if (this.A.isDown) {
             this.player.setFlipX(true);
@@ -178,25 +223,50 @@ export default class Jumper extends Phaser.Scene {
 		else if (this.S.isDown) {
 			this.player.setVelocityY(this.playerSpeed);
 		}
-		if (this.isJumping || (this.player.body.touching.down || this.player.body.blocked.down)) {
-			console.log(this.player.anims.currentAnim.key);
+		
+		if(this.isJumping) {
+			this.player.setVelocityY(-this.playerSpeed * 500);
+			if(this.player.anims.currentAnim.key !== "doJump") {
+				this.player.play("doJump");
+			}
+		}
+
+		// console.log(this.player.anims.isPlaying)
+
+		if(this.touchingDown) {
+			this.SPACE.enabled = true;
+			if(this.loadingJump) {
+				if(this.player.anims.currentAnim.key !== "loadJump") {
+					this.player.play("loadJump");
+				}
+			} else if(this.isMoving) {
+				if(this.player.anims.currentAnim.key !== "walk")
+					this.startWalk(true);
+			}
+			else if(this.player.anims.currentAnim.key !== "idle") {
+					this.startWalk(false);
+			}	
+
+		} else if(!this.player.anims.isPlaying) {
+			this.player.setFrame("jump6.png");
+		}
+		
+		
+
+		/* if (this.isJumping) {
 			if(this.player.anims.currentAnim.key !== "loadJump" && !this.spaceBarReleased) {
 				this.player.anims.stop()
 				this.player.play("loadJump");	
 			}
-			if(this.spaceBarReleased) {
-				this.player.setVelocityY(-this.playerSpeed)
+			if(this.spaceBarReleased ) {
+				this.player.setVelocityY(-this.playerSpeed * 5);
 				if(this.player.anims.currentAnim.key !== "doJump") {
-					console.log("doJump");
 					this.player.play("doJump");
 				}
 			} 
-			
 		}
-
-		if(!this.isJumping) {
+		else if(!this.isJumping) {
 			if((this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0) ) {
-				// console.log(this.player.anims.currentAnim.key)
 				if(this.player.anims.currentAnim.key === "idle" || (this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump")) {
 					this.startWalk(true);
 				}
@@ -204,7 +274,10 @@ export default class Jumper extends Phaser.Scene {
 			else if(this.player.anims.currentAnim.key === "walk" || (this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump")) {
 				this.startWalk(false);
 			}
-		}
+		} */
+
+
+
 
 		this.player.body.velocity.normalize().scale(this.playerSpeed);
     }
