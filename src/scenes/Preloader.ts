@@ -18,12 +18,8 @@ export default class Preloader extends Phaser.Scene {
 			'assets/images/tilemap.png'
 		)
 
-		this.load.image(
-			TextureKeys.platform, 
-			'assets/images/caveFloatingPlatform.png'
-		)
-
 	    this.load.atlas(TextureKeys.player, 'assets/spritesheets/player.png', 'assets/spritesheets/player.json');
+	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
 
     }
 
