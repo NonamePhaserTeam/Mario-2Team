@@ -96,7 +96,11 @@ export default class Jumper extends Phaser.Scene {
 		this.CreateAnims();
 
 		this.player.play("idle");
-		
+
+        this.CreateAnims();
+
+        this.player.play("idle");
+
 		this.SPACE.on("down", () => {
 			// console.log("down")
 			this.loadingJump = true;
@@ -267,7 +271,12 @@ export default class Jumper extends Phaser.Scene {
 		}
 		else if(!this.isJumping) {
 			if((this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0) ) {
+<<<<<<< HEAD
+				// console.log(this.player.anims.currentAnim.key)
+				if(this.player.anims.currentAnim.key === "idle" ||( this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump" )) {
+=======
 				if(this.player.anims.currentAnim.key === "idle" || (this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump")) {
+>>>>>>> 5a000a7517f367d3db303f03a892f13e4acdba1d
 					this.startWalk(true);
 				}
 			}
