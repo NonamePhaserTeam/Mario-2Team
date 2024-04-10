@@ -72,12 +72,12 @@ export default class Jumper extends Phaser.Scene {
 
 		this.aGrid = new AlignGrid({
 			scene: this,
-			rows: 22,
+			rows: 30,
 			cols: 11,
 			width: this.worldBounds.width,
 			height: this.worldBounds.height,
 		});
-		// this.aGrid.showNumbers();
+		this.aGrid.showNumbers();
 
         this.platforms = this.physics.add.group();
 		this.loopPlatforms(this.platforms)
@@ -89,17 +89,13 @@ export default class Jumper extends Phaser.Scene {
                 TextureKeys.player,
             )
             .setCollideWorldBounds(true)
-            .setScale(1.4);
+            .setScale(1.2);
 
 		// this.aGrid.placeAtIndex(236, this.player);
 		
 		this.CreateAnims();
 
 		this.player.play("idle");
-
-        this.CreateAnims();
-
-        this.player.play("idle");
 
 		this.SPACE.on("down", () => {
 			// console.log("down")
@@ -112,7 +108,7 @@ export default class Jumper extends Phaser.Scene {
 			this.isJumping = true;
 			setTimeout(() => {
 				this.isJumping = false;
-			}, 1000)
+			}, 1200)
 		});
 		
 		this.camera.startFollow(this.player, true);
@@ -171,17 +167,31 @@ export default class Jumper extends Phaser.Scene {
 			frameRate: 4,
 			repeat: 0,
 		});
+
+		this.anims.create({
+			key: 'fight',
+			frames: this.anims.generateFrameNames(TextureKeys.player, 	{
+				start: 1,
+				end: 12,
+				zeroPad: 1,
+				prefix: 'fight',
+				suffix: '.png'
+			}),
+			frameRate: 8,
+			repeat: 0,
+		});
 	}
 
 	private loopPlatforms(parent: Phaser.Physics.Arcade.Group) {
-		let index = 236;
+		let index = 324;
 		console.log("ada");
 		this.generatePlatform(index, parent);
-		/* for(var i = this.aGrid.config.rows; i > this.aGrid.config.rows / 2; i--) {
+		for(var i = this.aGrid.config.rows; i > 0; i--) {
 			console.log(i)
 			index += (-2 + Math.random() * (2 - (-2)) - 22);
+			console.log(index)
 			this.generatePlatform(index, parent);
-		} */
+		}
 	}
 
 	private generatePlatform(index: number, parent: Phaser.Physics.Arcade.Group): void {
@@ -198,7 +208,7 @@ export default class Jumper extends Phaser.Scene {
 		platform.body.updateFromGameObject();
 		
 		platform.setImmovable();
-		index !== 236 ? platform.setScale(1 + Math.random() * (2 - 1)) : platform.setScale(1.4);
+		index !== 324 ? platform.setScale(.7) : platform.setScale(1.4);
 		platform.body.setAllowGravity(false)
 	}
 
@@ -211,14 +221,13 @@ export default class Jumper extends Phaser.Scene {
 
 		this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
 		this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
-		// console.log("touching: " + this.touchingDown);
 
-
+		
         if (this.A.isDown) {
-            this.player.setFlipX(true);
+			this.player.setFlipX(true);
 			this.player.setVelocityX(-this.playerSpeed);
         } else if (this.D.isDown) {
-            this.player.setFlipX(false);
+			this.player.setFlipX(false);
             this.player.setVelocityX(this.playerSpeed);
         }
 		if (this.W.isDown) {
@@ -234,9 +243,8 @@ export default class Jumper extends Phaser.Scene {
 				this.player.play("doJump");
 			}
 		}
-
 		// console.log(this.player.anims.isPlaying)
-
+		
 		if(this.touchingDown) {
 			this.SPACE.enabled = true;
 			if(this.loadingJump) {
@@ -248,46 +256,15 @@ export default class Jumper extends Phaser.Scene {
 					this.startWalk(true);
 			}
 			else if(this.player.anims.currentAnim.key !== "idle") {
-					this.startWalk(false);
-			}	
-
-		} else if(!this.player.anims.isPlaying) {
-			this.player.setFrame("jump6.png");
-		}
-		
-		
-
-		/* if (this.isJumping) {
-			if(this.player.anims.currentAnim.key !== "loadJump" && !this.spaceBarReleased) {
-				this.player.anims.stop()
-				this.player.play("loadJump");	
-			}
-			if(this.spaceBarReleased ) {
-				this.player.setVelocityY(-this.playerSpeed * 5);
-				if(this.player.anims.currentAnim.key !== "doJump") {
-					this.player.play("doJump");
-				}
-			} 
-		}
-		else if(!this.isJumping) {
-			if((this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0) ) {
-<<<<<<< HEAD
-				// console.log(this.player.anims.currentAnim.key)
-				if(this.player.anims.currentAnim.key === "idle" ||( this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump" )) {
-=======
-				if(this.player.anims.currentAnim.key === "idle" || (this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump")) {
->>>>>>> 5a000a7517f367d3db303f03a892f13e4acdba1d
-					this.startWalk(true);
-				}
-			}
-			else if(this.player.anims.currentAnim.key === "walk" || (this.player.anims.currentAnim.key === "loadJump" || this.player.anims.currentAnim.key === "doJump")) {
 				this.startWalk(false);
-			}
-		} */
-
-
-
-
-		this.player.body.velocity.normalize().scale(this.playerSpeed);
+			}	
+			
+		} else {
+			// this.player.setFrame("jump6.png");
+		}
+		console.log(this.player.body.velocity)
+		
+		
+		this.player.body.velocity.normalize().scale(this.playerSpeed );
     }
 }
