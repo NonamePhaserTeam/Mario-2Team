@@ -109,7 +109,7 @@ export default class Gioco_prova extends Phaser.Scene {
                 TextureKeys.player
             )
             .setBounce(1, 1)
-            .setCollideWorldBounds(true)
+            .setCollideWorldBounds(false)
             .setDrag(0.2, 0.2)
             .setGravity(
                 gameSettings.gravity.x,
@@ -230,6 +230,16 @@ export default class Gioco_prova extends Phaser.Scene {
         else if (this.touchingRight) {this.direzione_player = false;}
         /* MOVIMENTI ORIZZONTALI */
 
+        /* MOVIMENTI VERTICALI */
+        if (this.W.isDown) {
+            this.player.setVelocityY(-this.playerSpeed);
+            this.direzione_player = false;
+        }
+        else if (this.S.isDown) {
+            this.player.setVelocityY(this.playerSpeed);
+            this.direzione_player = true;
+        }
+        /* MOVIMENTI VERTICALI */
         /* DASH */
         if (this.SHIFT.isDown && !this.direzione_player) {this.player.setVelocityX(-5000);}
         if (this.SHIFT.isDown && this.direzione_player) {this.player.setVelocityX(5000);}
@@ -245,7 +255,7 @@ export default class Gioco_prova extends Phaser.Scene {
             if (this.player.anims.currentAnim.key !== "doJump") {this.player.play("doJump");}
         }
 
-        if (this.touchingDown) {
+        if (this.touchingDown||this.touchingLeft||this.touchingRight) {
             this.SPACE.enabled = true;
             if (this.loadingJump) {
                 if (this.player.anims.currentAnim.key !== "loadJump") {this.player.play("loadJump");}
@@ -259,12 +269,13 @@ export default class Gioco_prova extends Phaser.Scene {
 
         /* CLIMBING STUFF */
         if (this.touchingRight || this.touchingLeft) {
-            this.player.setGravityY(gameSettings.gravity.y / 4)
+            //this.player.setGravityY(gameSettings.gravity.y / 4)
+            this.player.setGravityY(0)
             if (this.W.isDown) {
-                this.player.setVelocityY(-this.playerSpeed/4);
+                this.player.setVelocityY(-this.playerSpeed/2);
             }
             else if (this.S.isDown) {
-                this.player.setVelocityY(this.playerSpeed/4);
+                this.player.setVelocityY(this.playerSpeed/2);
             }
 
             if (this.isJumping && this.touchingLeft) {
@@ -277,7 +288,7 @@ export default class Gioco_prova extends Phaser.Scene {
                 this.player.setVelocityX(-500);
             }
         }
-        if (!this.touchingLeft || !this.touchingRight) {
+        if (!this.touchingLeft && !this.touchingRight) {
             this.player.setGravityY(gameSettings.gravity.y)
         }
         /* CLIMBING STUFF */
