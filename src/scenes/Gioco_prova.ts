@@ -7,7 +7,7 @@ import TextureKeys from "../consts/TextureKeys";
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Phaser.Physics.Arcade.Sprite;
-    platforms: Phaser.Physics.Arcade.StaticGroup;
+	platforms: Phaser.Physics.Arcade.StaticGroup;
     camera: Phaser.Cameras.Scene2D.Camera;
     /* ---------- SCENA ---------- */
 
@@ -108,9 +108,7 @@ export default class Gioco_prova extends Phaser.Scene {
                 this.platforms.getChildren()[0].body.position.y - 60,
                 TextureKeys.player
             )
-            .setBounce(1, 1)
             .setCollideWorldBounds(false)
-            .setDrag(0.2, 0.2)
             .setGravity(
                 gameSettings.gravity.x,
                 gameSettings.gravity.y,
@@ -207,6 +205,7 @@ export default class Gioco_prova extends Phaser.Scene {
     }
 
     update(time: number, delta: number): void {
+
         this.player.setVelocity(0);
 
         this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
@@ -216,18 +215,25 @@ export default class Gioco_prova extends Phaser.Scene {
         this.touchingLeft = this.player.body.touching.left || this.player.body.blocked.left;
         this.touching = this.touchingUp && this.touchingDown && this.touchingLeft && this.touchingRight
 
+
+
         /* MOVIMENTI ORIZZONTALI */
         if (this.A.isDown && !this.touchingLeft) {
+			this.player.setFlipX(true);
             this.player.setVelocityX(-this.playerSpeed);
             this.direzione_player = false;
         }
         else if (this.D.isDown && !this.touchingRight) {
+			this.player.setFlipX(false);
             this.player.setVelocityX(this.playerSpeed);
             this.direzione_player = true;
         }
 
         if (this.touchingLeft) {this.direzione_player = true;}
-        else if (this.touchingRight) {this.direzione_player = false;}
+        else if (this.touchingRight) {
+            this.direzione_player = false;
+            console.log("negro")
+        }
         /* MOVIMENTI ORIZZONTALI */
 
         /* MOVIMENTI VERTICALI */
@@ -251,11 +257,11 @@ export default class Gioco_prova extends Phaser.Scene {
         
         /* JUMP STUFF */
         if (this.isJumping) {
-            this.player.setVelocityY(-this.playerSpeed-100);
+            this.player.setVelocityY(-this.playerSpeed*2);
             if (this.player.anims.currentAnim.key !== "doJump") {this.player.play("doJump");}
         }
 
-        if (this.touchingDown||this.touchingLeft||this.touchingRight) {
+        if (this.touchingDown) { 
             this.SPACE.enabled = true;
             if (this.loadingJump) {
                 if (this.player.anims.currentAnim.key !== "loadJump") {this.player.play("loadJump");}
@@ -264,7 +270,11 @@ export default class Gioco_prova extends Phaser.Scene {
             }
             else if (this.player.anims.currentAnim.key !== "idle") {this.startWalk(false);}
 
-        } else if (!this.player.anims.isPlaying) {this.player.setFrame("jump6.png");}
+        } else{
+			this.SPACE.enabled = false;
+			if (!this.player.anims.isPlaying) {this.player.setFrame("jump6.png");}
+		} 
+			
         /* JUMP STUFF */
 
         /* CLIMBING STUFF */
