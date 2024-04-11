@@ -187,13 +187,23 @@ export default class Gioco_prova extends Phaser.Scene {
     startWalk(walk: boolean) {
         walk ? this.player.play("walk") : this.player.play("idle")
     }
+	resetFlags(touching: boolean, blocked: boolean): boolean {
+		if(touching || blocked) return true;
+		else setTimeout(() => {
+			return false;
+		}, 1000); 
+	}
     update(time: number, delta: number): void {
         this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
-        this.touching = this.touchingUp && this.touchingDown && this.touchingLeft && this.touchingRight
-        this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
-        this.touchingUp = this.player.body.touching.up || this.player.body.blocked.up;
-        this.touchingRight = this.player.body.touching.right || this.player.body.blocked.right;
-        this.touchingLeft = this.player.body.touching.left || this.player.body.blocked.left;
+        this.touchingDown = this.resetFlags(this.player.body.touching.down, this.player.body.blocked.down);
+        this.touchingUp = this.resetFlags(this.player.body.touching.up, this.player.body.blocked.up);
+        this.touchingRight = this.resetFlags(this.player.body.touching.right,  this.player.body.blocked.right);
+        this.touchingLeft = this.resetFlags(this.player.body.touching.left, this.player.body.blocked.left);
+        //this.touching = this.touchingUp && this.touchingDown && this.touchingLeft && this.touchingRight
+        //this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
+        //this.touchingUp = this.player.body.touching.up || this.player.body.blocked.up;
+        //this.touchingRight = this.player.body.touching.right || this.player.body.blocked.right;
+        //this.touchingLeft = this.player.body.touching.left || this.player.body.blocked.left;
 
         this.player.setVelocity(0);
         /* CLIMBING STUFF */
@@ -209,7 +219,7 @@ export default class Gioco_prova extends Phaser.Scene {
 
         }
         /* CLIMBING STUFF */
-        if(!this.touchingLeft && !this.touchingRight){this.player.setDrag(0,0)}
+        //if(!this.touchingLeft && !this.touchingRight){this.player.setDrag(0,0)}
     
         /* MOVIMENTI ORIZZONTALI */
         if (this.A.isDown && !this.touchingLeft) {
