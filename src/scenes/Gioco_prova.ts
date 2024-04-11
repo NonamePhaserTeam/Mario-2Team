@@ -7,7 +7,7 @@ import TextureKeys from "../consts/TextureKeys";
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Phaser.Physics.Arcade.Sprite;
-    platforms: Phaser.Physics.Arcade.StaticGroup;
+	platforms: Phaser.Physics.Arcade.StaticGroup;
     camera: Phaser.Cameras.Scene2D.Camera;
     /* ---------- SCENA ---------- */
 
@@ -218,10 +218,12 @@ export default class Gioco_prova extends Phaser.Scene {
 
         /* MOVIMENTI ORIZZONTALI */
         if (this.A.isDown && !this.touchingLeft) {
+			this.player.setFlipX(true);
             this.player.setVelocityX(-this.playerSpeed);
             this.direzione_player = false;
         }
         else if (this.D.isDown && !this.touchingRight) {
+			this.player.setFlipX(false);
             this.player.setVelocityX(this.playerSpeed);
             this.direzione_player = true;
         }
@@ -241,7 +243,7 @@ export default class Gioco_prova extends Phaser.Scene {
         
         /* JUMP STUFF */
         if (this.isJumping) {
-            this.player.setVelocityY(-this.playerSpeed-100);
+            this.player.setVelocityY(-this.playerSpeed*2);
             if (this.player.anims.currentAnim.key !== "doJump") {this.player.play("doJump");}
         }
 
@@ -254,7 +256,11 @@ export default class Gioco_prova extends Phaser.Scene {
             }
             else if (this.player.anims.currentAnim.key !== "idle") {this.startWalk(false);}
 
-        } else if (!this.player.anims.isPlaying) {this.player.setFrame("jump6.png");}
+        } else{
+			this.SPACE.enabled = false;
+			if (!this.player.anims.isPlaying) {this.player.setFrame("jump6.png");}
+		} 
+			
         /* JUMP STUFF */
 
         /* CLIMBING STUFF */
