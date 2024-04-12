@@ -1,5 +1,5 @@
 import { Callbacks, globalEval } from "jquery";
-import Phaser, { Physics } from "phaser";
+import Phaser, { Game, Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
@@ -7,6 +7,7 @@ import TextureKeys from "../consts/TextureKeys";
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Phaser.Physics.Arcade.Sprite;
+    colliderplayer: any
     platforms: Phaser.Physics.Arcade.StaticGroup;
     camera: Phaser.Cameras.Scene2D.Camera;
     /* ---------- SCENA ---------- */
@@ -19,11 +20,11 @@ export default class Gioco_prova extends Phaser.Scene {
     SPACE: Phaser.Input.Keyboard.Key; // salta
     SHIFT: Phaser.Input.Keyboard.Key; //dasha
     X: Phaser.Input.Keyboard.Key; // cade in picchiata
-    playerSpeed = 500;
+    playerSpeed: number = 500;
+
     /* ---------- MOVEMENT ---------- */
 
     /* -------- FLAGS ---------- */
-    gravita:boolean = false;
     touching: boolean = false;
     touchingUp: boolean = false;
     touchingDown: boolean = false;
@@ -32,14 +33,12 @@ export default class Gioco_prova extends Phaser.Scene {
     loadingJump: boolean = false;
     isMoving: boolean = false;
     isJumping: boolean = false;
+    wastouching: boolean = false;
     /* -------- FLAGS ---------- */
 
-    worldBounds = {
-        width: gameSettings.gameWidth,
-        height: gameSettings.gameHeight * 3,
-    }
+    worldBounds = { width: gameSettings.gameWidth, height: gameSettings.gameHeight * 3, }
 
-
+    direzione: number = 0;
     y_piattaforme = gameSettings.gameHeight * 5 - 40
 
     constructor() { super(SceneKeys.Game); }
@@ -56,20 +55,9 @@ export default class Gioco_prova extends Phaser.Scene {
 
         this.camera = this.cameras.main;
 
-        this.camera.setBounds(
-            0,
-            0,
-            gameSettings.gameWidth / 4,
-            gameSettings.gameHeight * 5,
-            true
-        );
+        this.camera.setBounds(0, 0, gameSettings.gameWidth / 4, gameSettings.gameHeight * 5, true);
 
-        this.physics.world.setBounds(
-            0,
-            0,
-            gameSettings.gameWidth / 2,
-            gameSettings.gameHeight * 5,
-        );
+        this.physics.world.setBounds(0, 0, gameSettings.gameWidth / 2, gameSettings.gameHeight * 5,);
     }
 
     create() {
@@ -103,72 +91,44 @@ export default class Gioco_prova extends Phaser.Scene {
         }
 
         this.player = this.physics.add
-            .sprite(
-                this.platforms.getChildren()[0].body.position.x + 100,
-                this.platforms.getChildren()[0].body.position.y - 60,
-                TextureKeys.player
-            )
+            .sprite(this.platforms.getChildren()[0].body.position.x + 100, this.platforms.getChildren()[0].body.position.y - 60, TextureKeys.player)
             .setCollideWorldBounds(false)
-            .setDrag(0,0)
-            .setBounce(0,0)
+            .setDrag(0, 0)
+            .setBounce(0, 0)
             .setScale(1.5);
 
         this.CreateAnims();
         this.player.play("idle");
 
+        this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
         this.camera.startFollow(this.player, true, 1, 1);
-        this.physics.add.collider(this.player, this.platforms)
-    }
 
+    }
     CreateAnims() {
         this.anims.create({
             key: 'walk',
-            frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 1,
-                end: 8,
-                zeroPad: 1,
-                prefix: 'walk',
-                suffix: '.png'
-            }),
+            frames: this.anims.generateFrameNames(TextureKeys.player, { start: 1, end: 8, zeroPad: 1, prefix: 'walk', suffix: '.png' }),
             frameRate: 8,
             repeat: -1
         });
 
         this.anims.create({
             key: 'idle',
-            frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 1,
-                end: 5,
-                zeroPad: 1,
-                prefix: 'fermo',
-                suffix: '.png'
-            }),
+            frames: this.anims.generateFrameNames(TextureKeys.player, { start: 1, end: 5, zeroPad: 1, prefix: 'fermo', suffix: '.png' }),
             frameRate: 10,
             repeat: -1,
         });
 
         this.anims.create({
             key: 'loadJump',
-            frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 1,
-                end: 3,
-                zeroPad: 1,
-                prefix: 'jump',
-                suffix: '.png'
-            }),
+            frames: this.anims.generateFrameNames(TextureKeys.player, { start: 1, end: 3, zeroPad: 1, prefix: 'jump', suffix: '.png' }),
             frameRate: 8,
             repeat: 0,
         });
 
         this.anims.create({
             key: 'doJump',
-            frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 4,
-                end: 6,
-                zeroPad: 1,
-                prefix: 'jump',
-                suffix: '.png'
-            }),
+            frames: this.anims.generateFrameNames(TextureKeys.player, { start: 4, end: 6, zeroPad: 1, prefix: 'jump', suffix: '.png' }),
             frameRate: 4,
             repeat: 0,
         });
@@ -184,51 +144,49 @@ export default class Gioco_prova extends Phaser.Scene {
         ).setScale(scala_immagine, 1).body.updateFromGameObject();
     }
 
-    startWalk(walk: boolean) {
-        walk ? this.player.play("walk") : this.player.play("idle")
+    startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
+    resetFlags(touching: boolean, blocked: boolean): boolean {
+        if (touching || blocked) return true;
+        else setTimeout(() => { return false; }, 1000);
     }
-	resetFlags(touching: boolean, blocked: boolean): boolean {
-		if(touching || blocked) return true;
-		else setTimeout(() => {
-			return false;
-		}, 1000); 
-	}
     update(time: number, delta: number): void {
         this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
         this.touchingDown = this.resetFlags(this.player.body.touching.down, this.player.body.blocked.down);
         this.touchingUp = this.resetFlags(this.player.body.touching.up, this.player.body.blocked.up);
-        this.touchingRight = this.resetFlags(this.player.body.touching.right,  this.player.body.blocked.right);
+        this.touchingRight = this.resetFlags(this.player.body.touching.right, this.player.body.blocked.right);
         this.touchingLeft = this.resetFlags(this.player.body.touching.left, this.player.body.blocked.left);
-        //this.touching = this.touchingUp && this.touchingDown && this.touchingLeft && this.touchingRight
-        //this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
-        //this.touchingUp = this.player.body.touching.up || this.player.body.blocked.up;
-        //this.touchingRight = this.player.body.touching.right || this.player.body.blocked.right;
-        //this.touchingLeft = this.player.body.touching.left || this.player.body.blocked.left;
+        this.touching = this.touchingLeft && this.touchingRight && this.touchingUp && this.touchingDown;
 
+        if (this.touchingUp) {
+            this.physics.world.removeCollider(this.colliderplayer);
+            setTimeout(() => {
+                this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
+            }, 50);
+        }
         this.player.setVelocity(0);
         /* CLIMBING STUFF */
         if (this.touchingRight || this.touchingLeft) {
-            this.player.setDrag(0,10000)
-            console.log(this.player.body.gravity);
-            if (this.W.isDown) {
-                this.player.setVelocityY(-this.playerSpeed);
+            this.player.setDrag(0, 10000);
+            this.wastouching= true;
+            if (this.touchingLeft) {
+                this.player.setGravityX(-10);
+                this.direzione += 1
+            } else if (this.touchingRight) {
+                this.player.setGravityX(10);
+                this.direzione -= 1
             }
-            else if (this.S.isDown) {
-                this.player.setVelocityY(this.playerSpeed);
-            }
-
+            if (this.W.isDown) { this.player.setVelocityY(-this.playerSpeed); }
         }
+
+        if (this.SHIFT.isDown && this.wastouching) { this.player.setVelocityX(10000*this.direzione); }
         /* CLIMBING STUFF */
-        //if(!this.touchingLeft && !this.touchingRight){this.player.setDrag(0,0)}
-    
+
         /* MOVIMENTI ORIZZONTALI */
-        if (this.A.isDown && !this.touchingLeft) {
-            this.gravita = false;
+        if (this.A.isDown) {
             this.player.setFlipX(true);
             this.player.setVelocityX(-this.playerSpeed);
         }
-        else if (this.D.isDown && !this.touchingRight) {
-            this.gravita = false;
+        else if (this.D.isDown) {
             this.player.setFlipX(false);
             this.player.setVelocityX(this.playerSpeed);
         }
@@ -241,13 +199,16 @@ export default class Gioco_prova extends Phaser.Scene {
         /* MOVIMENTI VERTICALI */
 
         /* DASH */
-        if (this.S.isDown && this.SHIFT.isDown) { this.player.setVelocityX(-5000); }
-        if (this.D.isDown && this.SHIFT.isDown) { this.player.setVelocityX(5000); }
+        if (this.A.isDown && this.SHIFT.isDown) { this.player.setVelocityX(-3000); }
+        if (this.D.isDown && this.SHIFT.isDown) { this.player.setVelocityX(3000); }
         /* DASH */
+        /* COLPO IN PICCHIATA */ // da implementare un cd
+        if (this.X.isDown && !this.touching) {
+            this.player.setVelocityY(this.playerSpeed * 5);
+        }
+        /* COLPO IN PICCHIATA */
 
-        /* COLPO IN PICCHIATA */
-        if (this.X.isDown && !this.touching) { this.player.setVelocityY(this.playerSpeed*3); }
-        /* COLPO IN PICCHIATA */
+
 
         /* JUMP STUFF */
         this.SPACE.on("down", () => {
@@ -260,17 +221,13 @@ export default class Gioco_prova extends Phaser.Scene {
             this.isJumping = true;
             setTimeout(() => {
                 this.isJumping = false;
-            }, 1000)
+            }, 500)
         });
 
-        if (this.isJumping) {
-            this.player.setVelocityY(-this.playerSpeed * 3);
 
-            if (this.touchingRight) {
-                this.player.setVelocityX(-this.playerSpeed*3);
-            } else if (this.touchingLeft) {
-                this.player.setVelocityX(this.playerSpeed*3);
-            }
+
+        if (this.isJumping) {
+            this.player.setVelocityY(-this.playerSpeed * 5)
             if (this.player.anims.currentAnim.key !== "doJump") {
                 this.player.play("doJump");
             }
@@ -298,6 +255,12 @@ export default class Gioco_prova extends Phaser.Scene {
             }
         }
 
+        if (!this.touchingLeft && !this.touchingRight) {
+            this.player.setDrag(0, 0)
+            this.wastouching = false;
+        }
+
+        this.direzione = 0;
         /* JUMP STUFF */
 
     }
