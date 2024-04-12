@@ -9,6 +9,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	private isMoving = false;
 	private isAttacking = false;
 	private isTouchingDown = true;
+	private enableDash = true;
 	private health = 100;
 
 	constructor(
@@ -37,21 +38,37 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	HandleMovement(
 		UP: Phaser.Input.Keyboard.Key,
 		LEFT: Phaser.Input.Keyboard.Key,
-		// DOWN: Phaser.Input.Keyboard.Key,
+		SHIFT: Phaser.Input.Keyboard.Key,
 		RIGHT: Phaser.Input.Keyboard.Key
 	) {
 		if (this.isAttacking) return;
+		
+		if(SHIFT.isDown && SHIFT.enabled) {
+			// Memorizza il tempo del click del tasto
+			this.enableDash = true;
+			SHIFT.enabled = false;
+			setTimeout(() => {
+				SHIFT.enabled = true;
+			}, 5000);
+			setTimeout(() => {
+				this.enableDash = false;
+			}, 200);
+		}
 
 		this.isMoving = LEFT.isDown || RIGHT.isDown;
 		if (LEFT.isDown) {
 			this.isMoving = true;
 			this.anims.play(AnimationKeys.player.walk, true);
 			this.setVelocityX(-this.speed);
+			if (this.enableDash && this.isTouchingDown) {this.setVelocityX(-this.speed*25)}
+
 		}
 		if (RIGHT.isDown) {
 			this.isMoving = true;
 			this.anims.play(AnimationKeys.player.walk, true);
 			this.setVelocityX(this.speed);
+			if (this.enableDash && this.isTouchingDown) {this.setVelocityX(this.speed*25)}
+
 		}
 		if (UP.isDown) {
 			if (this.body.velocity.y == 0) {
@@ -60,6 +77,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			  this.setVelocityY(-this.speed);
 			}
 		}
+
 		if (!this.isMoving) {
 			this.anims.play(AnimationKeys.player.idle, true);
 			this.setAccelerationY(0);
@@ -73,11 +91,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		Key3: Phaser.Input.Keyboard.Key,
 	) {
 		if (Key1.isDown) {
-		this.isAttacking = true;
-		this.anims.play(AnimationKeys.player.punch);
+			this.isAttacking = true;
+			this.anims.play(AnimationKeys.player.punch);
 		} else if (Key2.isDown) {
-		this.isAttacking = true;
-		this.anims.play(AnimationKeys.player.sword);
+			this.isAttacking = true;
+			this.anims.play(AnimationKeys.player.sword);
 		} else if(!this.isTouchingDown && Key3.isDown) {
 			this.anims.play(AnimationKeys.player.blow)
 		}
@@ -85,16 +103,5 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.on("animationcomplete", () => {
 			this.isAttacking = false;
 		});
-	}
-
-  	HandleJump(
-		SPACE: Phaser.Input.Keyboard.Key,
-  	)
-  	{
-		if(this.isAttacking) return;
-
-		if(SPACE.isDown) {
-
-		}
 	}
 }

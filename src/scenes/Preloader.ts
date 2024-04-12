@@ -20,7 +20,7 @@ export default class Preloader extends Phaser.Scene {
 
 	    this.load.atlas(TextureKeys.player, 'assets/spritesheets/player.png', 'assets/spritesheets/player.json');
 	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
-		this.CreateAnims();
+		// this.CreateAnims();
     }
 
     create() {

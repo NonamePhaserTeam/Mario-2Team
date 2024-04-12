@@ -55,9 +55,20 @@ export default class Gioco_prova extends Phaser.Scene {
 
         this.camera = this.cameras.main;
 
-        this.camera.setBounds(0, 0, gameSettings.gameWidth / 4, gameSettings.gameHeight * 5, true);
+		this.camera.setBounds(
+            0,
+            0,
+            this.worldBounds.width,
+            this.worldBounds.height,
+            true
+        );
 
-        this.physics.world.setBounds(0, 0, gameSettings.gameWidth / 2, gameSettings.gameHeight * 5,);
+        this.physics.world.setBounds(
+            0,
+            0,
+            this.worldBounds.width,
+            this.worldBounds.height,	
+        );
     }
 
     create() {
@@ -90,9 +101,10 @@ export default class Gioco_prova extends Phaser.Scene {
             }
         }
 
+
         this.player = this.physics.add
             .sprite(this.platforms.getChildren()[0].body.position.x + 100, this.platforms.getChildren()[0].body.position.y - 60, TextureKeys.player)
-            .setCollideWorldBounds(false)
+            .setCollideWorldBounds(true)
             .setDrag(0, 0)
             .setBounce(0, 0)
             .setScale(1.5);
