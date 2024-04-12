@@ -112,8 +112,6 @@ export default class Gioco_prova extends Phaser.Scene {
             .setCollideWorldBounds(true)
             .setScale(1.5);
 
-        this.CreateAnims();
-
         this.player.play("idle");
 
         this.SPACE.on("down", () => {
@@ -130,87 +128,8 @@ export default class Gioco_prova extends Phaser.Scene {
         });
 
         this.camera.startFollow(this.player, true, 1, 1);
-		this.physics.add.collider(this.player, this.platforms, () => {
-			const playerBounds = this.player.getBounds();
-			const platformBounds = this.platforms.getChildren.getBounds();
-		
-			if (playerBounds.bottom <= platformBounds.top) {
-				// Disattiva la collisione dalla parte inferiore del player
-				player.body.checkCollision.none = true;
-			}
-		});
+		this.physics.add.collider(this.player, this.platforms);
     }
-
-    CreateAnims() {
-        this.anims.create({
-            key: 'walk',
-            frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 1,
-                end: 8,
-                zeroPad: 1,
-                prefix: 'walk',
-                suffix: '.png'
-            }),
-            frameRate: 8,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'idle',
-            frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 1,
-                end: 5,
-                zeroPad: 1,
-                prefix: 'fermo',
-                suffix: '.png'
-            }),
-            frameRate: 10,
-            repeat: -1,
-        });
-
-        this.anims.create({
-            key: 'loadJump',
-            frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 1,
-                end: 3,
-                zeroPad: 1,
-                prefix: 'jump',
-                suffix: '.png'
-            }),
-            frameRate: 8,
-            repeat: 0,
-        });
-
-        this.anims.create({
-            key: 'doJump',
-            frames: this.anims.generateFrameNames(TextureKeys.player, {
-                start: 4,
-                end: 6,
-                zeroPad: 1,
-                prefix: 'jump',
-                suffix: '.png'
-            }),
-            frameRate: 4,
-            repeat: 0,
-        });
-
-		const fight = this.anims.create({
-			key: 'fight',
-			frames: this.anims.generateFrameNames(TextureKeys.player, {
-				start: 1,
-				end: 12,
-				zeroPad: 1,
-				prefix: 'fight',
-				suffix: '.png'
-			}),
-			frameRate: 6,
-			repeat: 0,
-		});
-		this.player.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-			// console.log("sono a")
-		})
-    }
-
     // todo wall climbing, wall sliding 
 
     CreatePlatform(x_axis: number, scala_immagine: number) {
@@ -266,10 +185,8 @@ export default class Gioco_prova extends Phaser.Scene {
 			setTimeout(() => {
 				this.activeDash = false;
 			}, 200);
-			// console.log(this.lastKeyPressTime);
 		}
 
-		console.log(this.activeDash);
 
         /* MOVIMENTI ORIZZONTALI */
         if (this.A.isDown && !this.touchingLeft) {
@@ -282,7 +199,6 @@ export default class Gioco_prova extends Phaser.Scene {
 			this.player.setVelocityX(this.playerSpeed);
 			if (this.activeDash && this.touchingDown) {this.player.setVelocityX(this.playerSpeed*5)}
 		}
-
         /* MOVIMENTI ORIZZONTALI */
 
 		/* COLPO IN PICCHIATA */
@@ -290,7 +206,7 @@ export default class Gioco_prova extends Phaser.Scene {
 			// this.player.setFrame("jump6.png")
 			if(this.X.isDown) {
 				this.isJumping = false;
-				this.player.setVelocityY(this.playerSpeed * 20);
+				this.player.setVelocityY(this.playerSpeed * 10);
 			}
 		}
         /* COLPO IN PICCHIATA */

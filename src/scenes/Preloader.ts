@@ -20,7 +20,7 @@ export default class Preloader extends Phaser.Scene {
 
 	    this.load.atlas(TextureKeys.player, 'assets/spritesheets/player.png', 'assets/spritesheets/player.json');
 	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
-
+		this.CreateAnims();
     }
 
     create() {
@@ -30,5 +30,72 @@ export default class Preloader extends Phaser.Scene {
         this.scene.start(SceneKeys.Game);
 		//this.scene.start(SceneKeys.Jumper)
 
+    }
+
+	CreateAnims() {
+        this.anims.create({
+            key: 'walk',
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 1,
+                end: 8,
+                zeroPad: 1,
+                prefix: 'walk',
+                suffix: '.png'
+            }),
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 1,
+                end: 5,
+                zeroPad: 1,
+                prefix: 'fermo',
+                suffix: '.png'
+            }),
+            frameRate: 10,
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: 'loadJump',
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 1,
+                end: 3,
+                zeroPad: 1,
+                prefix: 'jump',
+                suffix: '.png'
+            }),
+            frameRate: 8,
+            repeat: 0,
+        });
+
+        this.anims.create({
+            key: 'doJump',
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 4,
+                end: 6,
+                zeroPad: 1,
+                prefix: 'jump',
+                suffix: '.png'
+            }),
+            frameRate: 4,
+            repeat: 0,
+        });
+
+		const fight = this.anims.create({
+			key: 'fight',
+			frames: this.anims.generateFrameNames(TextureKeys.player, {
+				start: 1,
+				end: 12,
+				zeroPad: 1,
+				prefix: 'fight',
+				suffix: '.png'
+			}),
+			frameRate: 6,
+			repeat: 0,
+		});
     }
 }
