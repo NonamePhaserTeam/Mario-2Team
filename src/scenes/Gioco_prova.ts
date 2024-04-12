@@ -1,5 +1,5 @@
 import { Callbacks, globalEval } from "jquery";
-import Phaser, { Physics } from "phaser";
+import Phaser, { Game, Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
@@ -7,6 +7,7 @@ import TextureKeys from "../consts/TextureKeys";
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Phaser.Physics.Arcade.Sprite;
+    colliderplayer: any
     platforms: Phaser.Physics.Arcade.StaticGroup;
     camera: Phaser.Cameras.Scene2D.Camera;
     /* ---------- SCENA ---------- */
@@ -20,6 +21,7 @@ export default class Gioco_prova extends Phaser.Scene {
     SHIFT: Phaser.Input.Keyboard.Key; //dasha
     X: Phaser.Input.Keyboard.Key; // cade in picchiata
     playerSpeed: number = 500;
+
     /* ---------- MOVEMENT ---------- */
 
     /* -------- FLAGS ---------- */
@@ -98,8 +100,8 @@ export default class Gioco_prova extends Phaser.Scene {
         this.CreateAnims();
         this.player.play("idle");
 
+        this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
         this.camera.startFollow(this.player, true, 1, 1);
-        this.physics.add.collider(this.player, this.platforms)
 
     }
     CreateAnims() {
@@ -135,7 +137,11 @@ export default class Gioco_prova extends Phaser.Scene {
     // todo wall climbing, wall sliding 
 
     CreatePlatform(x_axis: number, scala_immagine: number) {
-        this.platforms.create(gameSettings.gameWidth * x_axis, this.y_piattaforme, 'platform').setScale(scala_immagine, 1).body.updateFromGameObject();
+        this.platforms.create(
+            gameSettings.gameWidth * x_axis,
+            this.y_piattaforme,
+            'platform'
+        ).setScale(scala_immagine, 1).body.updateFromGameObject();
     }
 
     startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
@@ -151,29 +157,36 @@ export default class Gioco_prova extends Phaser.Scene {
         this.touchingLeft = this.resetFlags(this.player.body.touching.left, this.player.body.blocked.left);
         this.touching = this.touchingLeft && this.touchingRight && this.touchingUp && this.touchingDown;
 
+        if (this.touchingUp) {
+            this.physics.world.removeCollider(this.colliderplayer);
+            setTimeout(() => {
+                this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
+            }, 50);
+        }
         this.player.setVelocity(0);
         /* CLIMBING STUFF */
         if (this.touchingRight || this.touchingLeft) {
             this.player.setDrag(0, 10000);
-            this.wastouching = true
-            if(this.wastouching) console.log("negro")
+            this.wastouching= true;
             if (this.touchingLeft) {
                 this.player.setGravityX(-10);
                 this.direzione += 1
-            }else if (this.touchingRight) {
+            } else if (this.touchingRight) {
                 this.player.setGravityX(10);
                 this.direzione -= 1
             }
             if (this.W.isDown) { this.player.setVelocityY(-this.playerSpeed); }
         }
 
+        if (this.SHIFT.isDown && this.wastouching) { this.player.setVelocityX(10000*this.direzione); }
         /* CLIMBING STUFF */
+
         /* MOVIMENTI ORIZZONTALI */
-        if (this.A.isDown && !this.touchingLeft) {
+        if (this.A.isDown) {
             this.player.setFlipX(true);
             this.player.setVelocityX(-this.playerSpeed);
         }
-        else if (this.D.isDown && !this.touchingRight) {
+        else if (this.D.isDown) {
             this.player.setFlipX(false);
             this.player.setVelocityX(this.playerSpeed);
         }
@@ -189,10 +202,13 @@ export default class Gioco_prova extends Phaser.Scene {
         if (this.A.isDown && this.SHIFT.isDown) { this.player.setVelocityX(-3000); }
         if (this.D.isDown && this.SHIFT.isDown) { this.player.setVelocityX(3000); }
         /* DASH */
+        /* COLPO IN PICCHIATA */ // da implementare un cd
+        if (this.X.isDown && !this.touching) {
+            this.player.setVelocityY(this.playerSpeed * 5);
+        }
+        /* COLPO IN PICCHIATA */
 
-        /* COLPO IN PICCHIATA */
-        if (this.X.isDown && !this.touching) { this.player.setVelocityY(this.playerSpeed * 3); }
-        /* COLPO IN PICCHIATA */
+
 
         /* JUMP STUFF */
         this.SPACE.on("down", () => {
@@ -205,17 +221,13 @@ export default class Gioco_prova extends Phaser.Scene {
             this.isJumping = true;
             setTimeout(() => {
                 this.isJumping = false;
-            }, 1000)
+            }, 500)
         });
 
 
 
         if (this.isJumping) {
-            if (this.wastouching) {
-                this.player.setVelocity(this.playerSpeed * 5*this.direzione, -this.playerSpeed * 5);
-            } else if (!this.wastouching){
-                this.player.setVelocityY(-this.playerSpeed * 3)
-            }
+            this.player.setVelocityY(-this.playerSpeed * 5)
             if (this.player.anims.currentAnim.key !== "doJump") {
                 this.player.play("doJump");
             }
@@ -245,14 +257,10 @@ export default class Gioco_prova extends Phaser.Scene {
 
         if (!this.touchingLeft && !this.touchingRight) {
             this.player.setDrag(0, 0)
-            if(this.player.anims.currentAnim.key !== "doJump"){
-
-                this.wastouching = false;
-                if(!this.wastouching) console.log("frocio")
-            }
+            this.wastouching = false;
         }
 
-        this.direzione=0;
+        this.direzione = 0;
         /* JUMP STUFF */
 
     }
