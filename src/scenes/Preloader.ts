@@ -82,7 +82,7 @@ export default class Preloader extends Phaser.Scene {
                 prefix: 'jump',
                 suffix: '.png'
             }),
-            frameRate: 4,
+			duration: 1000,
             repeat: 0,
         });
 
@@ -95,7 +95,7 @@ export default class Preloader extends Phaser.Scene {
 				prefix: 'fight',
 				suffix: '.png'
 			}),
-			frameRate: 6,
+			frameRate: 12	,
 			repeat: 0,
 		});
     }

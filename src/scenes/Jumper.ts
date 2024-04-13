@@ -46,7 +46,6 @@ export default class Gioco_prova extends Phaser.Scene {
 
     constructor() { super(SceneKeys.Jumper); }
     init() {
-
         this.W = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W, true, false);
         this.A = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false);
         this.S = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, true, false);
@@ -89,7 +88,7 @@ export default class Gioco_prova extends Phaser.Scene {
                     this.CreatePlatform(0.5, 1)  //middle 
                     this.CreatePlatform(0.73, 0.5)  //right 
                     this.y_piattaforme -= gameSettings.gameHeight / 1.3
-                case 3, 8: // due piattaforme con spacco al centro
+               /*  case 3, 8: // due piattaforme con spacco al centro
                     this.CreatePlatform(0.29, 1) //left 
                     this.CreatePlatform(0.73, 1) //right 
                     this.y_piattaforme -= gameSettings.gameHeight / 1.3
@@ -100,42 +99,18 @@ export default class Gioco_prova extends Phaser.Scene {
                 case 5, 10: // due piattaforme con spacco al a destra
                     this.CreatePlatform(0.29, 2.3) //left 
                     this.CreatePlatform(0.73, 0.7) //right
-                    this.y_piattaforme -= gameSettings.gameHeight / 1.3
+                    this.y_piattaforme -= gameSettings.gameHeight / 1.3 */
             }
         }
-
-        /* this.player = this.physics.add
-            .sprite(
-                this.platforms.getChildren()[0].body.position.x + 100,
-                this.platforms.getChildren()[0].body.position.y - 60,
-                TextureKeys.player
-            )
-            .setCollideWorldBounds(true)
-            .setScale(1.5);
-
-        this.player.play("idle"); */
-
 		this.player = new Player(
 			this,
 			this.platforms.getChildren()[0].body.position.x + 100, 
 			this.platforms.getChildren()[0].body.position.y - 60,
-			TextureKeys.player
+			TextureKeys.player,
 		)
         this.add.existing(this.player)
 
-        // this.SPACE.on("down", () => {
-        //     this.loadingJump = true;
-        // });
-
-        // this.SPACE.on("up", () => {
-        //     this.SPACE.enabled = false;
-        //     this.loadingJump = false;
-        //     this.isJumping = true;
-        //     setTimeout(() => {
-        //         this.isJumping = false;
-        //     }, 1000)
-        // });
-
+        
         this.camera.startFollow(this.player, true, 1, 1);
 		this.physics.add.collider(this.player, this.platforms);
     }
@@ -175,8 +150,8 @@ export default class Gioco_prova extends Phaser.Scene {
 	} */
 
     update(time: number, delta: number): void {
-		this.player.HandleMovement(this.SPACE, this.A, this.SHIFT, this.D)
-        this.player.HandleAttack(this.ENTER, this.S, this.X);
+		this.player.HandleMovement(this.A, this.SHIFT, this.D)
+        this.player.HandleAttack(this.ENTER, this.X, this.S);
 		// console.log(this.player);
         // this.player.setVelocity(0);
 

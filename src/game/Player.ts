@@ -9,7 +9,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	private isMoving = false;
 	private isAttacking = false;
 	private isTouchingDown = true;
-	private enableDash = true;
+	private isJumping = false;
+	private enableDash = false;
+	private enableSpace = true; 
 	private health = 100;
 
 	constructor(
@@ -17,21 +19,30 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		x: number,
 		y: number,
 		texture: string,
-		frame?: string | number
+		frame?: string | number,
 	) {
 		super(scene, x, y, texture, frame);
 
 		scene.physics.world.enable(this);
-
 		this.setCollideWorldBounds(true)
 		this.anims.play(AnimationKeys.Player.Idle);
+		this.create();
 		this.scene.add.existing(this);
-
+		
 		console.log("classe player")
 	}
-
+	
 	create() {
-		
+
+		this.scene.input.keyboard.on('keydown-SPACE', () => {
+			if(this.isTouchingDown) {
+				this.isJumping = true;
+				setTimeout(() => {
+					this.isJumping = false;
+				}, 500);
+			}
+		});
+
 	}
 
 	preUpdate(t: number, dt: number) {
@@ -40,46 +51,54 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	HandleMovement(
-		UP: Phaser.Input.Keyboard.Key,
 		LEFT: Phaser.Input.Keyboard.Key,
 		SHIFT: Phaser.Input.Keyboard.Key,
-		RIGHT: Phaser.Input.Keyboard.Key
+		RIGHT: Phaser.Input.Keyboard.Key,
+		// Blow: Phaser.Input.Keyboard.Key,
 	) {
 		if (this.isAttacking) return;
+
+		this.setVelocity(0);
+
+		this.isMoving = LEFT.isDown || RIGHT.isDown;
+		this.isTouchingDown = this.body.touching.down || this.body.blocked.down;
 		
 		if(SHIFT.isDown && SHIFT.enabled) {
 			// Memorizza il tempo del click del tasto
+			console.log("true shift")
 			this.enableDash = true;
-			SHIFT.enabled = false;
 			setTimeout(() => {
 				SHIFT.enabled = true;
 			}, 5000);
 			setTimeout(() => {
 				this.enableDash = false;
-			}, 200);
+				SHIFT.enabled = false;
+			}, 100);
 		}
 
-		this.isMoving = LEFT.isDown || RIGHT.isDown;
 		if (LEFT.isDown) {
-			this.isMoving = true;
 			this.anims.play(AnimationKeys.Player.Walk, true);
 			this.setVelocityX(-this.speed);
-			if (this.enableDash && this.isTouchingDown) {this.setVelocityX(-this.speed*25)}
+			this.setFlipX(true);
+			if (this.enableDash && this.isTouchingDown) {this.setVelocityX(-this.speed*15)}
 
 		}
 		if (RIGHT.isDown) {
-			this.isMoving = true;
 			this.anims.play(AnimationKeys.Player.Walk, true);
 			this.setVelocityX(this.speed);
-			if (this.enableDash && this.isTouchingDown) {this.setVelocityX(this.speed*25)}
+			this.setFlipX(false);
+			if (this.enableDash && this.isTouchingDown) {this.setVelocityX(this.speed*15)}
 
 		}
-		if (UP.isDown) {
-			if (this.body.velocity.y == 0) {
-			  this.isMoving = true;
-			  this.anims.play(AnimationKeys.Player.Jump, true);
-			  this.setVelocityY(-this.speed);
-			}
+
+		if (this.isJumping) {
+			this.isMoving = true;
+			this.anims.play(AnimationKeys.Player.Jump, true);
+			this.setVelocityY(-this.speed*3);
+		}
+		else if(!this.isTouchingDown){
+			// this.setFrame("	");
+			this.setVelocityY(this.speed);
 		}
 
 		if (!this.isMoving) {
@@ -98,10 +117,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			this.isAttacking = true;
 			this.anims.play(AnimationKeys.Player.Punch, true);
 		} else if (Key2.isDown) {
-			this.isAttacking = true;
-			this.anims.play(AnimationKeys.Player.Sword, true);
+			this.isJumping = false;
+			this.setVelocityY(this.speed * 5);
+			// this.isAttacking = true;
+			// this.anims.play(AnimationKeys.Player.Blow, true);
 		} else if(!this.isTouchingDown && Key3.isDown) {
-			this.anims.play(AnimationKeys.Player.Blow, true)
+			// this.anims.play(AnimationKeys.Player.Sword, true)
 		}
 
 		this.on("animationcomplete", () => {
