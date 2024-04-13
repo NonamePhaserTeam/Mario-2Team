@@ -21,13 +21,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	) {
 		super(scene, x, y, texture, frame);
 
-		this.scene.physics.world.enableBody(this);
+		scene.physics.world.enable(this);
 
-		// this.body.setSize(this.body.width * 0.4, this.body.height * 0.65);
-    	// this.body.setOffset(35, 40);
+		this.setCollideWorldBounds(true)
 		this.anims.play(AnimationKeys.Player.Idle);
 		this.scene.add.existing(this);
 
+		console.log("classe player")
 	}
 
 	create() {

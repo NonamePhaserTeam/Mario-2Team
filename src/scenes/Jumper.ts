@@ -121,6 +121,7 @@ export default class Gioco_prova extends Phaser.Scene {
 			this.platforms.getChildren()[0].body.position.y - 60,
 			TextureKeys.player
 		)
+        this.add.existing(this.player)
 
         // this.SPACE.on("down", () => {
         //     this.loadingJump = true;
