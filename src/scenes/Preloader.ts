@@ -29,6 +29,7 @@ export default class Preloader extends Phaser.Scene {
         this.scene.stop(SceneKeys.Preloader);
         this.scene.start(SceneKeys.Game);
 		//this.scene.start(SceneKeys.Jumper)
+		//this.scene.start(SceneKeys.Combattimento)
 
     }
 }

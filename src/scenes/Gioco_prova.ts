@@ -3,6 +3,7 @@ import Phaser, { Game, Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
+import { node } from "webpack";
 
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
@@ -20,7 +21,7 @@ export default class Gioco_prova extends Phaser.Scene {
     SPACE: Phaser.Input.Keyboard.Key; // salta
     SHIFT: Phaser.Input.Keyboard.Key; //dasha
     X: Phaser.Input.Keyboard.Key; // cade in picchiata
-    playerSpeed: number = 500;
+    playerSpeed: number = 750;
 
     /* ---------- MOVEMENT ---------- */
 
@@ -35,11 +36,18 @@ export default class Gioco_prova extends Phaser.Scene {
     isJumping: boolean = false;
     wastouching: boolean = false;
     /* -------- FLAGS ---------- */
-
+    /* -------- FIONDA --------- */
+    colpo: Phaser.Physics.Arcade.Group
+    LEFT: Phaser.Input.Keyboard.Key; //mira sinistra
+    RIGHT: Phaser.Input.Keyboard.Key; // mira destra
+    UP: Phaser.Input.Keyboard.Key; // miira sopra
+    DOWN: Phaser.Input.Keyboard.Key; // mira sotto
+    /* -------- FIONDA --------- */
     worldBounds = { width: gameSettings.gameWidth, height: gameSettings.gameHeight * 3, }
 
-    direzione: number = 0;
     y_piattaforme = gameSettings.gameHeight * 5 - 40
+    direzione: number = 0;
+    ha_sparato: boolean = false;
 
     constructor() { super(SceneKeys.Game); }
     init() {
@@ -52,15 +60,31 @@ export default class Gioco_prova extends Phaser.Scene {
         this.SHIFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT, true, false);
         this.X = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X, true, false);
 
+        this.LEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT, true, false);
+        this.UP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP, true, false);
+        this.RIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT, true, false);
+        this.DOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN, true, false);
 
         this.camera = this.cameras.main;
 
-        this.camera.setBounds(0, 0, gameSettings.gameWidth / 4, gameSettings.gameHeight * 5, true);
 
-        this.physics.world.setBounds(0, 0, gameSettings.gameWidth / 2, gameSettings.gameHeight * 5,);
     }
-
     create() {
+        this.camera.setBounds(
+            0,
+            0,
+            gameSettings.gameWidth,
+            gameSettings.gameHeight * 5,
+            true
+        );
+        this.physics.world.setBounds(
+            0,
+            0,
+            gameSettings.gameWidth,
+            gameSettings.gameHeight * 5,
+            true
+        )
+
         this.camera.setBackgroundColor(gameSettings.bgColor);
         this.platforms = this.physics.add.staticGroup();
         this.CreatePlatform(0.5, 3)
@@ -92,7 +116,7 @@ export default class Gioco_prova extends Phaser.Scene {
 
         this.player = this.physics.add
             .sprite(this.platforms.getChildren()[0].body.position.x + 100, this.platforms.getChildren()[0].body.position.y - 60, TextureKeys.player)
-            .setCollideWorldBounds(false)
+            .setCollideWorldBounds(true)
             .setDrag(0, 0)
             .setBounce(0, 0)
             .setScale(1.5);
@@ -100,9 +124,10 @@ export default class Gioco_prova extends Phaser.Scene {
         this.CreateAnims();
         this.player.play("idle");
 
+
         this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
         this.camera.startFollow(this.player, true, 1, 1);
-
+        this.colpo = this.physics.add.group()
     }
     CreateAnims() {
         this.anims.create({
@@ -136,26 +161,190 @@ export default class Gioco_prova extends Phaser.Scene {
 
     // todo wall climbing, wall sliding 
 
-    CreatePlatform(x_axis: number, scala_immagine: number) {
+    CreatePlatform(playerX: number, scala_immagine: number) {
         this.platforms.create(
-            gameSettings.gameWidth * x_axis,
+            gameSettings.gameWidth * playerX,
             this.y_piattaforme,
             'platform'
         ).setScale(scala_immagine, 1).body.updateFromGameObject();
     }
+    Direzione(direzione: string, playerx?: number, playery?: number): Array<number> {
+        let x: number, y: number;
+        switch (direzione) {
+            case "LEFT":
+                x = -2000
+                y = -1
+                break;
+            case "RIGHT":
+                x = 2000
+                y = 1
 
-    startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
-    resetFlags(touching: boolean, blocked: boolean): boolean {
-        if (touching || blocked) return true;
-        else setTimeout(() => { return false; }, 1000);
+                break;
+            case "UP":
+                y = -1500
+                x = 0.5
+                break;
+            case "DOWN":
+                y = 1500
+                x = 0.5
+                break;
+            case "LEFT_UP":
+                x = -1000
+                y = -1000
+
+                break;
+            case "LEFT_DOWN":
+                x = -1000
+                y = 1000
+
+                break;
+            case "RIGHT_UP":
+                x = 1000
+                y = -1000
+
+                break;
+            case "RIGHT_DOWN":
+                x = 1000
+                y = 1000
+
+                break;
+        }
+
+        return [x, y];
+
     }
+
+    Bullets(direzione: string, playerx: number, playery: number) {
+
+        let colpo = this.colpo.create(
+            this.player.x,
+            this.player.y,
+            TextureKeys.player
+        ).setScale(0.5);
+
+
+        colpo.enableBody(true, this.player.x, this.player.y, true, true);
+        colpo.setVelocity(
+            this.Direzione(direzione)[0],
+            this.Direzione(direzione)[1]
+        );
+
+        let c = this.colpo.getFirstAlive()
+            if (
+                c.y >= gameSettings.gameHeight * 5
+                || c.x <= 0 || c.y <= 0 ||c.x >= gameSettings.gameWidth
+            ) {
+                this.colpo.getFirstAlive().destroy(true);
+                console.log("distrutto")
+
+            }
+
+
+    }
+    startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
     update(time: number, delta: number): void {
         this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
-        this.touchingDown = this.resetFlags(this.player.body.touching.down, this.player.body.blocked.down);
-        this.touchingUp = this.resetFlags(this.player.body.touching.up, this.player.body.blocked.up);
-        this.touchingRight = this.resetFlags(this.player.body.touching.right, this.player.body.blocked.right);
-        this.touchingLeft = this.resetFlags(this.player.body.touching.left, this.player.body.blocked.left);
+        this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
+        this.touchingUp = this.player.body.touching.up || this.player.body.blocked.up;
+        this.touchingRight = this.player.body.touching.right || this.player.body.blocked.right;
+        this.touchingLeft = this.player.body.touching.left || this.player.body.blocked.left;
         this.touching = this.touchingLeft && this.touchingRight && this.touchingUp && this.touchingDown;
+        if (
+            this.LEFT.isDown &&
+            (!this.UP.isDown && !this.DOWN.isDown && !this.RIGHT.isDown)
+            && !this.ha_sparato
+        ) {
+            setTimeout(() => {
+                this.Bullets("LEFT", this.player.x, this.player.y)
+            }, 750);
+            this.ha_sparato = true;
+            setTimeout(() => {
+                this.ha_sparato = false;
+            }, 750);
+
+        }
+
+        if (this.RIGHT.isDown && (!this.UP.isDown && !this.DOWN.isDown && !this.LEFT.isDown)
+            && !this.ha_sparato) {
+            setTimeout(() => {
+                this.Bullets("RIGHT", this.player.x, this.player.y)
+            }, 750);
+            this.ha_sparato = true;
+            setTimeout(() => {
+                this.ha_sparato = false;
+            }, 750);
+        }
+
+        if (this.UP.isDown && (!this.LEFT.isDown && !this.RIGHT.isDown && !this.DOWN.isDown)
+            && !this.ha_sparato) {
+            setTimeout(() => {
+                this.Bullets("UP", this.player.x, this.player.y)
+            }, 750);
+            this.ha_sparato = true;
+            setTimeout(() => {
+                this.ha_sparato = false;
+            }, 750);
+        }
+
+        if (this.DOWN.isDown &&
+            (!this.LEFT.isDown && !this.RIGHT.isDown && !this.UP.isDown)
+            && !this.ha_sparato) {
+            setTimeout(() => {
+                this.Bullets("DOWN", this.player.x, this.player.y)
+            }, 750);
+            this.ha_sparato = true;
+            setTimeout(() => {
+                this.ha_sparato = false;
+            }, 750);
+        }
+
+        if (this.DOWN.isDown && this.LEFT.isDown && !this.ha_sparato) {
+            setTimeout(() => {
+                this.Bullets("LEFT_DOWN", this.player.x, this.player.y)
+            }, 750);
+            this.ha_sparato = true;
+            setTimeout(() => {
+                this.ha_sparato = false;
+            }, 750);
+        } else if (this.UP.isDown && this.LEFT.isDown && !this.ha_sparato) {
+            setTimeout(() => {
+                this.Bullets("LEFT_UP", this.player.x, this.player.y)
+            }, 750);
+            this.ha_sparato = true;
+            setTimeout(() => {
+                this.ha_sparato = false;
+            }, 750);
+        }
+
+        if (this.DOWN.isDown && this.RIGHT.isDown && !this.ha_sparato) {
+            setTimeout(() => {
+                this.Bullets("RIGHT_DOWN", this.player.x, this.player.y)
+            }, 750);
+            this.ha_sparato = true;
+            setTimeout(() => {
+                this.ha_sparato = false;
+            }, 750);
+        } else if (
+            this.UP.isDown && this.RIGHT.isDown && !this.ha_sparato
+        ) {
+
+            setTimeout(() => {
+                this.Bullets("RIGHT_UP", this.player.x, this.player.y)
+            }, 750);
+            this.ha_sparato = true;
+            setTimeout(() => {
+                this.ha_sparato = false;
+            }, 750);
+        }
+
+
+
+
+
+
+
+
+
 
         if (this.touchingUp) {
             this.physics.world.removeCollider(this.colliderplayer);
@@ -167,7 +356,7 @@ export default class Gioco_prova extends Phaser.Scene {
         /* CLIMBING STUFF */
         if (this.touchingRight || this.touchingLeft) {
             this.player.setDrag(0, 10000);
-            this.wastouching= true;
+            this.wastouching = true;
             if (this.touchingLeft) {
                 this.player.setGravityX(-10);
                 this.direzione += 1
@@ -178,19 +367,21 @@ export default class Gioco_prova extends Phaser.Scene {
             if (this.W.isDown) { this.player.setVelocityY(-this.playerSpeed); }
         }
 
-        if (this.SHIFT.isDown && this.wastouching) { this.player.setVelocityX(10000*this.direzione); }
+        if (this.SHIFT.isDown && this.wastouching) { this.player.setVelocityX(10000 * this.direzione); }
         /* CLIMBING STUFF */
 
         /* MOVIMENTI ORIZZONTALI */
         if (this.A.isDown) {
             this.player.setFlipX(true);
             this.player.setVelocityX(-this.playerSpeed);
+            //this.Bullets += 1
         }
         else if (this.D.isDown) {
             this.player.setFlipX(false);
             this.player.setVelocityX(this.playerSpeed);
         }
 
+        //if (this.A.isUp) { console.log(this.Bullets) }
         /* MOVIMENTI ORIZZONTALI */
 
         /* MOVIMENTI VERTICALI */
@@ -221,13 +412,13 @@ export default class Gioco_prova extends Phaser.Scene {
             this.isJumping = true;
             setTimeout(() => {
                 this.isJumping = false;
-            }, 500)
+            }, 750)
         });
 
 
 
         if (this.isJumping) {
-            this.player.setVelocityY(-this.playerSpeed * 5)
+            this.player.setVelocityY(-this.playerSpeed * 2)
             if (this.player.anims.currentAnim.key !== "doJump") {
                 this.player.play("doJump");
             }
@@ -262,6 +453,5 @@ export default class Gioco_prova extends Phaser.Scene {
 
         this.direzione = 0;
         /* JUMP STUFF */
-
     }
 }
