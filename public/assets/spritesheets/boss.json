@@ -1,0 +1,125 @@
+{
+	"textures": [
+		{
+			"image": "boss.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 474,
+				"h": 171
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "boss1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 192,
+						"h": 192
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 8,
+						"w": 178,
+						"h": 169
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 178,
+						"h": 169
+					}
+				},
+				{
+					"filename": "boss5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 192,
+						"h": 192
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 8,
+						"w": 178,
+						"h": 169
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 178,
+						"h": 169
+					}
+				},
+				{
+					"filename": "boss2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 192,
+						"h": 192
+					},
+					"spriteSourceSize": {
+						"x": 18,
+						"y": 7,
+						"w": 156,
+						"h": 169
+					},
+					"frame": {
+						"x": 181,
+						"y": 1,
+						"w": 156,
+						"h": 169
+					}
+				},
+				{
+					"filename": "boss4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 192,
+						"h": 192
+					},
+					"spriteSourceSize": {
+						"x": 18,
+						"y": 7,
+						"w": 156,
+						"h": 169
+					},
+					"frame": {
+						"x": 181,
+						"y": 1,
+						"w": 156,
+						"h": 169
+					}
+				},
+				{
+					"filename": "boss3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 192,
+						"h": 192
+					},
+					"spriteSourceSize": {
+						"x": 29,
+						"y": 6,
+						"w": 134,
+						"h": 169
+					},
+					"frame": {
+						"x": 339,
+						"y": 1,
+						"w": 134,
+						"h": 169
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:ed8fd6c23f4276e4adaa69062bb3515f:b27f1e3b7548b876fcbb925ffe2d391a:46ed12eff2905e238af2d2a3f055c310$"
+	}
+}

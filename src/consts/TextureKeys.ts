@@ -5,6 +5,7 @@ enum TextureKeys {
     tilemap = "tilemap",
     platform = "platform",
 	player = "player",
+	boss = "boss",
 }
 
 export default TextureKeys;

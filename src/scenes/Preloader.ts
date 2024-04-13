@@ -20,16 +20,89 @@ export default class Preloader extends Phaser.Scene {
 
 	    this.load.atlas(TextureKeys.player, 'assets/spritesheets/player.png', 'assets/spritesheets/player.json');
 	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
-
+	    this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
     }
-
+	
     create() {
-        // creazione di tutte le animazioni
+		// creazione di tutte le animazioni
+		this.CreateAnims();
 
         this.scene.stop(SceneKeys.Preloader);
+<<<<<<< HEAD
         this.scene.start(SceneKeys.Game);
 		//this.scene.start(SceneKeys.Jumper)
 		//this.scene.start(SceneKeys.Combattimento)
+=======
+        // this.scene.start(SceneKeys.Game);
+		this.scene.start(SceneKeys.Jumper)
+>>>>>>> ea47721179562766081a2b3ec86fe0e2c266afc3
 
+    }
+
+	CreateAnims() {
+        this.anims.create({
+            key: AnimationKeys.Player.Walk,
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 1,
+                end: 8,
+                zeroPad: 1,
+                prefix: 'walk',
+                suffix: '.png'
+            }),
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Player.Idle,
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 1,
+                end: 5,
+                zeroPad: 1,
+                prefix: 'fermo',
+                suffix: '.png'
+            }),
+            frameRate: 10,
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: 'loadJump',
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 1,
+                end: 3,
+                zeroPad: 1,
+                prefix: 'jump',
+                suffix: '.png'
+            }),
+            frameRate: 8,
+            repeat: 0,
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Player.Jump,
+            frames: this.anims.generateFrameNames(TextureKeys.player, {
+                start: 4,
+                end: 6,
+                zeroPad: 1,
+                prefix: 'jump',
+                suffix: '.png'
+            }),
+			duration: 1000,
+            repeat: 0,
+        });
+
+		const fight = this.anims.create({
+			key: AnimationKeys.Player.Punch,
+			frames: this.anims.generateFrameNames(TextureKeys.player, {
+				start: 1,
+				end: 12,
+				zeroPad: 1,
+				prefix: 'fight',
+				suffix: '.png'
+			}),
+			frameRate: 12	,
+			repeat: 0,
+		});
     }
 }

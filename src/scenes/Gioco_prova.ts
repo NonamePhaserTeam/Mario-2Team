@@ -3,7 +3,11 @@ import Phaser, { Game, Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
+<<<<<<< HEAD
 import { node } from "webpack";
+=======
+import AnimationKeys from "../consts/AnimationKeys";
+>>>>>>> ea47721179562766081a2b3ec86fe0e2c266afc3
 
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
@@ -67,7 +71,24 @@ export default class Gioco_prova extends Phaser.Scene {
 
         this.camera = this.cameras.main;
 
+<<<<<<< HEAD
 
+=======
+		this.camera.setBounds(
+            0,
+            0,
+            this.worldBounds.width,
+            this.worldBounds.height,
+            true
+        );
+
+        this.physics.world.setBounds(
+            0,
+            0,
+            this.worldBounds.width,
+            this.worldBounds.height,	
+        );
+>>>>>>> ea47721179562766081a2b3ec86fe0e2c266afc3
     }
     create() {
         this.camera.setBounds(
@@ -114,15 +135,20 @@ export default class Gioco_prova extends Phaser.Scene {
             }
         }
 
+
         this.player = this.physics.add
+<<<<<<< HEAD
             .sprite(this.platforms.getChildren()[0].body.position.x + 100, this.platforms.getChildren()[0].body.position.y - 60, TextureKeys.player)
+=======
+            .sprite(this.platforms.getChildren()[0].body.position.x + 100, this.platforms.getChildren()[0].body.position.y - 60, TextureKeys.boss)
+>>>>>>> ea47721179562766081a2b3ec86fe0e2c266afc3
             .setCollideWorldBounds(true)
             .setDrag(0, 0)
             .setBounce(0, 0)
             .setScale(1.5);
 
-        this.CreateAnims();
-        this.player.play("idle");
+        // this.CreateAnims();
+		this.player.play(AnimationKeys.Boss.idle)
 
 
         this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
@@ -243,6 +269,7 @@ export default class Gioco_prova extends Phaser.Scene {
     }
     startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
     update(time: number, delta: number): void {
+<<<<<<< HEAD
         this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
         this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
         this.touchingUp = this.player.body.touching.up || this.player.body.blocked.up;
@@ -383,29 +410,74 @@ export default class Gioco_prova extends Phaser.Scene {
 
         //if (this.A.isUp) { console.log(this.Bullets) }
         /* MOVIMENTI ORIZZONTALI */
+=======
+        // this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
+        // this.touchingDown = this.resetFlags(this.player.body.touching.down, this.player.body.blocked.down);
+        // this.touchingUp = this.resetFlags(this.player.body.touching.up, this.player.body.blocked.up);
+        // this.touchingRight = this.resetFlags(this.player.body.touching.right, this.player.body.blocked.right);
+        // this.touchingLeft = this.resetFlags(this.player.body.touching.left, this.player.body.blocked.left);
+        // this.touching = this.touchingLeft && this.touchingRight && this.touchingUp && this.touchingDown;
 
-        /* MOVIMENTI VERTICALI */
-        //if (this.W.isDown) {this.player.setVelocityY(-this.playerSpeed);}
-        //else if (this.S.isDown) {this.player.setVelocityY(this.playerSpeed);}
-        /* MOVIMENTI VERTICALI */
+        // if (this.touchingUp) {
+        //     this.physics.world.removeCollider(this.colliderplayer);
+        //     setTimeout(() => {
+        //         this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
+        //     }, 50);
+        // }
+        // this.player.setVelocity(0);
+        // /* CLIMBING STUFF */
+        // if (this.touchingRight || this.touchingLeft) {
+        //     this.player.setDrag(0, 10000);
+        //     this.wastouching= true;
+        //     if (this.touchingLeft) {
+        //         this.player.setGravityX(-10);
+        //         this.direzione += 1
+        //     } else if (this.touchingRight) {
+        //         this.player.setGravityX(10);
+        //         this.direzione -= 1
+        //     }
+        //     if (this.W.isDown) { this.player.setVelocityY(-this.playerSpeed); }
+        // }
 
-        /* DASH */
-        if (this.A.isDown && this.SHIFT.isDown) { this.player.setVelocityX(-3000); }
-        if (this.D.isDown && this.SHIFT.isDown) { this.player.setVelocityX(3000); }
-        /* DASH */
-        /* COLPO IN PICCHIATA */ // da implementare un cd
-        if (this.X.isDown && !this.touching) {
-            this.player.setVelocityY(this.playerSpeed * 5);
-        }
-        /* COLPO IN PICCHIATA */
+        // if (this.SHIFT.isDown && this.wastouching) { this.player.setVelocityX(10000*this.direzione); }
+        // /* CLIMBING STUFF */
+
+        // /* MOVIMENTI ORIZZONTALI */
+        // if (this.A.isDown) {
+        //     this.player.setFlipX(true);
+        //     this.player.setVelocityX(-this.playerSpeed);
+        // }
+        // else if (this.D.isDown) {
+        //     this.player.setFlipX(false);
+        //     this.player.setVelocityX(this.playerSpeed);
+        // }
+
+        // /* MOVIMENTI ORIZZONTALI */
+>>>>>>> ea47721179562766081a2b3ec86fe0e2c266afc3
+
+        // /* MOVIMENTI VERTICALI */
+        // //if (this.W.isDown) {this.player.setVelocityY(-this.playerSpeed);}
+        // //else if (this.S.isDown) {this.player.setVelocityY(this.playerSpeed);}
+        // /* MOVIMENTI VERTICALI */
+
+        // /* DASH */
+        // if (this.A.isDown && this.SHIFT.isDown) { this.player.setVelocityX(-3000); }
+        // if (this.D.isDown && this.SHIFT.isDown) { this.player.setVelocityX(3000); }
+        // /* DASH */
+        // /* COLPO IN PICCHIATA */ // da implementare un cd
+        // if (this.X.isDown && !this.touching) {
+        //     this.player.setVelocityY(this.playerSpeed * 5);
+        // }
+        // /* COLPO IN PICCHIATA */
 
 
 
-        /* JUMP STUFF */
-        this.SPACE.on("down", () => {
-            this.loadingJump = true;
-        });
+        // /* JUMP STUFF */
+        // this.SPACE.on("down", () => {
+        //     this.loadingJump = true;
+        // });
 
+<<<<<<< HEAD
         this.SPACE.on("up", () => {
             this.SPACE.enabled = false;
             this.loadingJump = false;
@@ -423,35 +495,54 @@ export default class Gioco_prova extends Phaser.Scene {
                 this.player.play("doJump");
             }
         }
+=======
+        // this.SPACE.on("up", () => {
+        //     this.SPACE.enabled = false;
+        //     this.loadingJump = false;
+        //     this.isJumping = true;
+        //     setTimeout(() => {
+        //         this.isJumping = false;
+        //     }, 500)
+        // });
 
-        if (this.touchingDown || this.touchingLeft || this.touchingRight) {
-            this.SPACE.enabled = true;
-            if (this.loadingJump) {
-                if (this.player.anims.currentAnim.key !== "loadJump") {
-                    this.player.play("loadJump");
-                }
-            } else if (this.isMoving) {
-                if (this.player.anims.currentAnim.key !== "walk") {
-                    this.startWalk(true);
-                }
-            }
-            else if (this.player.anims.currentAnim.key !== "idle") {
-                this.startWalk(false);
-            }
 
-        } else {
-            this.SPACE.enabled = false;
-            if (!this.player.anims.isPlaying) {
-                this.player.setFrame("jump6.png");
-            }
-        }
 
-        if (!this.touchingLeft && !this.touchingRight) {
-            this.player.setDrag(0, 0)
-            this.wastouching = false;
-        }
+        // if (this.isJumping) {
+        //     this.player.setVelocityY(-this.playerSpeed * 5)
+        //     if (this.player.anims.currentAnim.key !== "doJump") {
+        //         this.player.play("doJump");
+        //     }
+        // }
+>>>>>>> ea47721179562766081a2b3ec86fe0e2c266afc3
 
-        this.direzione = 0;
+        // if (this.touchingDown || this.touchingLeft || this.touchingRight) {
+        //     this.SPACE.enabled = true;
+        //     if (this.loadingJump) {
+        //         if (this.player.anims.currentAnim.key !== "loadJump") {
+        //             this.player.play("loadJump");
+        //         }
+        //     } else if (this.isMoving) {
+        //         if (this.player.anims.currentAnim.key !== "walk") {
+        //             this.startWalk(true);
+        //         }
+        //     }
+        //     else if (this.player.anims.currentAnim.key !== "idle") {
+        //         this.startWalk(false);
+        //     }
+
+        // } else {
+        //     this.SPACE.enabled = false;
+        //     if (!this.player.anims.isPlaying) {
+        //         this.player.setFrame("jump6.png");
+        //     }
+        // }
+
+        // if (!this.touchingLeft && !this.touchingRight) {
+        //     this.player.setDrag(0, 0)
+        //     this.wastouching = false;
+        // }
+
+        // this.direzione = 0;
         /* JUMP STUFF */
     }
 }
