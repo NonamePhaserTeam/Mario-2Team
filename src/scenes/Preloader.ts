@@ -20,21 +20,22 @@ export default class Preloader extends Phaser.Scene {
 
 	    this.load.atlas(TextureKeys.player, 'assets/spritesheets/player.png', 'assets/spritesheets/player.json');
 	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
-		// this.CreateAnims();
+	    this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
     }
-
+	
     create() {
-        // creazione di tutte le animazioni
+		// creazione di tutte le animazioni
+		this.CreateAnims();
 
         this.scene.stop(SceneKeys.Preloader);
-        this.scene.start(SceneKeys.Game);
-		//this.scene.start(SceneKeys.Jumper)
+        // this.scene.start(SceneKeys.Game);
+		this.scene.start(SceneKeys.Jumper)
 
     }
 
 	CreateAnims() {
         this.anims.create({
-            key: 'walk',
+            key: AnimationKeys.Player.Walk,
             frames: this.anims.generateFrameNames(TextureKeys.player, {
                 start: 1,
                 end: 8,
@@ -47,7 +48,7 @@ export default class Preloader extends Phaser.Scene {
         });
 
         this.anims.create({
-            key: 'idle',
+            key: AnimationKeys.Player.Idle,
             frames: this.anims.generateFrameNames(TextureKeys.player, {
                 start: 1,
                 end: 5,
@@ -73,7 +74,7 @@ export default class Preloader extends Phaser.Scene {
         });
 
         this.anims.create({
-            key: 'doJump',
+            key: AnimationKeys.Player.Jump,
             frames: this.anims.generateFrameNames(TextureKeys.player, {
                 start: 4,
                 end: 6,
@@ -86,7 +87,7 @@ export default class Preloader extends Phaser.Scene {
         });
 
 		const fight = this.anims.create({
-			key: 'fight',
+			key: AnimationKeys.Player.Punch,
 			frames: this.anims.generateFrameNames(TextureKeys.player, {
 				start: 1,
 				end: 12,

@@ -23,12 +23,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 		this.scene.physics.world.enableBody(this);
 
-		this.anims.play("idle");
+		// this.body.setSize(this.body.width * 0.4, this.body.height * 0.65);
+    	// this.body.setOffset(35, 40);
+
+		scene.physics.world.enable(this);
+		this.anims.play(AnimationKeys.Player.Idle);
 
 		this.scene.add.existing(this);
+
 	}
 
-	create() {}
+	create() {
+		
+	}
 
 	preUpdate(t: number, dt: number) {
 		// update per tutte le componenti dello sprite compless
@@ -58,14 +65,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.isMoving = LEFT.isDown || RIGHT.isDown;
 		if (LEFT.isDown) {
 			this.isMoving = true;
-			this.anims.play(AnimationKeys.player.walk, true);
+			this.anims.play(AnimationKeys.Player.Walk, true);
 			this.setVelocityX(-this.speed);
 			if (this.enableDash && this.isTouchingDown) {this.setVelocityX(-this.speed*25)}
 
 		}
 		if (RIGHT.isDown) {
 			this.isMoving = true;
-			this.anims.play(AnimationKeys.player.walk, true);
+			this.anims.play(AnimationKeys.Player.Walk, true);
 			this.setVelocityX(this.speed);
 			if (this.enableDash && this.isTouchingDown) {this.setVelocityX(this.speed*25)}
 
@@ -73,13 +80,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		if (UP.isDown) {
 			if (this.body.velocity.y == 0) {
 			  this.isMoving = true;
-			  this.anims.play(AnimationKeys.player.jump, true);
+			  this.anims.play(AnimationKeys.Player.Jump, true);
 			  this.setVelocityY(-this.speed);
 			}
 		}
 
 		if (!this.isMoving) {
-			this.anims.play(AnimationKeys.player.idle, true);
+			this.anims.play(AnimationKeys.Player.Idle, true);
 			this.setAccelerationY(0);
 			this.setVelocityX(0);
 		}
@@ -92,12 +99,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	) {
 		if (Key1.isDown) {
 			this.isAttacking = true;
-			this.anims.play(AnimationKeys.player.punch);
+			this.anims.play(AnimationKeys.Player.Punch, true);
 		} else if (Key2.isDown) {
 			this.isAttacking = true;
-			this.anims.play(AnimationKeys.player.sword);
+			this.anims.play(AnimationKeys.Player.Sword, true);
 		} else if(!this.isTouchingDown && Key3.isDown) {
-			this.anims.play(AnimationKeys.player.blow)
+			this.anims.play(AnimationKeys.Player.Blow, true)
 		}
 
 		this.on("animationcomplete", () => {

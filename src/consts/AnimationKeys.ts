@@ -2,13 +2,17 @@
 // per un utilizzo più veloce e ordinato nelle scene
 
 namespace AnimationKeys {
-    export enum player {
-		idle = "idle",
-		walk = "run",
-		punch = "punch",
-		sword = "sword",
-		jump = "jump",
-		blow = "blow",
+    export enum Player {
+		Idle = "player-idle",
+		Walk = "player-run",
+		Punch = "player-punch",
+		Sword = "player-sword",
+		Jump = "player-jump",
+		Blow = "player-blow",
+	}
+
+	export enum Boss{
+		idle = "bossIdle",
 	}
 }
 
