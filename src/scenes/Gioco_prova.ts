@@ -1,4 +1,3 @@
-import { Callbacks, globalEval } from "jquery";
 import Phaser, { Game, Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
@@ -68,7 +67,11 @@ export default class Gioco_prova extends Phaser.Scene {
 
         this.camera = this.cameras.main;
 
+<<<<<<< HEAD
         this.camera.setBounds(
+=======
+		this.camera.setBounds(
+>>>>>>> 3711e9a3597583019b3dfcc6cb54af61ad6ec856
             0,
             0,
             this.worldBounds.width,
@@ -237,7 +240,6 @@ export default class Gioco_prova extends Phaser.Scene {
     startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
 
     update(time: number, delta: number): void {
-
         this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
         this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
         this.touchingUp = this.player.body.touching.up || this.player.body.blocked.up;
@@ -389,9 +391,6 @@ export default class Gioco_prova extends Phaser.Scene {
 
         if (this.A.isUp) { console.log(this.Bullets) }
         /* MOVIMENTI ORIZZONTALI */
-
-
-
         // /* JUMP STUFF */
         this.SPACE.on("down", () => {
             this.loadingJump = true;
@@ -406,15 +405,12 @@ export default class Gioco_prova extends Phaser.Scene {
             }, 750)
         });
 
-
-
         if (this.isJumping) {
             this.player.setVelocityY(-this.playerSpeed * 2)
             //    if (this.player.anims.currentAnim.key !== "doJump") {
             //        this.player.play("doJump");
             //    }
         }
-
         if (this.touchingDown || this.touchingLeft || this.touchingRight) {
             this.SPACE.enabled = true;
             //if (this.loadingJump) {
@@ -442,7 +438,6 @@ export default class Gioco_prova extends Phaser.Scene {
             this.player.setDrag(0, 0)
             this.wastouching = false;
         }
-
         this.direzione = 0;
         /* JUMP STUFF */
     }

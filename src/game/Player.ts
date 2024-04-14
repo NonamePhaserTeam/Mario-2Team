@@ -11,7 +11,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 	private isTouchingDown = true;
 	private isJumping = false;
 	private enableDash = false;
-	private enableSpace = true; 
+	private shiftEnabled = true; 
 	private health = 100;
 
 	constructor(
@@ -63,18 +63,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.isMoving = LEFT.isDown || RIGHT.isDown;
 		this.isTouchingDown = this.body.touching.down || this.body.blocked.down;
 		
-		if(SHIFT.isDown && SHIFT.enabled) {
-			// Memorizza il tempo del click del tasto
-			console.log("true shift")
+		let lastDash;
+
+		if(SHIFT.isDown && this.shiftEnabled) {
 			this.enableDash = true;
 			setTimeout(() => {
-				SHIFT.enabled = true;
+				this.shiftEnabled = true;
 			}, 5000);
 			setTimeout(() => {
 				this.enableDash = false;
-				SHIFT.enabled = false;
-			}, 100);
+				this.shiftEnabled = false;
+			}, 150);
 		}
+
+		// console.log("this.enableDash: " + this.enableDash, "\nshift.enabled: " + SHIFT.enabled, "\nshift status: " + SHIFT.isDown);
 
 		if (LEFT.isDown) {
 			this.anims.play(AnimationKeys.Player.Walk, true);
