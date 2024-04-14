@@ -28,14 +28,9 @@ export default class Preloader extends Phaser.Scene {
 		this.CreateAnims();
 
         this.scene.stop(SceneKeys.Preloader);
-<<<<<<< HEAD
-        this.scene.start(SceneKeys.Game);
-		//this.scene.start(SceneKeys.Jumper)
-		//this.scene.start(SceneKeys.Combattimento)
-=======
         // this.scene.start(SceneKeys.Game);
 		this.scene.start(SceneKeys.Jumper)
->>>>>>> ea47721179562766081a2b3ec86fe0e2c266afc3
+		// this.scene.start(SceneKeys.Combattimento)
 
     }
 

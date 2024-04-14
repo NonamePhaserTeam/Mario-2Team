@@ -1,4 +1,3 @@
-import { Callbacks, globalEval } from "jquery";
 import Phaser, { Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";

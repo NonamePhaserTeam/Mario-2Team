@@ -1,4 +1,3 @@
-import { Callbacks, globalEval } from "jquery";
 import Phaser, { Game, Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
@@ -350,7 +349,7 @@ export default class Gioco_prova extends Phaser.Scene {
                 this.ha_sparato = false;
             }, 750);
         }
-		
+
         if (this.touchingUp) {
             this.physics.world.removeCollider(this.colliderplayer);
             setTimeout(() => {
