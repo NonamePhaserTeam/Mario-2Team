@@ -4,7 +4,6 @@ enum SceneKeys {
     Preloader = "preloader",
     Jumper = 'Jumper',
     Game = "Gioco_prova",
-    Combattimento = "Combattimento"
 }
 
 export default SceneKeys;

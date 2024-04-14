@@ -9,6 +9,7 @@ namespace AnimationKeys {
 		Sword = "player-sword",
 		Jump = "player-jump",
 		Blow = "player-blow",
+		fionda = "player-fionda",
 	}
 
 	export enum Boss{

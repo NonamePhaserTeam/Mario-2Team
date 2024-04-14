@@ -13,29 +13,20 @@ export default class Preloader extends Phaser.Scene {
 
         //this.load.image(TextureKeys.Logo, 'assets/images/logo.jpg')
 
-		this.load.image(
-			TextureKeys.tilemap,
-			'assets/images/tilemap.png'
-		)
+		this.load.image(TextureKeys.tilemap, 'assets/images/tilemap.png')
 
 	    this.load.atlas(TextureKeys.player, 'assets/spritesheets/player.png', 'assets/spritesheets/player.json');
 	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
-	    this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
+        this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
+	    this.load.atlas(TextureKeys.fionda, 'assets/spritesheets/fionda.png', '../assets/spritesheets/fionda.json');
     }
 	
     create() {
 		// creazione di tutte le animazioni
 		this.CreateAnims();
-
         this.scene.stop(SceneKeys.Preloader);
-<<<<<<< HEAD
         this.scene.start(SceneKeys.Game);
 		//this.scene.start(SceneKeys.Jumper)
-		//this.scene.start(SceneKeys.Combattimento)
-=======
-        // this.scene.start(SceneKeys.Game);
-		this.scene.start(SceneKeys.Jumper)
->>>>>>> ea47721179562766081a2b3ec86fe0e2c266afc3
 
     }
 

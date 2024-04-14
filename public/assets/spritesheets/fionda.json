@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "fionda.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 191,
+				"h": 61
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "sparo fionda2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 69,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 2,
+						"w": 63,
+						"h": 59
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 63,
+						"h": 59
+					}
+				},
+				{
+					"filename": "sparo fionda3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 69,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 3,
+						"w": 63,
+						"h": 58
+					},
+					"frame": {
+						"x": 66,
+						"y": 1,
+						"w": 63,
+						"h": 58
+					}
+				},
+				{
+					"filename": "sparo fionda1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 69,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 3,
+						"w": 59,
+						"h": 58
+					},
+					"frame": {
+						"x": 131,
+						"y": 1,
+						"w": 59,
+						"h": 58
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:f1346105488a324826e86335da2fb09b:fd973056480b41176abf1bb6b93e46cd:09a9caf9372019b34305128206540021$"
+	}
+}
