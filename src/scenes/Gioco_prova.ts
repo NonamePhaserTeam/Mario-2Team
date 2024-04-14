@@ -67,11 +67,7 @@ export default class Gioco_prova extends Phaser.Scene {
 
         this.camera = this.cameras.main;
 
-<<<<<<< HEAD
-        this.camera.setBounds(
-=======
 		this.camera.setBounds(
->>>>>>> 3711e9a3597583019b3dfcc6cb54af61ad6ec856
             0,
             0,
             this.worldBounds.width,
