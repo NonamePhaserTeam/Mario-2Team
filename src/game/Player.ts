@@ -1,6 +1,7 @@
 import Phaser, { Game, Physics } from "phaser";
 import AnimationKeys from "../consts/AnimationKeys";
 import { Bullets } from "../game/components";
+import TextureKeys from "../consts/TextureKeys";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     private speed = 250;
@@ -27,11 +28,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         scene.physics.world.enable(this);
         this.setCollideWorldBounds(true)
         this.anims.play(AnimationKeys.Player.Idle);
-        this.create();
         this.scene.add.existing(this);
         this.setDrag(0, 0)
         this.setBounce(0, 0)
         this.setScale(1.5);
+        this.create();
 
     }
 
@@ -84,9 +85,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(-this.speed);
             this.setFlipX(true);
             this.isMovingLeft = true
-            if (LEFT.isUp) {
-                this.isMovingLeft = false
-            }
+            setTimeout(() => {
+                if (LEFT.isUp) {
+                    this.isMovingLeft = false
+                }
+            }, 300);
             if (this.enableDash && this.isTouchingDown) { this.setVelocityX(-this.speed * 15) }
 
         }
@@ -95,9 +98,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(this.speed);
             this.setFlipX(false);
             this.isMovingRight = true
-            if (RIGHT.isUp) {
-                this.isMovingRight = false
-            }
+            setTimeout(() => {
+                if (RIGHT.isUp) {
+                    this.isMovingRight = false
+                }
+            }, 300);
+
             if (this.enableDash && this.isTouchingDown) { this.setVelocityX(this.speed * 15) }
 
         }
@@ -119,15 +125,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-
+    getplayerX() {
+        return this.x
+    }
+    getplayerY() {
+        return this.y
+    }
     HandleAttack(
-        Key1?: Phaser.Input.Keyboard.Key,
-        Key2?: Phaser.Input.Keyboard.Key,
-        Key3?: Phaser.Input.Keyboard.Key,
-        Key4?: Phaser.Input.Keyboard.Key, //left
-        Key5?: Phaser.Input.Keyboard.Key, //right
-        Key6?: Phaser.Input.Keyboard.Key, //up
-        Key7?: Phaser.Input.Keyboard.Key, //down
+        Key1?: Phaser.Input.Keyboard.Key, // cazzotto
+        Key2?: Phaser.Input.Keyboard.Key, // blow
+        Key3?: Phaser.Input.Keyboard.Key, // spada
+        Key4?: Phaser.Input.Keyboard.Key, // left
+        Key5?: Phaser.Input.Keyboard.Key, // right
+        Key6?: Phaser.Input.Keyboard.Key, // up
+        Key7?: Phaser.Input.Keyboard.Key, // down
     ) {
 
         if (Key1.isDown) {
@@ -146,13 +157,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.isAttacking = false;
         });
 
-        if ( Key4.isDown &&
+        if (this.isMovingRight) { console.log("destra") }
+        if (this.isMovingLeft) { console.log("sinistra") }
+
+        if (Key4.isDown &&
             (!Key6.isDown && !Key7.isDown && !Key5.isDown)
             && !this.ha_sparato && !this.isMovingRight) {
             this.setFlipX(true)
 
             setTimeout(() => {
-                if (!Key4.isUp) new Bullets("LEFT", this.x, this.y)
+                if (!Key4.isUp) new Bullets(this.scene, this.x, this.y, "LEFT")
             }, 300);
             this.ha_sparato = true;
             this.anims.play(AnimationKeys.Player.fionda)
@@ -170,7 +184,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             && !this.ha_sparato && !this.isMovingLeft) {
             this.setFlipX(false)
             setTimeout(() => {
-                if (!Key5.isUp) new Bullets("RIGHT", this.x, this.y)
+                if (!Key5.isUp) new Bullets(this.scene, this.x, this.y, "RIGHT")
             }, 300);
             this.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
@@ -187,7 +201,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (Key7.isDown && this.flipX && !this.ha_sparato) {
             this.setFlipX(true)
             setTimeout(() => {
-                if (!Key7.isUp) new Bullets("LEFT_DOWN", this.x, this.y)
+                if (!Key7.isUp) new Bullets(this.scene, this.x, this.y, "LEFT_DOWN")
             }, 300);
             this.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
@@ -202,7 +216,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         else if (Key6.isDown && this.flipX && !this.ha_sparato) {
             this.setFlipX(true)
             setTimeout(() => {
-                if (!Key6.isUp) new Bullets("LEFT_UP", this.x, this.y)
+                if (!Key6.isUp) new Bullets(this.scene, this.x, this.y, "LEFT_UP")
             }, 300);
             this.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
@@ -217,7 +231,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (Key7.isDown && !this.flipX && !this.ha_sparato) {
             this.setFlipX(false)
             setTimeout(() => {
-                if (!Key7.isUp) new Bullets("RIGHT_DOWN", this.x, this.y)
+                if (!Key7.isUp) new Bullets(this.scene, this.x, this.y, "RIGHT_DOWN",)
             }, 300);
             this.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
@@ -231,7 +245,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         else if (Key6.isDown && !this.flipX && !this.ha_sparato) {
             this.setFlipX(false)
             setTimeout(() => {
-                if (!Key6.isUp) new Bullets("RIGHT_UP", this.x, this.y)
+                if (!Key6.isUp) new Bullets(this.scene, this.x, this.y, "RIGHT_UP")
             }, 300);
             this.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
@@ -242,6 +256,5 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 }
             }, 300);
         } // BASSO SINISTRA
-
     }
 }
