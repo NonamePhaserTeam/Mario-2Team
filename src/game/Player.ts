@@ -1,7 +1,5 @@
 
 import Phaser, { Physics } from "phaser";
-
-import TextureKeys from "../consts/TextureKeys";
 import AnimationKeys from "../consts/AnimationKeys";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
@@ -29,7 +27,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.create();
 		this.scene.add.existing(this);
 		
-		console.log("classe player")
 	}
 	
 	create() {
@@ -56,15 +53,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		RIGHT: Phaser.Input.Keyboard.Key,
 		// Blow: Phaser.Input.Keyboard.Key,
 	) {
-		if (this.isAttacking) return;
+		if (this.isAttacking) {
+			this.setVelocity(0);
+			return;
+		}
 
 		this.setVelocity(0);
 
 		this.isMoving = LEFT.isDown || RIGHT.isDown;
 		this.isTouchingDown = this.body.touching.down || this.body.blocked.down;
 		
-		let lastDash;
-
 		if(SHIFT.isDown && this.shiftEnabled) {
 			this.enableDash = true;
 			setTimeout(() => {
@@ -75,8 +73,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.shiftEnabled = false;
 			}, 150);
 		}
-
-		// console.log("this.enableDash: " + this.enableDash, "\nshift.enabled: " + SHIFT.enabled, "\nshift status: " + SHIFT.isDown);
 
 		if (LEFT.isDown) {
 			this.anims.play(AnimationKeys.Player.Walk, true);
@@ -99,7 +95,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			this.setVelocityY(-this.speed*3);
 		}
 		else if(!this.isTouchingDown){
-			// this.setFrame("	");
+			this.setFrame("jump6.png");
 			this.setVelocityY(this.speed);
 		}
 
@@ -115,6 +111,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		Key2: Phaser.Input.Keyboard.Key,
 		Key3: Phaser.Input.Keyboard.Key,
 	) {
+		
 		if (Key1.isDown) {
 			this.isAttacking = true;
 			this.anims.play(AnimationKeys.Player.Punch, true);

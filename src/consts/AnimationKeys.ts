@@ -14,6 +14,11 @@ namespace AnimationKeys {
 	export enum Boss{
 		idle = "bossIdle",
 	}
+
+	export enum SkeletonEnemy {
+		Idle = "skeleton-idle",
+		Walk = "skeleton-walk",
+	}
 }
 
 export default AnimationKeys;

@@ -2,11 +2,13 @@ import Phaser, { Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
-import Player from "../game/Player";
+import {Player, Enemy} from "../game/components";
+import AnimationKeys from "../consts/AnimationKeys";
 
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Player;
+	enemy: Enemy;
 	platforms: Phaser.Physics.Arcade.StaticGroup;
     camera: Phaser.Cameras.Scene2D.Camera;
     /* ---------- SCENA ---------- */
@@ -20,19 +22,18 @@ export default class Gioco_prova extends Phaser.Scene {
     SHIFT: Phaser.Input.Keyboard.Key; //dasha
 	ENTER: Phaser.Input.Keyboard.Key; //combat
     X: Phaser.Input.Keyboard.Key; // cade in picchiata
-    playerSpeed = 500;
     /* ---------- MOVEMENT ---------- */
 
     /* -------- FLAGS ---------- */
-    touching: boolean = false;
-    touchingUp: boolean = false;
-    touchingDown: boolean = false;
-    touchingLeft: boolean = false;
-    touchingRight: boolean = false;
-    loadingJump: boolean = false;
-    isMoving: boolean = false;
-    isJumping: boolean = false;
-	activeDash = false;
+    // touching: boolean = false;
+    // touchingUp: boolean = false;
+    // touchingDown: boolean = false;
+    // touchingLeft: boolean = false;
+    // touchingRight: boolean = false;
+    // loadingJump: boolean = false;
+    // isMoving: boolean = false;
+    // isJumping: boolean = false;
+	// activeDash = false;
     /* -------- FLAGS ---------- */
 
     worldBounds = {
@@ -70,9 +71,26 @@ export default class Gioco_prova extends Phaser.Scene {
             this.worldBounds.width,
             this.worldBounds.height,	
         );
-    }
+		
+	}
+
+	preload() {
+		this.load.image("tiles", "/assets/tilesets/walls_rosso.png");
+		this.load.tilemapTiledJSON("map", "/assets/tilesets/mappa_1.json");
+	}
 
     create() {
+
+		const map = this.make.tilemap({ key: "map" });
+
+		// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
+		// Phaser's cache (i.e. the name you used in preload)
+		const tileset = map.addTilesetImage("walls rosso", "tiles");
+
+		const belowLayer = map.createLayer("base", tileset, 0, 0);
+
+
+		this.enemy = new Enemy(this, 0, 0, TextureKeys.SkeletonEnemy, AnimationKeys.SkeletonEnemy);
         this.camera.setBackgroundColor(gameSettings.bgColor);
         this.platforms = this.physics.add.staticGroup();
         this.CreatePlatform(0.5, 3)
@@ -112,7 +130,10 @@ export default class Gioco_prova extends Phaser.Scene {
         
         this.camera.startFollow(this.player, true, 1, 1);
 		this.physics.add.collider(this.player, this.platforms);
-    }
+		this.physics.add.collider(this.player, this.enemy);
+		this.physics.add.collider(this.platforms, this.enemy);
+
+	}
     // todo wall climbing, wall sliding 
 
     CreatePlatform(x_axis: number, scala_immagine: number) {
