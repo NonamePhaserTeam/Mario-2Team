@@ -4,7 +4,7 @@ import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
 import { node } from "webpack";
 import AnimationKeys from "../consts/AnimationKeys";
-
+import Player from "../game/Player"
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Phaser.Physics.Arcade.Sprite;
@@ -21,7 +21,7 @@ export default class Gioco_prova extends Phaser.Scene {
     SPACE: Phaser.Input.Keyboard.Key; // salta
     SHIFT: Phaser.Input.Keyboard.Key; //dasha
     X: Phaser.Input.Keyboard.Key; // cade in picchiata
-    playerSpeed: number = 750;
+    playerSpeed: number = 300;
 
     /* ---------- MOVEMENT ---------- */
 
@@ -129,40 +129,23 @@ export default class Gioco_prova extends Phaser.Scene {
 
 
         this.player = this.physics.add
-            .sprite(this.platforms.getChildren()[0].body.position.x + 100, this.platforms.getChildren()[0].body.position.y - 60, TextureKeys.player)
+            .sprite(
+                this.platforms.getChildren()[0].body.position.x + 100,
+                this.platforms.getChildren()[0].body.position.y - 60,
+                TextureKeys.fionda
+            )
             .setCollideWorldBounds(true)
             .setDrag(0, 0)
             .setBounce(0, 0)
             .setScale(1.5);
 
-        this.player.play(AnimationKeys.Boss.idle)
 
 
         this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
         this.camera.startFollow(this.player, true, 1, 1);
         this.colpo = this.physics.add.group()
     }
-    CreateAnims() {
-        this.anims.create({
-            key: AnimationKeys.Player.fionda,
-            frames: this.anims.generateFrameNames(
-                TextureKeys.fionda,
-                { start: 1, end: 1, zeroPad: 1, prefix: 'sparo fionda', suffix: '.png' }
-            ),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: AnimationKeys.Player.fionda,
-            frames: this.anims.generateFrameNames(
-                TextureKeys.fionda,
-                { start: 2, end: 3, zeroPad: 1, prefix: 'sparo fionda', suffix: '.png' }
-            ),
-            frameRate: 8,
-            repeat: -1
-        });
 
-    }
     CreatePlatform(playerX: number, scala_immagine: number) {
         this.platforms.create(
             gameSettings.gameWidth * playerX,
@@ -176,11 +159,11 @@ export default class Gioco_prova extends Phaser.Scene {
         switch (direzione) {
             case "LEFT":
                 x = -2000
-                y = -1
+                y = -1.5
                 break;
             case "RIGHT":
                 x = 2000
-                y = 1
+                y = 1.5
 
                 break;
             case "UP":
@@ -238,7 +221,6 @@ export default class Gioco_prova extends Phaser.Scene {
         ) {
             this.colpo.getFirstAlive().destroy(true);
             console.log("distrutto")
-
         }
 
 
@@ -254,96 +236,108 @@ export default class Gioco_prova extends Phaser.Scene {
         this.touchingLeft = this.player.body.touching.left || this.player.body.blocked.left;
         this.touching = this.touchingLeft && this.touchingRight && this.touchingUp && this.touchingDown;
 
-
+        /* ---- SPARO ----- */
         if (
             this.LEFT.isDown &&
             (!this.UP.isDown && !this.DOWN.isDown && !this.RIGHT.isDown)
             && !this.ha_sparato
         ) {
+            this.player.setFlipX(true)
             setTimeout(() => {
-                this.player.play(AnimationKeys.Player.fionda) 
-                this.Bullets("LEFT", this.player.x, this.player.y)
-            }, 750);
+                if(!this.LEFT.isUp) this.Bullets("LEFT", this.player.x, this.player.y)
+            }, 300);
             this.ha_sparato = true;
+            this.player.anims.play(AnimationKeys.Player.fionda)
             setTimeout(() => {
                 this.ha_sparato = false;
-            }, 750);
+                if(this.LEFT.isUp){
+                    this.player.anims.stop()
+                }
+            }, 300);
+            
+        } // SINISTRA
 
-        }
 
         if (this.RIGHT.isDown && (!this.UP.isDown && !this.DOWN.isDown && !this.LEFT.isDown)
             && !this.ha_sparato) {
+            this.player.setFlipX(false)
             setTimeout(() => {
-                this.Bullets("RIGHT", this.player.x, this.player.y)
-            }, 750);
+                if(!this.RIGHT.isUp) this.Bullets("RIGHT", this.player.x, this.player.y)
+            }, 300);
+            this.player.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
             setTimeout(() => {
                 this.ha_sparato = false;
-            }, 750);
-        }
+                if(this.RIGHT.isUp){
+                    this.player.anims.stop()
+                }
+            }, 300);
+        } // DESTRA
+        
 
-        if (this.UP.isDown && (!this.LEFT.isDown && !this.RIGHT.isDown && !this.DOWN.isDown)
-            && !this.ha_sparato) {
-            setTimeout(() => {
-                this.Bullets("UP", this.player.x, this.player.y)
-            }, 750);
-            this.ha_sparato = true;
-            setTimeout(() => {
-                this.ha_sparato = false;
-            }, 750);
-        }
 
-        if (this.DOWN.isDown &&
-            (!this.LEFT.isDown && !this.RIGHT.isDown && !this.UP.isDown)
-            && !this.ha_sparato) {
+        if (this.DOWN.isDown && this.player.flipX && !this.ha_sparato) {
+            this.player.setFlipX(true)
             setTimeout(() => {
-                this.Bullets("DOWN", this.player.x, this.player.y)
-            }, 750);
+               if(!this.DOWN.isUp) this.Bullets("LEFT_DOWN", this.player.x, this.player.y)
+            }, 300);
+            this.player.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
             setTimeout(() => {
                 this.ha_sparato = false;
-            }, 750);
-        }
+                if(this.DOWN.isUp){
+                    this.player.anims.stop()
+                }
+            }, 300);
+        } // BASSO SINISTRA
 
-        if (this.DOWN.isDown && this.LEFT.isDown && !this.ha_sparato) {
+        else if (this.UP.isDown && this.player.flipX && !this.ha_sparato) {
+            this.player.setFlipX(true)
             setTimeout(() => {
-                this.Bullets("LEFT_DOWN", this.player.x, this.player.y)
-            }, 750);
+               if(!this.UP.isUp) this.Bullets("LEFT_UP", this.player.x, this.player.y)
+            }, 300);
+            this.player.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
             setTimeout(() => {
                 this.ha_sparato = false;
-            }, 750);
-        } else if (this.UP.isDown && this.LEFT.isDown && !this.ha_sparato) {
-            setTimeout(() => {
-                this.Bullets("LEFT_UP", this.player.x, this.player.y)
-            }, 750);
-            this.ha_sparato = true;
-            setTimeout(() => {
-                this.ha_sparato = false;
-            }, 750);
-        }
+                if(this.UP.isUp){
+                    this.player.anims.stop()
+                }
+            }, 300);
+        } //ALTO SINISTRA
 
-        if (this.DOWN.isDown && this.RIGHT.isDown && !this.ha_sparato) {
+        if (this.DOWN.isDown && !this.player.flipX && !this.ha_sparato) {
+            this.player.setFlipX(false)
             setTimeout(() => {
-                this.Bullets("RIGHT_DOWN", this.player.x, this.player.y)
-            }, 750);
+                if(!this.DOWN.isUp)this.Bullets("RIGHT_DOWN", this.player.x, this.player.y)
+            }, 300);
+            this.player.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
             setTimeout(() => {
                 this.ha_sparato = false;
-            }, 750);
-        } else if (
-            this.UP.isDown && this.RIGHT.isDown && !this.ha_sparato
-        ) {
-
+                if(this.DOWN.isUp){
+                    this.player.anims.stop()
+                }
+            }, 300);
+        } // BASSO DESTRA
+        else if (this.UP.isDown && !this.player.flipX && !this.ha_sparato) {
+            this.player.setFlipX(false)
             setTimeout(() => {
-                this.Bullets("RIGHT_UP", this.player.x, this.player.y)
-            }, 750);
+                if(!this.UP.isUp)this.Bullets("RIGHT_UP", this.player.x, this.player.y)
+            }, 300);
+            this.player.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
             setTimeout(() => {
                 this.ha_sparato = false;
-            }, 750);
-        }
+                if(this.UP.isUp){
+                    this.player.anims.stop()
+                }
+            }, 300);
+        } // BASSO SINISTRA
+        /* ---- SPARO ----- */
 
+
+        
         if (this.touchingUp) {
             this.physics.world.removeCollider(this.colliderplayer);
             setTimeout(() => {
@@ -397,8 +391,8 @@ export default class Gioco_prova extends Phaser.Scene {
 
         /* MOVIMENTI ORIZZONTALI */
         // /* JUMP STUFF */
-        this.SPACE.on("down", () => {
             this.loadingJump = true;
+        this.SPACE.on("down", () => {
         });
 
         this.SPACE.on("up", () => {
