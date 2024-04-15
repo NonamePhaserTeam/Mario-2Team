@@ -135,7 +135,6 @@ export default class Gioco_prova extends Phaser.Scene {
             .setBounce(0, 0)
             .setScale(1.5);
 
-        // this.CreateAnims();
         this.player.play(AnimationKeys.Boss.idle)
 
 
@@ -146,7 +145,19 @@ export default class Gioco_prova extends Phaser.Scene {
     CreateAnims() {
         this.anims.create({
             key: AnimationKeys.Player.fionda,
-            frames: this.anims.generateFrameNames(TextureKeys.fionda, { start: 1, end: 3, zeroPad: 1, prefix: 'sparo fionda', suffix: '.png' }),
+            frames: this.anims.generateFrameNames(
+                TextureKeys.fionda,
+                { start: 1, end: 1, zeroPad: 1, prefix: 'sparo fionda', suffix: '.png' }
+            ),
+            frameRate: 8,
+            repeat: -1
+        });
+        this.anims.create({
+            key: AnimationKeys.Player.fionda,
+            frames: this.anims.generateFrameNames(
+                TextureKeys.fionda,
+                { start: 2, end: 3, zeroPad: 1, prefix: 'sparo fionda', suffix: '.png' }
+            ),
             frameRate: 8,
             repeat: -1
         });
@@ -243,8 +254,6 @@ export default class Gioco_prova extends Phaser.Scene {
         this.touchingLeft = this.player.body.touching.left || this.player.body.blocked.left;
         this.touching = this.touchingLeft && this.touchingRight && this.touchingUp && this.touchingDown;
 
-        this.player.play(AnimationKeys.Player.fionda) 
-
 
         if (
             this.LEFT.isDown &&
@@ -252,6 +261,7 @@ export default class Gioco_prova extends Phaser.Scene {
             && !this.ha_sparato
         ) {
             setTimeout(() => {
+                this.player.play(AnimationKeys.Player.fionda) 
                 this.Bullets("LEFT", this.player.x, this.player.y)
             }, 750);
             this.ha_sparato = true;
@@ -385,7 +395,6 @@ export default class Gioco_prova extends Phaser.Scene {
         }
         /* COLPO IN PICCHIATA */
 
-        if (this.A.isUp) { console.log(this.Bullets) }
         /* MOVIMENTI ORIZZONTALI */
         // /* JUMP STUFF */
         this.SPACE.on("down", () => {
