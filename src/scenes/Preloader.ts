@@ -13,21 +13,18 @@ export default class Preloader extends Phaser.Scene {
 
         //this.load.image(TextureKeys.Logo, 'assets/images/logo.jpg')
 
-		//this.load.image(TextureKeys.tilemap, 'assets/images/tilemap.png')
+        //this.load.image(TextureKeys.tilemap, 'assets/images/tilemap.png')
 
 	    this.load.atlas(TextureKeys.player, 'assets/spritesheets/player/player.png', 'assets/spritesheets/player/player.json');
 	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
 	    this.load.atlas(TextureKeys.SkeletonEnemy, 'assets/spritesheets/skeleton/skeleton.png', 'assets/spritesheets/skeleton/skeleton.json');
-        // this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
-        // this.load.atlas(TextureKeys.boss, 'assets/spritesheets/portal/portali.png', '../assets/spritesheets/portal/portali.json');
-	    this.load.atlas(TextureKeys.fionda, 'assets/spritesheets/fionda.png', '../assets/spritesheets/fionda.json');
-		
 		this.load.image("tiles", "/assets/tilesets/walls_rosso.png")
 		this.load.tilemapTiledJSON("map", "assets/tilesets/mappa_2.json")
-
-		this.load.aseprite(TextureKeys.portale, 'assets/spritesheets/portal/portali.png', 'assets/spritesheets/portal/portali.json');
+        this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
+        this.load.atlas(TextureKeys.portale, 'assets/spritesheets/portal/portali.png', 'assets/spritesheets/portal/portali.json');
+	    this.load.atlas(TextureKeys.fionda, 'assets/spritesheets/fionda.png', '../assets/spritesheets/fionda.json');
     }
-	
+
     create() {
 		// creazione di tutte le animazioni
 		this.CreatePlayerAnims();
@@ -35,8 +32,8 @@ export default class Preloader extends Phaser.Scene {
 		this.CreateEntitiesAnims();
 
 		this.scene.stop(SceneKeys.Preloader);
-        // this.scene.start(SceneKeys.Game);
-		this.scene.start(SceneKeys.Jumper)
+        this.scene.start(SceneKeys.Game);
+		//this.scene.start(SceneKeys.Jumper)
 
     }
 
@@ -89,7 +86,7 @@ export default class Preloader extends Phaser.Scene {
 				prefix: 'fight',
 				suffix: '.png'
 			}),
-			frameRate: 15,
+			frameRate: 12,
 			repeat: 0,
 		});
 

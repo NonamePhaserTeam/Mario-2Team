@@ -85,7 +85,6 @@ export default class Gioco_prova extends Phaser.Scene {
 		const portal = this.physics.add.sprite(0, 0, TextureKeys.portale);
 		portal.play(AnimationKeys.Portale.Opening, true);
 
-		this.enemy = new Enemy(this, 0, 0, TextureKeys.SkeletonEnemy, AnimationKeys.SkeletonEnemy);
         this.camera.setBackgroundColor(gameSettings.bgColor);
         this.platforms = this.physics.add.staticGroup();
         this.CreatePlatform(0.5, 3)
@@ -122,6 +121,7 @@ export default class Gioco_prova extends Phaser.Scene {
 		)
         this.add.existing(this.player)
 
+		this.enemy = new Enemy(this, 0, 0, TextureKeys.SkeletonEnemy,AnimationKeys.SkeletonEnemy);
         
         this.camera.startFollow(this.player, true, 1, 1);
 		this.physics.add.collider(this.player, this.platforms);
