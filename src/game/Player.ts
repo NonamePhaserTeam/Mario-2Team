@@ -23,6 +23,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 		scene.physics.world.enable(this);
 		this.setCollideWorldBounds(true)
+		// this.setMass(4)
 		this.anims.play(AnimationKeys.Player.Idle);
 		this.create();
 		this.scene.add.existing(this);
@@ -118,8 +119,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		} else if (Key2.isDown) {
 			this.isJumping = false;
 			this.setVelocityY(this.speed * 5);
-			// this.isAttacking = true;
-			// this.anims.play(AnimationKeys.Player.Blow, true);
+			this.isAttacking = true;
+			this.anims.play(AnimationKeys.Player.fionda, true);
 		} else if(!this.isTouchingDown && Key3.isDown) {
 			// this.anims.play(AnimationKeys.Player.Sword, true)
 		}

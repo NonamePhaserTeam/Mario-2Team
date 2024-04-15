@@ -74,18 +74,16 @@ export default class Gioco_prova extends Phaser.Scene {
 		
 	}
 
-	preload()  {
-		this.load.image("")
-	}
-
     create() {
 
-		const map = this.make.tilemap({ key: "map	" });
+		const map = this.make.tilemap({ key: "map" });
 
-		const tileset = map.addTilesetImage("walls rosso", "tiles");
+		const tileset = map.addTilesetImage("walls_rosso", "tiles");
 
 		const belowLayer = map.createLayer("base", tileset, 0, 0);
 
+		const portal = this.physics.add.sprite(0, 0, TextureKeys.portale);
+		portal.play(AnimationKeys.Portale.Opening, true);
 
 		this.enemy = new Enemy(this, 0, 0, TextureKeys.SkeletonEnemy, AnimationKeys.SkeletonEnemy);
         this.camera.setBackgroundColor(gameSettings.bgColor);

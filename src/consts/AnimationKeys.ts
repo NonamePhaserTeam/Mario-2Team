@@ -24,7 +24,7 @@ namespace AnimationKeys {
 	export enum Portale {
 		Opening = "portale-opening",
 		Idle = "portale-idle",
-		Closiing = "portale-closiing",
+		Closiing = "portale-closing",
 	}
 }
 
