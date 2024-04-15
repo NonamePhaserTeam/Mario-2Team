@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import AnimationKeys from "../consts/AnimationKeys";
+import Player from "../game/components";
 
 interface EnemyClass {
 	Idle: string,
@@ -33,10 +34,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 	}
 
-	HandleMovement() {
-		let k = 1.2 + ( Math.random() * 0.8);
+	//HandleMovement(Player.x:number, Player.y:number) {if(Player.x > 200 from)}
 
-		
-	}
-
-} 
+}
