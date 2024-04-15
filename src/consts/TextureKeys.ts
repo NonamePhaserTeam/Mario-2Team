@@ -6,8 +6,8 @@ enum TextureKeys {
     platform = "platform",
 	player = "player",
 	SkeletonEnemy = "SkeletonEnemy",
-    boss = "boss",
-	fionda = "fionda",
+	portale = "portale",
+    boss = "boss",			
 }
 
 export default TextureKeys;

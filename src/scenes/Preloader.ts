@@ -19,7 +19,8 @@ export default class Preloader extends Phaser.Scene {
 	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
 	    this.load.atlas(TextureKeys.SkeletonEnemy, 'assets/spritesheets/skeleton/skeleton.png', 'assets/spritesheets/skeleton/skeleton.json');
         this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
-	    this.load.atlas(TextureKeys.fionda, 'assets/spritesheets/fionda.png', '../assets/spritesheets/fionda.json');
+        this.load.atlas(TextureKeys.boss, 'assets/spritesheets/portal/portali.png', '../assets/spritesheets/portal/portali.json');
+	    // this.load.atlas(TextureKeys.fionda, 'assets/spritesheets/fionda.png', '../assets/spritesheets/fionda.json');
     }
 	
     create() {
@@ -28,8 +29,8 @@ export default class Preloader extends Phaser.Scene {
 		this.CreateEnemiesAnims();
 
 		this.scene.stop(SceneKeys.Preloader);
-        this.scene.start(SceneKeys.Game);
-		//this.scene.start(SceneKeys.Jumper)
+        // this.scene.start(SceneKeys.Game);
+		this.scene.start(SceneKeys.Jumper)
 
     }
 
@@ -86,7 +87,7 @@ export default class Preloader extends Phaser.Scene {
 			repeat: 0,
 		});
 
-        this.anims.create({
+        /* this.anims.create({
             key: AnimationKeys.Player.fionda,
             frames: this.anims.generateFrameNames(
                 TextureKeys.fionda,
@@ -132,7 +133,7 @@ export default class Preloader extends Phaser.Scene {
             ),
             frameRate: 8,
             repeat: -1
-        });
+        }); */
     }
 
 	CreateEnemiesAnims() {

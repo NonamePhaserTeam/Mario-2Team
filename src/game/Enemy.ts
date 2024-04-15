@@ -34,7 +34,9 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 	}
 
 	HandleMovement() {
-		let timeIdle = Math.random();
+		let k = 1.2 + ( Math.random() * 0.8);
+
+		
 	}
 
 } 

@@ -132,7 +132,7 @@ export default class Gioco_prova extends Phaser.Scene {
             .sprite(
                 this.platforms.getChildren()[0].body.position.x + 100,
                 this.platforms.getChildren()[0].body.position.y - 60,
-                TextureKeys.fionda
+                TextureKeys.player
             )
             .setCollideWorldBounds(true)
             .setDrag(0, 0)

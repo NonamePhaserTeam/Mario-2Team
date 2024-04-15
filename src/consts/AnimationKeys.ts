@@ -20,6 +20,12 @@ namespace AnimationKeys {
 		Idle = "skeleton-idle",
 		Walk = "skeleton-walk",
 	}
+
+	export enum Portale {
+		Opening = "portale-opening",
+		Idle = "portale-idle",
+		Closiing = "portale-closiing",
+	}
 }
 
 export default AnimationKeys;

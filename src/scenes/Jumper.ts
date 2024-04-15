@@ -74,17 +74,14 @@ export default class Gioco_prova extends Phaser.Scene {
 		
 	}
 
-	preload() {
-		this.load.image("tiles", "/assets/tilesets/walls_rosso.png");
-		this.load.tilemapTiledJSON("map", "/assets/tilesets/mappa_1.json");
+	preload()  {
+		this.load.image("")
 	}
 
     create() {
 
-		const map = this.make.tilemap({ key: "map" });
+		const map = this.make.tilemap({ key: "map	" });
 
-		// Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
-		// Phaser's cache (i.e. the name you used in preload)
 		const tileset = map.addTilesetImage("walls rosso", "tiles");
 
 		const belowLayer = map.createLayer("base", tileset, 0, 0);
