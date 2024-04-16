@@ -30,21 +30,17 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setCollisionCategory(dacollidere)
         this.setCollidesWith(dacollidere)
         //this.create();
-        //if (this.y === this.yp && this.x - 100 === this.xp) {
-        //    this.setVelocityX(-this.speed);
-        //} else if (this.y === this.player.y || this.x + 100 === this.player.x) {
-        //    this.setVelocityX(this.speed);
-        //}
     }
+
     preUpdate(t: number, dt: number) {
         // update per tutte le componenti dello sprite compless
         super.preUpdate(t, dt);
     }
 
     OnGuard(playerx:number, playery:number){
-        if (this.y === playery && this.x - 100 === playerx) {
+        if (this.y === playery && this.x - 50 <= playerx) {
             this.setVelocityX(-this.speed);
-        } else if (this.y === this.player.y || this.x + 100 === this.player.x) {
+        } else if (this.y === playery || this.x + 50 >= playerx) {
             this.setVelocityX(this.speed);
         }
     }

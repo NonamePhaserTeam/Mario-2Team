@@ -129,12 +129,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    getplayerX() {
-        return this.body.x
-    }
-    getplayerY() {
-        return this.body.y
-    }
     HandleAttack(
         Key1?: Phaser.Input.Keyboard.Key, // cazzotto
         Key2?: Phaser.Input.Keyboard.Key, // blow
@@ -242,5 +236,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
             }
         });
+    }
+    getcolpo(): Bullets {
+        return this.colpo
+
+    }
+    getplayerX():number {
+        return this.body.x
+    }
+    getplayerY():number {
+        return this.body.y
     }
 }
