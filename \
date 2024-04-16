@@ -237,14 +237,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             }
         });
     }
-    getcolpo(): Bullets {
-        return this.colpo
-
-    }
-    getplayerX():number {
+    getplayerX() {
         return this.body.x
     }
-    getplayerY():number {
+    getplayerY() {
         return this.body.y
     }
 }

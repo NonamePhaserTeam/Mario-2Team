@@ -11,10 +11,9 @@ import Bullets from "../game/Bullets"
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Player;
-	enemy: Enemy;
+    enemy: Enemy;
     colliderplayer: any
     platforms: Phaser.Physics.Arcade.StaticGroup;
-    bullets: Phaser.Physics.Arcade.Sprite;
     camera: Phaser.Cameras.Scene2D.Camera;
     /* ---------- SCENA ---------- */
 
@@ -49,7 +48,7 @@ export default class Gioco_prova extends Phaser.Scene {
     ha_sparato: boolean = false;
     /* -------- FIONDA --------- */
     worldBounds = { width: gameSettings.gameWidth, height: gameSettings.gameHeight * 3, }
-    caterogia_collisioni:number 
+    caterogia_collisioni: number
     y_piattaforme = gameSettings.gameHeight * 5 - 40
     direzione: number = 0;
 
@@ -133,29 +132,30 @@ export default class Gioco_prova extends Phaser.Scene {
             }
         }
 
-		this.player = new Player(
-			this,
-			this.platforms.getChildren()[0].body.position.x + 100, 
-			this.platforms.getChildren()[0].body.position.y - 60,
-			TextureKeys.player,
+        this.player = new Player(
+            this,
+            this.platforms.getChildren()[0].body.position.x + 100,
+            this.platforms.getChildren()[0].body.position.y - 60,
+            TextureKeys.player,
             this.caterogia_collisioni
-		)
-        this.add.existing(this.player)
-		this.enemy = new Enemy(
-		    this,
-		    this.platforms.getChildren()[0].body.position.x + 100,
-		    this.platforms.getChildren()[0].body.position.y - 60,
-		    TextureKeys.SkeletonEnemy,
-		    AnimationKeys.SkeletonEnemy,
+        )
+        this.add.existing(this.player);
+
+        this.enemy = new Enemy(
+            this,
+            this.platforms.getChildren()[0].body.position.x + 100,
+            this.platforms.getChildren()[0].body.position.y - 60,
+            TextureKeys.SkeletonEnemy,
+            AnimationKeys.SkeletonEnemy,
             this.caterogia_collisioni
-		)
-        this.add.existing(this.enemy)
-        
-        this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
-        this.colliderplayer = this.physics.world.addCollider(this.player, this.enemy)
-        this.colliderplayer = this.physics.world.addCollider(this.enemy, this.enemy)
+        )
+        this.add.existing(this.enemy);
+
+        this.physics.world.addCollider(this.platforms, this.player)
+        this.physics.world.addCollider(this.player, this.enemy)
+        this.physics.world.addCollider(this.platforms, this.enemy)
         this.camera.startFollow(this.player, true, 1, 1);
-        
+
     }
 
     CreatePlatform(playerX: number, scala_immagine: number) {
@@ -171,9 +171,8 @@ export default class Gioco_prova extends Phaser.Scene {
 
     update(time: number, delta: number): void {
         this.player.HandleMovement(this.A, this.D, this.SHIFT)
-        this.player.HandleAttack(this.E, this.X, this.S,this.LEFT, this.RIGHT, this.UP, this.DOWN);
-        this.enemy.OnGuard();
-
+        this.player.HandleAttack(this.E, this.X, this.S, this.LEFT, this.RIGHT, this.UP, this.DOWN);
+        this.enemy.OnGuard(this.player.getplayerY(), this.player.getplayerX());
 
 
 
@@ -184,7 +183,7 @@ export default class Gioco_prova extends Phaser.Scene {
         //this.touchingRight = this.player.body.touching.right || this.player.body.blocked.right;
         //this.touchingLeft = this.player.body.touching.left || this.player.body.blocked.left;
         //this.touching = this.touchingLeft && this.touchingRight && this.touchingUp && this.touchingDown;
-        
+
         //if (this.touchingUp) {
         //    this.physics.world.removeCollider(this.colliderplayer);
         //    setTimeout(() => {
