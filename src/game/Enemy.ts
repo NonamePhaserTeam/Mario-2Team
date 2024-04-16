@@ -41,6 +41,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         super.preUpdate(t, dt);
     }
 
-    //HandleMovement(Player.x:number, Player.y:number) {if(Player.x > 200 from)}
+    OnGuard(playerx:number, playery:number){
+        if (this.y === playery && this.x - 100 === playerx) {
+            this.setVelocityX(-this.speed);
+        } else if (this.y === this.player.y || this.x + 100 === this.player.x) {
+            this.setVelocityX(this.speed);
+        }
+    }
 
 }

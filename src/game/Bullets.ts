@@ -4,7 +4,6 @@ import { gameSettings } from "../consts/GameSettings";
 import { World } from "matter";
 
 export default class Bullets extends Phaser.Physics.Arcade.Sprite {
-
     private direzione_shot: string
 
     constructor(
@@ -27,6 +26,7 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         );
         this.setCollisionCategory(dacollidere)
         this.setCollidesWith(dacollidere)
+
         setTimeout(() => {
             this.destroy(true);
             console.log("autodistruzione")

@@ -42,7 +42,6 @@ export default class Gioco_prova extends Phaser.Scene {
     wastouching: boolean = false;
     /* -------- FLAGS ---------- */
     /* -------- FIONDA --------- */
-    colpo: Phaser.Physics.Arcade.Group
     LEFT: Phaser.Input.Keyboard.Key; //mira sinistra
     RIGHT: Phaser.Input.Keyboard.Key; // mira destra
     UP: Phaser.Input.Keyboard.Key; // miira sopra
@@ -50,7 +49,7 @@ export default class Gioco_prova extends Phaser.Scene {
     ha_sparato: boolean = false;
     /* -------- FIONDA --------- */
     worldBounds = { width: gameSettings.gameWidth, height: gameSettings.gameHeight * 3, }
-    caterogia_collisioni = this.physics.nextCategory()
+    caterogia_collisioni:number 
     y_piattaforme = gameSettings.gameHeight * 5 - 40
     direzione: number = 0;
 
@@ -89,6 +88,7 @@ export default class Gioco_prova extends Phaser.Scene {
         );
     }
     create() {
+        this.caterogia_collisioni = this.physics.nextCategory()
         this.camera.setBounds(
             0,
             0,
@@ -155,7 +155,7 @@ export default class Gioco_prova extends Phaser.Scene {
         this.colliderplayer = this.physics.world.addCollider(this.player, this.enemy)
         this.colliderplayer = this.physics.world.addCollider(this.enemy, this.enemy)
         this.camera.startFollow(this.player, true, 1, 1);
-        this.colpo = this.physics.add.group()
+        
     }
 
     CreatePlatform(playerX: number, scala_immagine: number) {
@@ -164,12 +164,15 @@ export default class Gioco_prova extends Phaser.Scene {
             this.y_piattaforme,
             'platform'
         ).setScale(scala_immagine, 1).body.updateFromGameObject();
+        this.platforms.setCollisionCategory(this.caterogia_collisioni)
+        this.platforms.setCollidesWith(this.caterogia_collisioni)
     }
     startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
 
     update(time: number, delta: number): void {
         this.player.HandleMovement(this.A, this.D, this.SHIFT)
         this.player.HandleAttack(this.E, this.X, this.S,this.LEFT, this.RIGHT, this.UP, this.DOWN);
+        this.enemy.OnGuard();
 
 
 
