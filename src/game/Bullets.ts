@@ -1,6 +1,7 @@
 import AnimationKeys from "../consts/AnimationKeys";
 import TextureKeys from "../consts/TextureKeys";
 import { gameSettings } from "../consts/GameSettings";
+import { World } from "matter";
 
 export default class Bullets extends Phaser.Physics.Arcade.Sprite {
 
@@ -8,14 +9,14 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
     y: number
     x: number
     private direzione_shot: string
-    private texture_proittile: string
-    
+
     constructor(
         scene: Phaser.Scene,
         playerx: number,
         playery: number,
-        // texture: string,
         direzione: string,
+        dacollidere?: number,
+        // texture: string,
     ) {
         super(scene, playerx, playery, TextureKeys.player);
 
@@ -25,61 +26,63 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         this.x = playerx
         this.y = playery
         this.direzione_shot = direzione
-		this.setVelocity(
+        this.setVelocity(
             this.Direzione(this.direzione_shot)[0],
             this.Direzione(this.direzione_shot)[1]
         );
+        this.setCollisionCategory(dacollidere)
+        this.setCollidesWith(dacollidere)
+        setTimeout(() => {
+            this.destroy(true);
+            console.log("autodistruzione")
+        }, 1200);
+        this.create();
     }
     Direzione(dir: string): Array<number> {
         let xp: number, yp: number;
         switch (dir) {
             case "LEFT":
                 xp = -2000
-                yp = -1.5
+                yp = -0.5
                 break;
             case "RIGHT":
-                xp= 2000
-                yp= 1.5
+                xp = 2000
+                yp = 0.5
                 break;
             case "UP":
-                yp= -1500
-                xp= 0.5
+                yp = -1500
+                xp = 0.5
                 break;
             case "DOWN":
-                yp= 1500
-                xp= 0.5
+                yp = 1500
+                xp = 0.5
                 break;
             case "LEFT_UP":
-                xp= -1000
-                yp= -1000
+                xp = -1000
+                yp = -1000
                 break;
             case "LEFT_DOWN":
-                xp= -1000
-                yp= 1000
+                xp = -1000
+                yp = 1000
                 break;
             case "RIGHT_UP":
-                xp= 1000
-                yp= -1000
+                xp = 1000
+                yp = -1000
                 break;
             case "RIGHT_DOWN":
-                xp= 1000
-                yp= 1000
+                xp = 1000
+                yp = 1000
                 break;
         }
         return [xp, yp];
     }
 
     create() {
-       
-        /* let c = this.colpo.getFirstAlive()
-        if (c.y >= gameSettings.gameHeight * 5 || c.x <= 0 || c.y <= 0 || c.x >= gameSettings.gameWidth) {
-            this.colpo.getFirstAlive().destroy(true);
-        } */
     }
 
     preUpdate(t: number, dt: number) {
         // update per tutte le componenti dello sprite compless
         super.preUpdate(t, dt);
     }
-    
+
 }
