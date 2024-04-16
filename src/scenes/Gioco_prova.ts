@@ -6,6 +6,7 @@ import { node } from "webpack";
 import AnimationKeys from "../consts/AnimationKeys";
 import Player from "../game/Player"
 import Enemy from "../game/Enemy"
+import Bullets from "../game/Bullets"
 
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
@@ -13,6 +14,7 @@ export default class Gioco_prova extends Phaser.Scene {
 	enemy: Enemy;
     colliderplayer: any
     platforms: Phaser.Physics.Arcade.StaticGroup;
+    bullets: Phaser.Physics.Arcade.Sprite;
     camera: Phaser.Cameras.Scene2D.Camera;
     /* ---------- SCENA ---------- */
 
@@ -26,7 +28,6 @@ export default class Gioco_prova extends Phaser.Scene {
     X: Phaser.Input.Keyboard.Key; // cade in picchiata
     E: Phaser.Input.Keyboard.Key; // colpisce melee
     playerSpeed: number = 300;
-
     /* ---------- MOVEMENT ---------- */
 
     /* -------- FLAGS ---------- */
@@ -49,7 +50,7 @@ export default class Gioco_prova extends Phaser.Scene {
     ha_sparato: boolean = false;
     /* -------- FIONDA --------- */
     worldBounds = { width: gameSettings.gameWidth, height: gameSettings.gameHeight * 3, }
-
+    caterogia_collisioni = this.physics.nextCategory()
     y_piattaforme = gameSettings.gameHeight * 5 - 40
     direzione: number = 0;
 
@@ -132,20 +133,27 @@ export default class Gioco_prova extends Phaser.Scene {
             }
         }
 
-
-
 		this.player = new Player(
 			this,
 			this.platforms.getChildren()[0].body.position.x + 100, 
 			this.platforms.getChildren()[0].body.position.y - 60,
 			TextureKeys.player,
+            this.caterogia_collisioni
 		)
         this.add.existing(this.player)
-		//this.enemy = new Enemy(this, this.platforms.getChildren()[0].body.position.x + 100, this.platforms.getChildren()[0].body.position.y - 60, TextureKeys.SkeletonEnemy, AnimationKeys.SkeletonEnemy, this.player)
-        //this.add.existing(this.enemy)
-
-
+		this.enemy = new Enemy(
+		    this,
+		    this.platforms.getChildren()[0].body.position.x + 100,
+		    this.platforms.getChildren()[0].body.position.y - 60,
+		    TextureKeys.SkeletonEnemy,
+		    AnimationKeys.SkeletonEnemy,
+            this.caterogia_collisioni
+		)
+        this.add.existing(this.enemy)
+        
         this.colliderplayer = this.physics.world.addCollider(this.player, this.platforms)
+        this.colliderplayer = this.physics.world.addCollider(this.player, this.enemy)
+        this.colliderplayer = this.physics.world.addCollider(this.enemy, this.enemy)
         this.camera.startFollow(this.player, true, 1, 1);
         this.colpo = this.physics.add.group()
     }

@@ -2,6 +2,7 @@ import Phaser, { Game, Physics } from "phaser";
 import AnimationKeys from "../consts/AnimationKeys";
 import { Bullets } from "../game/components";
 import TextureKeys from "../consts/TextureKeys";
+import { gameSettings } from "../consts/GameSettings";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     private speed = 250;
@@ -14,14 +15,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     private enableDash = false;
     private shiftEnabled = true;
     private health = 100;
-    private ha_sparato: boolean = false;
-	private enableShooting = true;
+    private enableShooting = true;
+    private dirshot: string;
+    private colpo: Bullets
+    private dacol: number
 
     constructor(
         scene: Phaser.Scene,
         x: number,
         y: number,
         texture: string,
+        dacollidere?: number,
         frame?: string | number,
     ) {
         super(scene, x, y, texture, frame);
@@ -31,6 +35,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.anims.play(AnimationKeys.Player.Idle);
         this.scene.add.existing(this);
         this.setScale(1.5);
+        this.dacol= dacollidere
+        this.setCollisionCategory(dacollidere)
+        this.setCollidesWith(dacollidere)
         this.create();
     }
 
@@ -123,10 +130,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     getplayerX() {
-        return this.x
+        return this.body.x
     }
     getplayerY() {
-        return this.y
+        return this.body.y
     }
     HandleAttack(
         Key1?: Phaser.Input.Keyboard.Key, // cazzotto
@@ -150,31 +157,90 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             // this.anims.play(AnimationKeys.Player.Sword, true)
         }
 
-
         if ((Key4.isDown && this.enableShooting) &&
             (!Key6.isDown && !Key7.isDown && !Key5.isDown)
-            && !this.ha_sparato && !this.isMovingRight) {
+            && !this.isMovingRight) {
+            this.dirshot = "LEFT"
             this.setFlipX(true)
-			this.isAttacking = true;
-			this.anims.play(AnimationKeys.Player.fionda, true)
-			
-			this.enableShooting = false;
-			setTimeout(() => {
-				this.enableShooting = true;
-			}, 300);
+            this.isAttacking = true;
+            this.anims.play(AnimationKeys.Player.fionda, true)
+            this.enableShooting = false;
+            setTimeout(() => {
+                this.enableShooting = true;
+            }, 300);
         } // SINISTRA
 
-		this.on("animationcomplete", () => {
-            this.isAttacking = false;
-			if(this.anims.currentAnim.key === "player-fionda") {
-				new Bullets(
-					this.scene,
-					this.body.x,
-					this.body.y,
-					"LEFT"
-				);
-			}
-        });
 
-       }
+        if ((Key5.isDown && this.enableShooting) &&
+            (!Key6.isDown && !Key7.isDown && !Key4.isDown)
+            && !this.isMovingLeft) {
+            this.dirshot = "RIGHT"
+            this.setFlipX(false)
+            this.isAttacking = true;
+            this.anims.play(AnimationKeys.Player.fionda, true)
+            this.enableShooting = false;
+            setTimeout(() => {
+                this.enableShooting = true;
+            }, 300);
+        } // DESTRA
+
+
+
+        if (Key7.isDown && this.flipX && this.enableShooting) {
+            this.dirshot = "LEFT_DOWN"
+            this.setFlipX(true)
+            this.isAttacking = true;
+            this.anims.play(AnimationKeys.Player.fionda)
+            this.enableShooting = false;
+            setTimeout(() => {
+                this.enableShooting = true;
+            }, 300);
+        } // BASSO SINISTRA
+
+        else if (Key6.isDown && this.flipX && this.enableShooting) {
+            this.dirshot = "LEFT_UP"
+            this.setFlipX(true)
+            this.isAttacking = true;
+            this.anims.play(AnimationKeys.Player.fionda)
+            this.enableShooting = false;
+            setTimeout(() => {
+                this.enableShooting = true;
+            }, 300);
+        } //ALTO SINISTRA
+
+        if (Key7.isDown && !this.flipX && this.enableShooting) {
+            this.dirshot = "RIGHT_DOWN"
+            this.setFlipX(false)
+            this.isAttacking = true;
+            this.anims.play(AnimationKeys.Player.fionda)
+            this.enableShooting = false;
+            setTimeout(() => {
+                this.enableShooting = true;
+            }, 300);
+        } // BASSO DESTRA
+        else if (Key6.isDown && !this.flipX && this.enableShooting) {
+            this.dirshot = "RIGHT_UP"
+            this.setFlipX(false)
+            this.isAttacking = true;
+            this.anims.play(AnimationKeys.Player.fionda)
+            this.enableShooting = false;
+            setTimeout(() => {
+                this.enableShooting = true;
+            }, 300);
+        } // ALTO DESTRA
+
+        this.on("animationcomplete", () => {
+            this.isAttacking = false;
+            if (this.anims.currentAnim.key === "player-fionda") {
+                this.colpo = new Bullets(
+                    this.scene,
+                    this.body.x,
+                    this.body.y,
+                    this.dirshot,
+                    this.dacol
+                );
+
+            }
+        });
+    }
 }
