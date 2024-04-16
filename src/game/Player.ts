@@ -59,8 +59,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     HandleMovement(
         LEFT: Phaser.Input.Keyboard.Key,
-        RIGHT: Phaser.Input.Keyboard.Key,
         SHIFT: Phaser.Input.Keyboard.Key,
+        RIGHT: Phaser.Input.Keyboard.Key,
         // Blow: Phaser.Input.Keyboard.Key,
     ) {
         if (this.isAttacking) {
@@ -117,7 +117,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.anims.play(AnimationKeys.Player.Jump, true);
             this.setVelocityY(-this.speed * 3);
         }
-        else if (!this.isTouchingDown) {
+    	if (!this.isTouchingDown) {
             this.setFrame("jump6.png");
             this.setVelocityY(this.speed);
         }

@@ -172,7 +172,7 @@ export default class Gioco_prova extends Phaser.Scene {
     update(time: number, delta: number): void {
         this.player.HandleMovement(this.A, this.D, this.SHIFT)
         this.player.HandleAttack(this.E, this.X, this.S,this.LEFT, this.RIGHT, this.UP, this.DOWN);
-        this.enemy.OnGuard();
+        // this.enemy.OnGuard();
 
 
 

@@ -5,7 +5,7 @@ import TextureKeys from "../consts/TextureKeys";
 import {Player, Enemy} from "../game/components";
 import AnimationKeys from "../consts/AnimationKeys";
 
-export default class Gioco_prova extends Phaser.Scene {
+export default class Jumper extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Player;
 	enemy: Enemy;
@@ -20,21 +20,16 @@ export default class Gioco_prova extends Phaser.Scene {
     D: Phaser.Input.Keyboard.Key; // destra
     SPACE: Phaser.Input.Keyboard.Key; // salta
     SHIFT: Phaser.Input.Keyboard.Key; //dasha
-	ENTER: Phaser.Input.Keyboard.Key; //combat
-    X: Phaser.Input.Keyboard.Key; // cade in picchiata
     /* ---------- MOVEMENT ---------- */
 
-    /* -------- FLAGS ---------- */
-    // touching: boolean = false;
-    // touchingUp: boolean = false;
-    // touchingDown: boolean = false;
-    // touchingLeft: boolean = false;
-    // touchingRight: boolean = false;
-    // loadingJump: boolean = false;
-    // isMoving: boolean = false;
-    // isJumping: boolean = false;
-	// activeDash = false;
-    /* -------- FLAGS ---------- */
+	/* ---------- ATTACK ---------- */
+	ENTER: Phaser.Input.Keyboard.Key; //PUNCH
+    X: Phaser.Input.Keyboard.Key; //PICCHIATA
+	LEFT: Phaser.Input.Keyboard.Key; //FIONDA sinistra
+    RIGHT: Phaser.Input.Keyboard.Key; //FIONDA destra
+    UP: Phaser.Input.Keyboard.Key; //FIONDA sopra
+    DOWN: Phaser.Input.Keyboard.Key;
+	/* ---------- ATTACK ---------- */
 
     worldBounds = {
         width: gameSettings.gameWidth,
@@ -54,6 +49,11 @@ export default class Gioco_prova extends Phaser.Scene {
         this.SHIFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT, true, false);
         this.X = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X, true, false);
 		this.ENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER, true, false);
+
+		this.LEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT, true, false);
+        this.UP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP, true, false);
+        this.RIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT, true, false);
+        this.DOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN, true, false);
 
         this.camera = this.cameras.main;
 
@@ -81,6 +81,8 @@ export default class Gioco_prova extends Phaser.Scene {
 		const tileset = map.addTilesetImage("walls_rosso", "tiles");
 
 		const belowLayer = map.createLayer("base", tileset, 0, 0);
+		console.log(belowLayer.width) 
+		// const aboveLayer = map.createLayer("muro", tileset, 0, 0);
 
 		const portal = this.physics.add.sprite(0, 0, TextureKeys.portale);
 		portal.play(AnimationKeys.Portale.Opening, true);
@@ -137,107 +139,11 @@ export default class Gioco_prova extends Phaser.Scene {
             this.y_piattaforme,
             'platform'
         ).setScale(scala_immagine, 1).body.updateFromGameObject();
-    }
-
-    startWalk(walk: boolean) {
-		walk ? this.player.play("walk") : this.player.play("idle")
-    }
-
-	resetFlags(touching: boolean, blocked: boolean): boolean {
-		if(touching || blocked) return true;
-		else setTimeout(() => {
-			return false;
-		}, 1000); 
 	}
-
-	/* checkTimeSinceKeyPress(lastKeyPressTime: number, timeDelay: number): boolean { 
-		const currentTime = this.time.now;
-		const timeSinceKeyPress = currentTime - lastKeyPressTime; 
-		// console.log(lastKeyPressTime, c	urrentTime)
-		// Logga il tempo trascorso dal click del tasto
-		console.log('Tempo trascorso dal click del tasto:', timeSinceKeyPress);
-		if(timeSinceKeyPress >= timeDelay) {
-			this.lastKeyPressTime = 0;
-			return true 
-		}
-		else
-			return false; 
-	} */
 
     update(time: number, delta: number): void {
 		this.player.HandleMovement(this.A, this.SHIFT, this.D)
-        this.player.HandleAttack(this.ENTER, this.X, this.S);
-		// console.log(this.player);
-        // this.player.setVelocity(0);
-
-        // this.isMoving = this.A.isDown || this.D.isDown;
-        // this.touchingDown = this.resetFlags(this.player.body.touching.down, this.player.body.blocked.down);
-        // this.touchingUp = this.resetFlags(this.player.body.touching.up, this.player.body.blocked.up);
-        // this.touchingRight = this.resetFlags(this.player.body.touching.right,  this.player.body.blocked.right);
-        // this.touchingLeft = this.resetFlags(this.player.body.touching.left, this.player.body.blocked.left);
-        // // this.touching = this.touchingUp && this.touchingDown && this.touchingLeft && this.touchingRight
-		
-		// if(this.SHIFT.isDown && this.SHIFT.enabled) {
-		// 	// Memorizza il tempo del click del tasto
-		// 	this.activeDash = true;
-		// 	this.SHIFT.enabled = false;
-		// 	setTimeout(() => {
-		// 		this.SHIFT.enabled = true;
-		// 	}, 5000);
-		// 	setTimeout(() => {
-		// 		this.activeDash = false;
-		// 	}, 200);
-		// }
-
-
-        // /* MOVIMENTI ORIZZONTALI */
-        // if (this.A.isDown && !this.touchingLeft) {
-		// 	this.player.setFlipX(true);
-        //     this.player.setVelocityX(-this.playerSpeed);
-		// 	if (this.activeDash && this.touchingDown) {this.player.setVelocityX(-this.playerSpeed*25)}
-        // }
-		// else if (this.D.isDown && !this.touchingRight) {
-		// 	this.player.setFlipX(false);
-		// 	this.player.setVelocityX(this.playerSpeed);
-		// 	if (this.activeDash && this.touchingDown) {this.player.setVelocityX(this.playerSpeed*5)}
-		// }
-        // /* MOVIMENTI ORIZZONTALI */
-
-		// /* COLPO IN PICCHIATA */
-		// if(!this.touchingDown) {
-		// 	// this.player.setFrame("jump6.png")
-		// 	if(this.X.isDown) {
-		// 		this.isJumping = false;
-		// 		this.player.setVelocityY(this.playerSpeed * 10);
-		// 	}
-		// }
-        // /* COLPO IN PICCHIATA */
-        
-        // /* JUMP STUFF */
-        // if (this.isJumping && !this.X.isDown) {
-        //     this.player.setVelocityY(-this.playerSpeed*2);
-        //     if (this.player.anims.currentAnim.key !== "doJump") {this.player.play("doJump");}
-        // }
-        // else if (this.touchingDown || this.touchingLeft || this.touchingRight) {
-		// 	this.SPACE.enabled = true;
-        //     if (this.loadingJump) {
-		// 		if (this.player.anims.currentAnim.key !== "loadJump" && this.player.anims.isPlaying) {this.player.play("loadJump");}
-        //     } else if (this.isMoving) {
-		// 		if (this.player.anims.currentAnim.key !== "walk" && this.touchingDown) this.startWalk(true);
-        //     }
-        //     else if (this.player.anims.currentAnim.key !== "idle" && this.touchingDown) {this.startWalk(false);}
-			
-        // } else{
-		// 	this.SPACE.enabled = false;
-		// 	if (!this.player.anims.isPlaying) {this.player.setFrame("jump6.png");}
-		// } 
-		// /* JUMP STUFF */
-
-		// /* COMBAT STUFF */
-		// if(this.ENTER.isDown) {
-		// 	if(this.player.anims.currentAnim.key !== "fight") this.player.play("fight");
-		// }
-		// /*  */
+        this.player.HandleAttack(this.ENTER, this.X, this.S,this.LEFT, this.RIGHT, this.UP, this.DOWN);
 
         // /* CLIMBING STUFF */
         // if (this.touchingRight || this.touchingLeft) {
