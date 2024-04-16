@@ -167,7 +167,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.on("animationcomplete", () => {
             this.isAttacking = false;
 			if(this.anims.currentAnim.key === "player-fionda") {
-				let colpo = new Bullets(
+				new Bullets(
 					this.scene,
 					this.body.x,
 					this.body.y,
@@ -176,83 +176,5 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			}
         });
 
-        /* if (Key5.isDown && (!Key6.isDown && !Key7.isDown && !Key4.isDown)
-            && !this.ha_sparato && !this.isMovingLeft) {
-            this.setFlipX(false)
-            setTimeout(() => {
-                if (!Key5.isUp) new Bullets(this.scene, this.x, this.y, "RIGHT")
-            }, 300);
-            this.anims.play(AnimationKeys.Player.fionda)
-            this.ha_sparato = true;
-            setTimeout(() => {
-                this.ha_sparato = false;
-                if (Key5.isUp) {
-                    this.anims.stop()
-                }
-            }, 300);
-        } // DESTRA
-
-
-
-        if (Key7.isDown && this.flipX && !this.ha_sparato) {
-            this.setFlipX(true)
-            setTimeout(() => {
-                if (!Key7.isUp) {
-					let bullet = new Bullets(this.scene, this.x, this.y, "LEFT_DOWN")
-
-            }, 300);
-            this.anims.play(AnimationKeys.Player.fionda)
-            this.ha_sparato = true;
-            setTimeout(() => {
-                this.ha_sparato = false;
-                if (Key7.isUp) {
-                    this.anims.stop()
-                }
-            }, 300);
-        } // BASSO SINISTRA
-
-        else if (Key6.isDown && this.flipX && !this.ha_sparato) {
-            this.setFlipX(true)
-            setTimeout(() => {
-                if (!Key6.isUp) new Bullets(this.scene, this.x, this.y, "LEFT_UP")
-            }, 300);
-            this.anims.play(AnimationKeys.Player.fionda)
-            this.ha_sparato = true;
-            setTimeout(() => {
-                this.ha_sparato = false;
-                if (Key6.isUp) {
-                    this.anims.stop()
-                }
-            }, 300);
-        } //ALTO SINISTRA
-
-        if (Key7.isDown && !this.flipX && !this.ha_sparato) {
-            this.setFlipX(false)
-            setTimeout(() => {
-                if (!Key7.isUp) new Bullets(this.scene, this.x, this.y, "RIGHT_DOWN",)
-            }, 300);
-            this.anims.play(AnimationKeys.Player.fionda)
-            this.ha_sparato = true;
-            setTimeout(() => {
-                this.ha_sparato = false;
-                if (Key7.isUp) {
-                    this.anims.stop()
-                }
-            }, 300);
-        } // BASSO DESTRA
-        else if (Key6.isDown && !this.flipX && !this.ha_sparato) {
-            this.setFlipX(false)
-            setTimeout(() => {
-                if (!Key6.isUp) new Bullets(this.scene, this.x, this.y, "RIGHT_UP")
-            }, 300);
-            this.anims.play(AnimationKeys.Player.fionda)
-            this.ha_sparato = true;
-            setTimeout(() => {
-                this.ha_sparato = false;
-                if (Key6.isUp) {
-                    this.anims.stop()
-                }
-            }, 300);
-        } */ // BASSO SINISTRA
-    }
+       }
 }

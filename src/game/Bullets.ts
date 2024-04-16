@@ -4,9 +4,6 @@ import { gameSettings } from "../consts/GameSettings";
 
 export default class Bullets extends Phaser.Physics.Arcade.Sprite {
 
-    private colpo: Phaser.Physics.Arcade.Group
-    y: number
-    x: number
     private direzione_shot: string
     private texture_proittile: string
     
@@ -17,13 +14,11 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         // texture: string,
         direzione: string,
     ) {
-        super(scene, playerx, playery, TextureKeys.player);
+        super(scene, playerx, playery, "mariano");
 
         scene.physics.world.enable(this);
         this.setCollideWorldBounds(true)
         this.scene.add.existing(this);
-        this.x = playerx
-        this.y = playery
         this.direzione_shot = direzione
 		this.setVelocity(
             this.Direzione(this.direzione_shot)[0],
@@ -67,14 +62,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
                 break;
         }
         return [xp, yp];
-    }
-
-    create() {
-       
-        /* let c = this.colpo.getFirstAlive()
-        if (c.y >= gameSettings.gameHeight * 5 || c.x <= 0 || c.y <= 0 || c.x >= gameSettings.gameWidth) {
-            this.colpo.getFirstAlive().destroy(true);
-        } */
     }
 
     preUpdate(t: number, dt: number) {
