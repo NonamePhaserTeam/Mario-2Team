@@ -14,10 +14,10 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         scene: Phaser.Scene,
         playerx: number,
         playery: number,
+        // texture: string,
         direzione: string,
-        //texture?: string
     ) {
-        super(scene, playerx, playery, direzione);
+        super(scene, playerx, playery, TextureKeys.player);
 
         scene.physics.world.enable(this);
         this.setCollideWorldBounds(true)
@@ -25,8 +25,10 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         this.x = playerx
         this.y = playery
         this.direzione_shot = direzione
-        //this.texture_proittile = texture
-        this.create();
+		this.setVelocity(
+            this.Direzione(this.direzione_shot)[0],
+            this.Direzione(this.direzione_shot)[1]
+        );
     }
     Direzione(dir: string): Array<number> {
         let xp: number, yp: number;
@@ -68,24 +70,11 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
     }
 
     create() {
-        this.colpo = this.scene.physics.add.group()
-        let colpo = this.colpo.create(
-            this.x,
-            this.y,
-            TextureKeys.fionda
-        ).setScale(0.0);
-        colpo.setGravity(0, -500);
-
-
-        colpo.enableBody(true, this.x, this.y, true, true);
-        this.colpo.setVelocity(
-            this.Direzione(this.direzione_shot)[0],
-            this.Direzione(this.direzione_shot)[1]
-        );
-        let c = this.colpo.getFirstAlive()
+       
+        /* let c = this.colpo.getFirstAlive()
         if (c.y >= gameSettings.gameHeight * 5 || c.x <= 0 || c.y <= 0 || c.x >= gameSettings.gameWidth) {
             this.colpo.getFirstAlive().destroy(true);
-        }
+        } */
     }
 
     preUpdate(t: number, dt: number) {

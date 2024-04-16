@@ -15,6 +15,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     private shiftEnabled = true;
     private health = 100;
     private ha_sparato: boolean = false;
+	private enableShooting = true;
 
     constructor(
         scene: Phaser.Scene,
@@ -29,15 +30,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true)
         this.anims.play(AnimationKeys.Player.Idle);
         this.scene.add.existing(this);
-        this.setDrag(0, 0)
-        this.setBounce(0, 0)
         this.setScale(1.5);
         this.create();
-
     }
 
     create() {
-
         this.scene.input.keyboard.on('keydown-SPACE', () => {
             if (this.isTouchingDown) {
                 this.isJumping = true;
@@ -146,41 +143,40 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.anims.play(AnimationKeys.Player.Punch, true);
         } else if (Key2.isDown) {
             this.isJumping = false;
-            this.setVelocityY(this.speed * 5);
+            this.setVelocityY(this.speed * 20);
             // this.isAttacking = true;
             // this.anims.play(AnimationKeys.Player.Blow, true);
         } else if (!this.isTouchingDown && Key3.isDown) {
             // this.anims.play(AnimationKeys.Player.Sword, true)
         }
 
-        this.on("animationcomplete", () => {
-            this.isAttacking = false;
-        });
 
-        if (this.isMovingRight) { console.log("destra") }
-        if (this.isMovingLeft) { console.log("sinistra") }
-
-        if (Key4.isDown &&
+        if ((Key4.isDown && this.enableShooting) &&
             (!Key6.isDown && !Key7.isDown && !Key5.isDown)
             && !this.ha_sparato && !this.isMovingRight) {
             this.setFlipX(true)
-
-            setTimeout(() => {
-                if (!Key4.isUp) new Bullets(this.scene, this.x, this.y, "LEFT")
-            }, 300);
-            this.ha_sparato = true;
-            this.anims.play(AnimationKeys.Player.fionda)
-            setTimeout(() => {
-                this.ha_sparato = false;
-                if (Key4.isUp) {
-                    this.anims.stop()
-                }
-            }, 300);
-
+			this.isAttacking = true;
+			this.anims.play(AnimationKeys.Player.fionda, true)
+			
+			this.enableShooting = false;
+			setTimeout(() => {
+				this.enableShooting = true;
+			}, 300);
         } // SINISTRA
 
+		this.on("animationcomplete", () => {
+            this.isAttacking = false;
+			if(this.anims.currentAnim.key === "player-fionda") {
+				let colpo = new Bullets(
+					this.scene,
+					this.body.x,
+					this.body.y,
+					"LEFT"
+				);
+			}
+        });
 
-        if (Key5.isDown && (!Key6.isDown && !Key7.isDown && !Key4.isDown)
+        /* if (Key5.isDown && (!Key6.isDown && !Key7.isDown && !Key4.isDown)
             && !this.ha_sparato && !this.isMovingLeft) {
             this.setFlipX(false)
             setTimeout(() => {
@@ -201,7 +197,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (Key7.isDown && this.flipX && !this.ha_sparato) {
             this.setFlipX(true)
             setTimeout(() => {
-                if (!Key7.isUp) new Bullets(this.scene, this.x, this.y, "LEFT_DOWN")
+                if (!Key7.isUp) {
+					let bullet = new Bullets(this.scene, this.x, this.y, "LEFT_DOWN")
+
             }, 300);
             this.anims.play(AnimationKeys.Player.fionda)
             this.ha_sparato = true;
@@ -255,6 +253,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                     this.anims.stop()
                 }
             }, 300);
-        } // BASSO SINISTRA
+        } */ // BASSO SINISTRA
     }
 }

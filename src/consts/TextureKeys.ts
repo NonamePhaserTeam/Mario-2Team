@@ -7,7 +7,6 @@ enum TextureKeys {
 	player = "player",
 	SkeletonEnemy = "SkeletonEnemy",
 	portale = "portale",
-	fionda = "fionda",
     boss = "boss",			
     fionda = "fionda"
 }

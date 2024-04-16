@@ -73,7 +73,7 @@ export default class Preloader extends Phaser.Scene {
                 prefix: 'jump',
                 suffix: '.png'
             }),
-			frameRate: 8,
+			frameRate: 2,
             repeat: 0,
         });
 
@@ -102,7 +102,7 @@ export default class Preloader extends Phaser.Scene {
                     suffix: '.png'
                 }
             ),
-            frameRate: 4,
+            frameRate: 12,
             repeat: 0
         });
 
