@@ -4,10 +4,6 @@ import { gameSettings } from "../consts/GameSettings";
 import { World } from "matter";
 
 export default class Bullets extends Phaser.Physics.Arcade.Sprite {
-
-    private colpo: Phaser.Physics.Arcade.Group
-    y: number
-    x: number
     private direzione_shot: string
 
     constructor(
@@ -23,8 +19,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         scene.physics.world.enable(this);
         this.setCollideWorldBounds(true)
         this.scene.add.existing(this);
-        this.x = playerx
-        this.y = playery
         this.direzione_shot = direzione
         this.setVelocity(
             this.Direzione(this.direzione_shot)[0],
@@ -32,10 +26,11 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         );
         this.setCollisionCategory(dacollidere)
         this.setCollidesWith(dacollidere)
+
         setTimeout(() => {
             this.destroy(true);
             console.log("autodistruzione")
-        }, 1200);
+        }, 1000);
         this.create();
     }
     Direzione(dir: string): Array<number> {
