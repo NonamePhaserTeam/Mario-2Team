@@ -123,7 +123,15 @@ export default class Jumper extends Phaser.Scene {
 		)
         this.add.existing(this.player)
 
-		this.enemy = new Enemy(this, 0, 0, TextureKeys.SkeletonEnemy,AnimationKeys.SkeletonEnemy);
+		this.enemy = new Enemy(
+		    this,
+		    0,
+		    0,
+            100,
+            50,
+		    TextureKeys.SkeletonEnemy,
+		    AnimationKeys.SkeletonEnemy
+		);
         
         this.camera.startFollow(this.player, true, 1, 1);
 		this.physics.add.collider(this.player, this.platforms);

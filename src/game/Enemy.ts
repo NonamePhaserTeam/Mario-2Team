@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import AnimationKeys from "../consts/AnimationKeys";
-import {Player} from "../game/components";
+import { gameSettings } from "../consts/GameSettings";
+import SceneKeys from "../consts/SceneKeys";
+import TextureKeys from "../consts/TextureKeys";
 
 interface EnemyClass {
     Idle: string,
@@ -8,41 +10,76 @@ interface EnemyClass {
 }
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
-    private speed = 10;
+    private chase_speed: number //= 100;
+    private patrol_speed: number //= 50;
     private damage: number;
-    player: Player
+    private distanza_minima: number = 500;
+    private nemico: EnemyClass
 
     constructor(
         scene: Phaser.Scene,
         xe: number,
         ye: number,
+        chase_speed: number,
+        patrol_speed: number,
         texture: string,
         EnemyClass: EnemyClass,
         dacollidere?: number,
         frame?: string,
     ) {
-        super(scene, xe, ye, texture,frame);
+        super(scene, xe, ye, texture, frame);
         scene.physics.world.enable(this);
         this.setCollideWorldBounds(true)
         this.anims.play(EnemyClass.Idle);
+        this.nemico = EnemyClass;
+        this.chase_speed = chase_speed;
+        this.patrol_speed = patrol_speed;
         this.scene.add.existing(this);
-        this.setScale(1.7);
+        this.setScale(3);
         this.setCollisionCategory(dacollidere)
         this.setCollidesWith(dacollidere)
-        //this.create();
     }
 
     preUpdate(t: number, dt: number) {
         // update per tutte le componenti dello sprite compless
         super.preUpdate(t, dt);
     }
-
-    OnGuard(playerx:number, playery:number){
-        if (this.y === playery && this.x - 50 <= playerx) {
-            this.setVelocityX(-this.speed);
-        } else if (this.y === playery || this.x + 50 >= playerx) {
-            this.setVelocityX(this.speed);
+    OnGuard(playerx: number, playery: number) {
+        let distanzaX_dal_player: number = playerx - this.x
+        let distanzaY_dal_player: number = playery - this.y
+        //console.log(this.y, playery, distanzaY_dal_player)
+        if (distanzaY_dal_player > -100) { // quando sta a terra
+            if (distanzaX_dal_player < this.distanza_minima && distanzaX_dal_player > 0) { // follow right
+                this.anims.play(this.nemico.Walk, true);
+                this.setFlipX(false)
+                this.setVelocityX(this.chase_speed);
+            } else if (distanzaX_dal_player > -this.distanza_minima && distanzaX_dal_player < 0) { // follow left
+                this.anims.play(this.nemico.Walk, true);
+                this.setFlipX(true)
+                this.setVelocityX(-this.chase_speed);
+            } else {
+                this.anims.play(this.nemico.Idle, true);
+                this.setVelocityX(0);
+                console.log("fermo perche' non vedo")
+            }
+        } else if (
+            distanzaY_dal_player > -150 &&
+            (distanzaX_dal_player < this.distanza_minima-300 && distanzaX_dal_player > 30) ||
+                (distanzaX_dal_player > -this.distanza_minima+300 && distanzaX_dal_player < 30)
+        ){ 
+            this.anims.play(this.nemico.Idle, true); // qua ci dovrebbe stare l'animazione di attacco in aria del nemico
+            this.setVelocityX(0);
+            console.log("fermo perche' sto attaccando sopra")
+        }else{
+            this.anims.play(this.nemico.Idle, true);
+            this.setVelocityX(0);
+            console.log("fermo perche' non vedo e sta sopra")
         }
+// tutti queste costanti sono abbastanza assolute 
+// -100 e' se il player sta piu' o meno sullo stesso layer del player 
+// 0 se vedere dove deve andare (da mettere che se no va in una sola direzione)
+// 150 per vedere se sta volando (da cambiare ma relativamente perche' mi baso sulla grandezza del livello che mi ha fatto vedere mariano) 
+// -300 per vedere se sta volando dentro un'area ristresttra  
+// non ho fatto come l'esempio con la scatola e i cerchi perche' questa non e' una scena e non mi da come disponibile le cose che hanno fatto quelli sul lab
     }
-
 }
