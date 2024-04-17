@@ -76,6 +76,8 @@ export default class Jumper extends Phaser.Scene {
 
     create() {
 
+		console.log("create jumper")
+
 		const map = this.make.tilemap({ key: "map" });
 
 		const tileset = map.addTilesetImage("mappa1", "tiles");
@@ -132,10 +134,13 @@ export default class Jumper extends Phaser.Scene {
 		    TextureKeys.SkeletonEnemy,
 		    AnimationKeys.SkeletonEnemy
 		);
+		this.add.existing(this.enemy);
         
         this.camera.startFollow(this.player, true, 1, 1);
 		this.physics.add.collider(this.player, this.platforms);
-		this.physics.add.collider(this.player, this.enemy);
+		this.physics.world.addCollider(this.player, this.enemy, () => {
+			console.log("collision ")
+		});
 		this.physics.add.collider(this.platforms, this.enemy);
 
 	}

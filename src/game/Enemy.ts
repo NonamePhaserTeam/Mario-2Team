@@ -24,26 +24,28 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         patrol_speed: number,
         texture: string,
         EnemyClass: EnemyClass,
-        dacollidere?: number,
         frame?: string,
     ) {
         super(scene, xe, ye, texture, frame);
         scene.physics.world.enable(this);
-        this.setCollideWorldBounds(true)
-        this.anims.play(EnemyClass.Idle);
         this.nemico = EnemyClass;
         this.chase_speed = chase_speed;
         this.patrol_speed = patrol_speed;
-        this.scene.add.existing(this);
-        this.setScale(3);
-        this.setCollisionCategory(dacollidere)
-        this.setCollidesWith(dacollidere)
+        scene.add.existing(this);
+        this.create();
     }
-
+	
     preUpdate(t: number, dt: number) {
-        // update per tutte le componenti dello sprite compless
+		// update per tutte le componenti dello sprite compless
         super.preUpdate(t, dt);
     }
+	
+	private create() {
+		this.setScale(3);
+		this.setCollideWorldBounds(true)
+		this.anims.play(this.nemico.Idle);
+	}
+	
     OnGuard(playerx: number, playery: number) {
         let distanzaX_dal_player: number = playerx - this.x
         let distanzaY_dal_player: number = playery - this.y

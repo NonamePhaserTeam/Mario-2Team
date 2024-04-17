@@ -10,24 +10,27 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         playerx: number,
         playery: number,
         direzione: string,
-        dacollidere?: number,
         // texture: string,
     ) {
         super(scene, playerx, playery, TextureKeys.player);
 
         scene.physics.world.enable(this);
         this.setCollideWorldBounds(true)
-        this.scene.add.existing(this);
         this.direzione_shot = direzione
-        this.setVelocity(
-            this.Direzione(this.direzione_shot)[0],
-            this.Direzione(this.direzione_shot)[1]
-        );
+		scene.add.existing(this);
+		this.create();
+    }
+	
+	private create() {
+		this.setVelocity(
+			this.Direzione(this.direzione_shot)[0],
+			this.Direzione(this.direzione_shot)[1]
+		);
         setTimeout(() => {
-            this.destroy(true);
+			this.destroy(true);
             console.log("autodistruzione")
         }, 100);
-    }
+	}
 
     Direzione(dir: string): Array<number> {
         let xp: number, yp: number;

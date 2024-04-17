@@ -25,24 +25,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         x: number,
         y: number,
         texture: string,
-        dacollidere?: number,
         frame?: string | number,
     ) {
         super(scene, x, y, texture, frame);
-
         scene.physics.world.enable(this);
-        this.setCollideWorldBounds(true)
-        this.anims.play(AnimationKeys.Player.Idle);
-        this.scene.add.existing(this);
-        this.setScale(1.5);
-        this.dacol = dacollidere
-        this.setCollisionCategory(dacollidere)
-        this.setCollidesWith(dacollidere)
+        scene.add.existing(this);
         this.create();
     }
-
+	
     create() {
-        this.scene.input.keyboard.on('keydown-SPACE', () => {
+		this.setCollideWorldBounds(true)
+		this.anims.play(AnimationKeys.Player.Idle);
+		this.setScale(1.5);
+		this.scene.input.keyboard.on('keydown-SPACE', () => {
             if (this.isTouchingDown) {
                 this.isJumping = true;
                 setTimeout(() => {
