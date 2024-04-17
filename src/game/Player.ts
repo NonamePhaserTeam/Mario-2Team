@@ -35,7 +35,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.anims.play(AnimationKeys.Player.Idle);
         this.scene.add.existing(this);
         this.setScale(1.5);
-        this.dacol= dacollidere
+        this.dacol = dacollidere
         this.setCollisionCategory(dacollidere)
         this.setCollidesWith(dacollidere)
         this.create();
