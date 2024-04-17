@@ -59,7 +59,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		}, timeReset);
 	}
 
-	getXY(): object {
+	getXY(): {x: number, y: number} {
 		return {
 			x: this.body.x,
 			y: this.body.y

@@ -151,13 +151,12 @@ export default class Gioco_prova extends Phaser.Scene {
             50,
             TextureKeys.SkeletonEnemy,
             AnimationKeys.SkeletonEnemy,
-            this.caterogia_collisioni
         )
         this.add.existing(this.enemy);
 
         //this.physics.world.addCollider(this.platforms, this.player)
         //this.physics.world.addCollider(this.platforms, this.enemy)
-        this.physics.world.addCollider(this.player, this.enemy)
+        this.physics.add.collider(this.player, this.enemy)
         this.camera.startFollow(this.player, true, 1, 1);
 
         
@@ -182,7 +181,7 @@ export default class Gioco_prova extends Phaser.Scene {
             0,
         );
 
-		console.log(this.player.getXY())
+		console.log(this.player.getXY().x)
 
         //this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
         //this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
