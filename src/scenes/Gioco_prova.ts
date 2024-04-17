@@ -27,7 +27,7 @@ export default class Gioco_prova extends Phaser.Scene {
     SPACE: Phaser.Input.Keyboard.Key; // salta
     SHIFT: Phaser.Input.Keyboard.Key; //dasha
     X: Phaser.Input.Keyboard.Key; // cade in picchiata
-    E: Phaser.Input.Keyboard.Key; // colpisce melee
+    ENTER: Phaser.Input.Keyboard.Key; // colpisce melee
     playerSpeed: number = 300;
     /* ---------- MOVEMENT ---------- */
 
@@ -64,7 +64,7 @@ export default class Gioco_prova extends Phaser.Scene {
         this.SPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE, true, false);
         this.SHIFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT, true, false);
         this.X = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X, true, false);
-        this.E = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false);
+        this.ENTER = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER, true, false);
 
         this.LEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT, true, false);
         this.UP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP, true, false);
@@ -175,13 +175,12 @@ export default class Gioco_prova extends Phaser.Scene {
 
     update(time: number, delta: number): void {
         this.player.HandleMovement(this.A, this.SHIFT, this.D)
-        this.player.HandleAttack(this.E, this.X, this.S, this.LEFT, this.RIGHT, this.UP, this.DOWN);
+        this.player.HandleAttack(this.ENTER, this.X, this.S, this.LEFT, this.RIGHT, this.UP, this.DOWN);
         this.enemy.OnGuard(
             0,
             0,
         );
 
-		console.log(this.player.getXY().x)
 
         //this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
         //this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
