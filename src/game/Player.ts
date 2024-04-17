@@ -64,6 +64,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		}, timeReset);
 	}
 
+	getXY(): object {
+		return {
+			x: this.body.x,
+			y: this.body.y
+		};
+	}
+
     HandleMovement(
         LEFT: Phaser.Input.Keyboard.Key,
         SHIFT: Phaser.Input.Keyboard.Key,

@@ -23,9 +23,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
             this.Direzione(this.direzione_shot)[0],
             this.Direzione(this.direzione_shot)[1]
         );
-            
-        this.setCollisionCategory(dacollidere)
-        this.setCollidesWith(dacollidere)
         setTimeout(() => {
             this.destroy(true);
             console.log("autodistruzione")

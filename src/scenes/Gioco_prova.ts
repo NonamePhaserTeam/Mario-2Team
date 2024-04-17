@@ -175,13 +175,14 @@ export default class Gioco_prova extends Phaser.Scene {
     startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
 
     update(time: number, delta: number): void {
-        this.player.HandleMovement(this.A, this.D, this.SHIFT)
+        this.player.HandleMovement(this.A, this.SHIFT, this.D)
         this.player.HandleAttack(this.E, this.X, this.S, this.LEFT, this.RIGHT, this.UP, this.DOWN);
         this.enemy.OnGuard(
-            this.player.getplayerX(),
-            this.player.getplayerY()
+            0,
+            0,
         );
 
+		console.log(this.player.getXY())
 
         //this.isMoving = this.A.isDown || this.D.isDown || this.S.isDown || this.W.isDown;
         //this.touchingDown = this.player.body.touching.down || this.player.body.blocked.down;
@@ -291,6 +292,6 @@ export default class Gioco_prova extends Phaser.Scene {
         //}
         //this.direzione = 0;
         /* JUMP STUFF */
->>>>>>> 4e51291 (follow del nemico, mancano animazioni)
+// >>>>>>> 4e51291 (follow del nemico, mancano animazioni)
     }
 }

@@ -78,11 +78,11 @@ export default class Jumper extends Phaser.Scene {
 
 		const map = this.make.tilemap({ key: "map" });
 
-		const tileset = map.addTilesetImage("walls_rosso", "tiles");
+		const tileset = map.addTilesetImage("mappa1", "tiles");
 
-		const belowLayer = map.createLayer("base", tileset, 0, 0);
-		console.log(belowLayer.width) 
-		// const aboveLayer = map.createLayer("muro", tileset, 0, 0);
+		const floor = map.createLayer("pavimento", tileset, 0, 0);
+		// console.log(belowLayer.width) 
+		const wall = map.createLayer("muro", tileset, 0, 0);
 
 		const portal = this.physics.add.sprite(0, 0, TextureKeys.portale);
 		portal.play(AnimationKeys.Portale.Opening, true);

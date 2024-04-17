@@ -19,11 +19,10 @@ export default class Preloader extends Phaser.Scene {
 	    this.load.atlas(TextureKeys.platform, 'assets/images/platform.png', 'assets/images/platform.json');
 	    this.load.atlas(TextureKeys.SkeletonEnemy, 'assets/spritesheets/skeleton/skeleton.png', 'assets/spritesheets/skeleton/skeleton.json');
 		this.load.image("tiles", "/assets/tilesets/walls_rosso.png")
-		this.load.tilemapTiledJSON("map", "assets/tilesets/mappa_2.json")
+		this.load.tilemapTiledJSON("map", "assets/tilesets/mappa_1.json")
         this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
         this.load.atlas(TextureKeys.portale, 'assets/spritesheets/portal/portali.png', 'assets/spritesheets/portal/portali.json');
 	    this.load.atlas(TextureKeys.fionda, 'assets/spritesheets/fionda.png', '../assets/spritesheets/fionda.json');
-		this.load.image("mariano", "/assets/images/mariano.png");
     }
 
     create() {
