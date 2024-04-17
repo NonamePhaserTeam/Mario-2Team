@@ -29,7 +29,7 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         setTimeout(() => {
             this.destroy(true);
             console.log("autodistruzione")
-        }, 1000);
+        }, 100);
     }
 
     Direzione(dir: string): Array<number> {
