@@ -29,11 +29,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     ) {
         super(scene, x, y, texture, frame);
         scene.physics.world.enable(this);
+		// this.setInteractive(true);
         scene.add.existing(this);
         this.create();
     }
 	
-    create() {
+    private create() {
 		this.setCollideWorldBounds(true)
 		this.anims.play(AnimationKeys.Player.Idle);
 		this.setScale(1.5);
@@ -45,6 +46,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 }, 500);
             }
         });
+		/* this.on("pointerdown", () => {
+			console.log("pointerdown");
+		}) */
     }
 
     preUpdate(t: number, dt: number) {
@@ -64,6 +68,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			x: this.body.x,
 			y: this.body.y
 		};
+	}
+
+	BossDamaged() {
+		if (this.isAttacking) {
+		  return true;
+		} else {
+		  return false;
+		}
 	}
 
     HandleMovement(
@@ -93,7 +105,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             }, 150);
         }
 		if(this.isMoving) {
-            this.anims.play(AnimationKeys.Player.Walk, true);
+			if(this.isTouchingDown) this.anims.play(AnimationKeys.Player.Walk, true);
 			if (LEFT.isDown) {
 				this.setVelocityX(-this.speed);
 				this.setFlipX(true);
@@ -116,7 +128,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(-this.speed * 3);
         }
     	else if (!this.isTouchingDown) {
-            this.setFrame("jump6.png");
+            this.setFrame("jumpsprite6.png");
             this.setVelocityY(this.speed);
         }
 
@@ -131,7 +143,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         Key1?: Phaser.Input.Keyboard.Key, // cazzotto
         Key2?: Phaser.Input.Keyboard.Key, // blow
         Key3?: Phaser.Input.Keyboard.Key, // spada
-        Key4?: Phaser.Input.Keyboard.Key, // left
+		Key4?: Phaser.Input.Keyboard.Key, // left
         Key5?: Phaser.Input.Keyboard.Key, // right
         Key6?: Phaser.Input.Keyboard.Key, // up
         Key7?: Phaser.Input.Keyboard.Key, // down
@@ -161,7 +173,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 			} // SINISTRA
 
-
 			if ((Key5.isDown) &&
 				(!Key6.isDown && !Key7.isDown && !Key4.isDown)
 				&& !this.isMovingLeft) {
@@ -173,8 +184,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 			} // DESTRA
 
-
-
 			if (Key7.isDown && this.flipX) {
 				this.dirshot = "LEFT_DOWN"
 				this.setFlipX(true)
@@ -183,7 +192,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.handleResetFlag(this.enableShooting, 300);
 
 			} // BASSO SINISTRA
-
 			else if (Key6.isDown && this.flipX) {
 				this.dirshot = "LEFT_UP"
 				this.setFlipX(true)
@@ -211,16 +219,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			} // ALTO DESTRA
 		}
 
-        this.on("animationcomplete", () => {
+		this.on("animationcomplete", () => {
             this.isAttacking = false;
             if (this.anims.currentAnim.key === "player-fionda") {
-				console.log(this.dirshot);
                 this.colpo = new Bullets(
                     this.scene,
                     this.body.x,
                     this.body.y,
                     this.dirshot,
                 );
+				/* setTimeout(() => {
+					this.colpo.checkCollision()
+				}, 300); */
 			}
         });
     }

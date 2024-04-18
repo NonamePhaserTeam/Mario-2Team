@@ -1,7 +1,6 @@
 import AnimationKeys from "../consts/AnimationKeys";
 import TextureKeys from "../consts/TextureKeys";
-import { gameSettings } from "../consts/GameSettings";
-import { World } from "matter";
+import { Player, Enemy } from "../game/components";
 export default class Bullets extends Phaser.Physics.Arcade.Sprite {
     private direzione_shot: string
 
@@ -26,10 +25,9 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
 			this.Direzione(this.direzione_shot)[0],
 			this.Direzione(this.direzione_shot)[1]
 		);
-        setTimeout(() => {
+		setTimeout(() => {
 			this.destroy(true);
-            console.log("autodistruzione")
-        }, 100);
+		}, 100);
 	}
 
     Direzione(dir: string): Array<number> {
@@ -70,6 +68,20 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         }
         return [xp, yp];
     }
+
+	/* checkCollision() {
+		let t = this.body.touching;
+		let b = this.body.blocked;
+
+			console.log(t);
+			console.log(b);
+		if(
+			t.left || b.left || 
+			t.right || b.right ||
+			t.up || b.up ||
+			t.down || b.down
+		)	this.destroy(true);
+	} */
 
     preUpdate(t: number, dt: number) {
         // update per tutte le componenti dello sprite compless

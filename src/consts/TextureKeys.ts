@@ -3,12 +3,15 @@
 
 enum TextureKeys {
     tilemap = "tilemap",
+	Logo = "logo",
+  	Background = "background",
     platform = "platform",
 	player = "player",
 	SkeletonEnemy = "SkeletonEnemy",
-	portale = "portale",
-    boss = "boss",			
-    fionda = "fionda"
+	portale = "portale",		
+    fionda = "fionda",
+	Boss = "boss",
+	Bomb = "bomb",
 }
 
 export default TextureKeys;

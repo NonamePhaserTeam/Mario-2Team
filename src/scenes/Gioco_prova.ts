@@ -139,7 +139,6 @@ export default class Gioco_prova extends Phaser.Scene {
             1000,
             gameSettings.gameHeight*5,
             TextureKeys.player,
-            this.caterogia_collisioni
         )
         this.add.existing(this.player);
 

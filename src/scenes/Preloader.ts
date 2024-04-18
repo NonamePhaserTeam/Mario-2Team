@@ -20,10 +20,23 @@ export default class Preloader extends Phaser.Scene {
 	    this.load.atlas(TextureKeys.SkeletonEnemy, 'assets/spritesheets/skeleton/skeleton.png', 'assets/spritesheets/skeleton/skeleton.json');
 		this.load.image("tiles", "/assets/tilesets/walls_rosso.png")
 		this.load.tilemapTiledJSON("map", "assets/tilesets/mappa_1.json")
-        this.load.atlas(TextureKeys.boss, 'assets/spritesheets/boss.png', '../assets/spritesheets/boss.json');
         this.load.atlas(TextureKeys.portale, 'assets/spritesheets/portal/portali.png', 'assets/spritesheets/portal/portali.json');
 	    this.load.atlas(TextureKeys.fionda, 'assets/spritesheets/fionda.png', '../assets/spritesheets/fionda.json');
     }
+
+	/* private LoadImages(): void {
+		this.load.image(TextureKeys.Background, "images/background.png");
+		this.load.image(TextureKeys.Platform, "images/background.png");
+		// this.load.image(TextureKeys.Player, "images/Character/000.png");
+		this.load.image(TextureKeys.Boss, "images/Character/0001.png");
+		this.load.image(TextureKeys.Bomb, "images/bomb.png");
+		this.load.image(BarKeys.Background, "images/background.png");
+		this.load.image(BarKeys.HealthBar1, "images/vita1.png");
+		this.load.image(BarKeys.HealthBar2, "images/vita2.png");
+		this.load.image(BarKeys.HealthBar3, "images/vita3.png");
+		this.load.image(BarKeys.ButtonDown, "images/buttondown.png");
+		this.load.image(BarKeys.ButtomUp, "images/buttonup.png");
+	  } */
 
     create() {
 		// creazione di tutte le animazioni
@@ -32,8 +45,8 @@ export default class Preloader extends Phaser.Scene {
 		this.CreateEntitiesAnims();
 
 		this.scene.stop(SceneKeys.Preloader);
-        this.scene.start(SceneKeys.Game);
-		// this.scene.start(SceneKeys.Jumper)
+        // this.scene.start(SceneKeys.Game);
+		this.scene.start(SceneKeys.Jumper)
 
     }
 
@@ -44,7 +57,7 @@ export default class Preloader extends Phaser.Scene {
                 start: 1,
                 end: 8,
                 zeroPad: 1,
-                prefix: 'walk',
+                prefix: 'camminata',
                 suffix: '.png'
             }),
             frameRate: 8,
@@ -70,7 +83,7 @@ export default class Preloader extends Phaser.Scene {
                 start: 4,
                 end: 6,
                 zeroPad: 1,
-                prefix: 'jump',
+                prefix: 'jumpsprite',
                 suffix: '.png'
             }),
 			frameRate: 2,
@@ -80,8 +93,8 @@ export default class Preloader extends Phaser.Scene {
 		this.anims.create({
 			key: AnimationKeys.Player.Punch,
 			frames: this.anims.generateFrameNames(TextureKeys.player, {
-				start: 1,
-				end: 12,
+				start: 2,
+				end: 10,
 				zeroPad: 1,
 				prefix: 'fight',
 				suffix: '.png'

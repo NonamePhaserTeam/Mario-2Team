@@ -2,7 +2,7 @@ import Phaser, { Physics } from "phaser";
 import { gameSettings } from "../consts/GameSettings";
 import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
-import {Player, Enemy} from "../game/components";
+import {Player, Enemy, Bullets} from "../game/components";
 import AnimationKeys from "../consts/AnimationKeys";
 
 export default class Jumper extends Phaser.Scene {
@@ -138,9 +138,7 @@ export default class Jumper extends Phaser.Scene {
         
         this.camera.startFollow(this.player, true, 1, 1);
 		this.physics.add.collider(this.player, this.platforms);
-		this.physics.world.addCollider(this.player, this.enemy, () => {
-			console.log("collision ")
-		});
+		this.physics.add.collider(this.player, this.enemy);
 		this.physics.add.collider(this.platforms, this.enemy);
 
 	}
@@ -156,7 +154,7 @@ export default class Jumper extends Phaser.Scene {
 
     update(time: number, delta: number): void {
 		this.player.HandleMovement(this.A, this.SHIFT, this.D)
-        this.player.HandleAttack(this.ENTER, this.X, this.S,this.LEFT, this.RIGHT, this.UP, this.DOWN);
+        this.player.HandleAttack(this.ENTER, this.X, this.S, this.LEFT, this.RIGHT, this.UP, this.DOWN);
 
         // /* CLIMBING STUFF */
         // if (this.touchingRight || this.touchingLeft) {

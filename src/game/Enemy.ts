@@ -62,7 +62,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.anims.play(this.nemico.Idle, true);
                 this.setVelocityX(0);
-                console.log("fermo perche' non vedo")
+                // console.log("fermo perche' non vedo")
             }
         } else if (
             distanzaY_dal_player > -150 &&
@@ -71,16 +71,16 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         ){ 
             this.anims.play(this.nemico.Idle, true); // qua ci dovrebbe stare l'animazione di attacco in aria del nemico
             this.setVelocityX(0);
-            console.log("fermo perche' sto attaccando sopra")
+            // console.log("fermo perche' sto attaccando sopra")
         }else{
             this.anims.play(this.nemico.Idle, true);
             this.setVelocityX(0);
-            console.log("fermo perche' non vedo e sta sopra")
+            // console.log("fermo perche' non vedo e sta sopra")
         }
 // tutti queste costanti sono abbastanza assolute 
 // -100 e' se il player sta piu' o meno sullo stesso layer del player 
 // 0 se vedere dove deve andare (da mettere che se no va in una sola direzione)
-// 150 per vedere se sta volando (da cambiare ma relativamente perche' mi baso sulla grandezza del livello che mi ha fatto vedere mariano) 
+// 150 per vedere se sta volando (da cambiare ma relativamente perc	he' mi baso sulla grandezza del livello che mi ha fatto vedere mariano) 
 // -300 per vedere se sta volando dentro un'area ristresttra  
 // non ho fatto come l'esempio con la scatola e i cerchi perche' questa non e' una scena e non mi da come disponibile le cose che hanno fatto quelli sul lab
     }

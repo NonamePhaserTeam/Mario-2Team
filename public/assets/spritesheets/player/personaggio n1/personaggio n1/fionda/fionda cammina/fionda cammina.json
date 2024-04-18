@@ -1,0 +1,99 @@
+{ "frames": {
+   "fionda cammina 0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   "fionda cammina 1.aseprite": {
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   "fionda cammina 2.aseprite": {
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   "fionda cammina 3.aseprite": {
+    "frame": { "x": 192, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   "fionda cammina 4.aseprite": {
+    "frame": { "x": 256, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   "fionda cammina 5.aseprite": {
+    "frame": { "x": 320, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   "fionda cammina 6.aseprite": {
+    "frame": { "x": 384, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   "fionda cammina 7.aseprite": {
+    "frame": { "x": 448, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   },
+   "fionda cammina 8.aseprite": {
+    "frame": { "x": 512, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.2-x64",
+  "image": "fionda cammina.png",
+  "format": "RGBA8888",
+  "size": { "w": 576, "h": 64 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "colore", "opacity": 255, "blendMode": "normal" },
+   { "name": "braccio sinistro", "opacity": 255, "blendMode": "normal" },
+   { "name": "corpo", "opacity": 255, "blendMode": "normal" },
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "braccio destro", "opacity": 255, "blendMode": "normal" },
+   { "name": "corda", "opacity": 255, "blendMode": "normal" },
+   { "name": "fionda cart" },
+   { "name": "fionda", "group": "fionda cart", "opacity": 255, "blendMode": "normal" },
+   { "name": "gamba sinistra", "opacity": 255, "blendMode": "normal" },
+   { "name": "gamba destra", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
