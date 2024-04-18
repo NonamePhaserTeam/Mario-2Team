@@ -2,16 +2,17 @@ import AnimationKeys from "../consts/AnimationKeys";
 import TextureKeys from "../consts/TextureKeys";
 import { Player, Enemy } from "../game/components";
 export default class Bullets extends Phaser.Physics.Arcade.Sprite {
-    private direzione_shot: string
+  private direzione_shot: string;
 
-    constructor(
-        scene: Phaser.Scene,
-        playerx: number,
-        playery: number,
-        direzione: string,
-        // texture: string,
-    ) {
-        super(scene, playerx, playery, TextureKeys.player);
+  constructor(
+    scene: Phaser.Scene,
+    playerx: number,
+    playery: number,
+    direzione: string,
+    dacollidere?: number
+    // texture: string,
+  ) {
+    super(scene, playerx, playery, TextureKeys.Texture.player);
 
         scene.physics.world.enable(this);
         this.setCollideWorldBounds(true)
@@ -87,5 +88,4 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         // update per tutte le componenti dello sprite compless
         super.preUpdate(t, dt);
     }
-
 }

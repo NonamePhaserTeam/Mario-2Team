@@ -5,20 +5,20 @@ import TextureKeys from "../consts/TextureKeys";
 import { gameSettings } from "../consts/GameSettings";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-    private speed = 250;
-    private isMoving = false;
-    private isMovingLeft = false;
-    private isMovingRight = false;
-    private isAttacking = false;
-    private isTouchingDown = true;
-    private isJumping = false;
-    private enableDash = false;
-    private shiftEnabled = true;
-    private health = 100;
-    private enableShooting = true;
-    private dirshot: string;
-    private colpo: Bullets
-    private dacol: number
+  private speed = 250;
+  private isMoving = false;
+  private isMovingLeft = false;
+  private isMovingRight = false;
+  private isAttacking = false;
+  private isTouchingDown = true;
+  private isJumping = false;
+  private enableDash = false;
+  private shiftEnabled = true;
+  private health = 100;
+  private enableShooting = true;
+  private dirshot: string;
+  private colpo: Bullets;
+  private dacol: number;
 
     constructor(
         scene: Phaser.Scene,

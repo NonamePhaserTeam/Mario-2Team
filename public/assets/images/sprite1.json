@@ -1,0 +1,251 @@
+{
+	"textures": [
+		{
+			"image": " .png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 938,
+				"h": 489
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "morte.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 816,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 0,
+						"w": 811,
+						"h": 59
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 811,
+						"h": 59
+					}
+				},
+				{
+					"filename": "fight2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 768,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 2,
+						"w": 753,
+						"h": 59
+					},
+					"frame": {
+						"x": 1,
+						"y": 62,
+						"w": 753,
+						"h": 59
+					}
+				},
+				{
+					"filename": "muvment fight.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 768,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 2,
+						"w": 748,
+						"h": 59
+					},
+					"frame": {
+						"x": 1,
+						"y": 123,
+						"w": 748,
+						"h": 59
+					}
+				},
+				{
+					"filename": "dush.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 192,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 4,
+						"w": 183,
+						"h": 60
+					},
+					"frame": {
+						"x": 751,
+						"y": 123,
+						"w": 183,
+						"h": 60
+					}
+				},
+				{
+					"filename": "animazione spada.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 768,
+						"h": 96
+					},
+					"spriteSourceSize": {
+						"x": 25,
+						"y": 11,
+						"w": 738,
+						"h": 85
+					},
+					"frame": {
+						"x": 1,
+						"y": 184,
+						"w": 738,
+						"h": 85
+					}
+				},
+				{
+					"filename": "cammina spada.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 768,
+						"h": 96
+					},
+					"spriteSourceSize": {
+						"x": 30,
+						"y": 5,
+						"w": 733,
+						"h": 88
+					},
+					"frame": {
+						"x": 1,
+						"y": 271,
+						"w": 733,
+						"h": 88
+					}
+				},
+				{
+					"filename": "sparo fionda.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 207,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 2,
+						"w": 201,
+						"h": 59
+					},
+					"frame": {
+						"x": 736,
+						"y": 271,
+						"w": 201,
+						"h": 59
+					}
+				},
+				{
+					"filename": "spriteinginocchio.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 512,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 0,
+						"w": 485,
+						"h": 64
+					},
+					"frame": {
+						"x": 1,
+						"y": 361,
+						"w": 485,
+						"h": 64
+					}
+				},
+				{
+					"filename": "fionda cammina.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 576,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 3,
+						"w": 571,
+						"h": 61
+					},
+					"frame": {
+						"x": 1,
+						"y": 427,
+						"w": 571,
+						"h": 61
+					}
+				},
+				{
+					"filename": "jumpsprite.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 448,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 1,
+						"w": 429,
+						"h": 60
+					},
+					"frame": {
+						"x": 488,
+						"y": 361,
+						"w": 429,
+						"h": 60
+					}
+				},
+				{
+					"filename": "fermo.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 320,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 2,
+						"w": 305,
+						"h": 59
+					},
+					"frame": {
+						"x": 574,
+						"y": 423,
+						"w": 305,
+						"h": 59
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:3286860402cea0bfd3bc4d2c47df2591:18503b38309ec040a40087f706c9605e:fd3edfb81502695d1a2218814c8d0bc3$"
+	}
+}
