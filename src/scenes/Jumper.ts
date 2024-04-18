@@ -141,9 +141,12 @@ export default class Jumper extends Phaser.Scene {
     //secondo parametro è il layer che vogliamo utilizzare
     const tileset = map.addTilesetImage("mappa1", "tiles");
 
-    const belowLayer = map.createLayer("pavimento", tileset, 0, 0);
-    belowLayer.setPosition(-1000, 1600).setScale(4.5);
-	aGrid.placeAtIndex(155, belowLayer);
+    const floor = map.createLayer("pavimento", tileset, 0, 0);
+    const walls = map.createLayer("muro", tileset, 0, 0);
+    // const gay = map.createLayer("prova", tileset, 0, 0);
+    floor.setPosition(0, 0).setScale(4.5);
+	aGrid.placeAtIndex(60, walls);
+
     // belowLayer.rotation = Phaser.Math.DegToRad(180);
 
     // console.log(belowLayer.width);
@@ -198,9 +201,14 @@ export default class Jumper extends Phaser.Scene {
       AnimationKeys.SkeletonEnemy
     );
 
-    this.camera.startFollow(this.player, true, 1, 1);
+    this.camera.startFollow(this.player, true, .5, .5);
+	this.camera.setZoom(1.1)
     this.physics.add.collider(this.player, this.platforms);
-    this.physics.add.collider(this.player, this.enemy);
+    this.physics.add.collider(this.player, this.enemy, () => {
+		setTimeout(() => {
+			this.player.damage();
+		}, 300);
+	});
     this.physics.add.collider(this.platforms, this.enemy);
   }
   // todo wall climbing, wall sliding

@@ -268,15 +268,15 @@
                  "x":0,
                  "y":0
                 }],
-         "height":112,
+         "height":96,
          "id":4,
          "name":"prova",
          "opacity":1,
          "startx":-16,
-         "starty":-96,
+         "starty":-80,
          "type":"tilelayer",
          "visible":true,
-         "width":48,
+         "width":32,
          "x":0,
          "y":0
         }, 

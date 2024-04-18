@@ -5,7 +5,7 @@ import TextureKeys from "../consts/TextureKeys";
 import { gameSettings } from "../consts/GameSettings";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-  private speed = 250;
+  private speed = 450;
   private isMoving = false;
   private isMovingLeft = false;
   private isMovingRight = false;
@@ -43,7 +43,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 this.isJumping = true;
                 setTimeout(() => {
                     this.isJumping = false;
-                }, 500);
+                }, 300);
             }
         });
 		/* this.on("pointerdown", () => {
@@ -76,6 +76,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		} else {
 		  return false;
 		}
+	}
+
+	damage() {
+		// TODO: codice thommy
 	}
 
     HandleMovement(
@@ -125,11 +129,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.isJumping) {
             this.isMoving = true;
             this.anims.play(AnimationKeys.Player.Jump, true);
-            this.setVelocityY(-this.speed * 5);
+            this.setVelocityY(-this.speed * 3);
         }
     	else if (!this.isTouchingDown) {
-            this.setFrame("jumpsprite6.png");
-            this.setVelocityY(this.speed);
+			this.setFrame("jumpsprite6.png");
+			this.setVelocityY(this.speed * 1.7);
+			
         }
 
         if (!this.isMoving && this.isTouchingDown) {

@@ -45,8 +45,8 @@ export default class Preloader extends Phaser.Scene {
         this.CreateEntitiesAnims();
 
         this.scene.stop(SceneKeys.Preloader);
-        //this.scene.start(SceneKeys.Jumper)
-        this.scene.start(SceneKeys.Game);
+        this.scene.start(SceneKeys.Jumper)
+        // this.scene.start(SceneKeys.Game);
 
         this.load.atlas(
             TextureKeys.Texture.Boss,

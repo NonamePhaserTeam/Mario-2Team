@@ -70,7 +70,7 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         return [xp, yp];
     }
 
-	/* checkCollision() {
+	checkCollision() {
 		let t = this.body.touching;
 		let b = this.body.blocked;
 
@@ -82,7 +82,7 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
 			t.up || b.up ||
 			t.down || b.down
 		)	this.destroy(true);
-	} */
+	}
 
     preUpdate(t: number, dt: number) {
         // update per tutte le componenti dello sprite compless
