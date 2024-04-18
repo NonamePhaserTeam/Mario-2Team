@@ -31,7 +31,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.nemico = EnemyClass;
         this.chase_speed = chase_speed;
         this.patrol_speed = patrol_speed;
-        scene.add.existing(this);
+        // scene.add.existing(this);
         this.create();
     }
 
@@ -82,7 +82,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.anims.play(this.nemico.Idle, true);
                 this.setVelocityX(0);
-                console.log("fermo perche' non vedo")
+                // console.log("fermo perche' non vedo")
             }
         } else if (
             distanzaY_dal_player > -100 &&
@@ -91,11 +91,11 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         ) {
             this.anims.play(this.nemico.Idle, true); // qua ci dovrebbe stare l'animazione di attacco in aria del nemico
             this.setVelocityX(0);
-            console.log("fermo perche' sto attaccando sopra")
+            //console.log("fermo perche' sto attaccando sopra")
         }else{
             this.anims.play(this.nemico.Idle, true);
             this.setVelocityX(0);
-             console.log("fermo perche' non vedo e sta sopra")
+            //console.log("fermo perche' non vedo e sta sopra")
         }
         // tutti queste costanti sono abbastanza assolute 
         // -100 e' se il player sta piu' o meno sullo stesso layer del player 

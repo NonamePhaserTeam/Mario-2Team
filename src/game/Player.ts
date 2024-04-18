@@ -37,13 +37,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     private create() {
 		this.setCollideWorldBounds(true)
 		this.anims.play(AnimationKeys.Player.Idle);
-		this.setScale(1.5);
 		this.scene.input.keyboard.on('keydown-SPACE', () => {
             if (this.isTouchingDown) {
                 this.isJumping = true;
                 setTimeout(() => {
                     this.isJumping = false;
-                }, 300);
+                }, 400);
             }
         });
 		/* this.on("pointerdown", () => {
@@ -116,7 +115,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.handleResetFlag(this.isMovingLeft, 300);
 				if (this.enableDash && this.isTouchingDown) {
                     this.anims.play(AnimationKeys.Player.Dush)
-				    this.setVelocityX(-this.speed * 15)
+				    this.setVelocityX(-this.speed * 10)
 				}
 
 			}
@@ -127,7 +126,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				
 				if (this.enableDash && this.isTouchingDown) {
                     this.anims.play(AnimationKeys.Player.Dush)
-				    this.setVelocityX(this.speed * 15)
+				    this.setVelocityX(this.speed * 10)
 				}
 
 			}
@@ -139,7 +138,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
     	else if (!this.isTouchingDown) {
 			this.setFrame("jumpsprite6.png");
-			this.setVelocityY(this.speed * 1.7);
+			this.setVelocityY(this.speed * 1.8);
 			
         }
 
@@ -243,7 +242,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 			}
 
 			if(this.anims.currentAnim.key === AnimationKeys.Player.Jump) {
-				console.log(this.anims.currentAnim.key)
+				// console.log(this.anims	.currentAnim.key)
 			}
         });
     }

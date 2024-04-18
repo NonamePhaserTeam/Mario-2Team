@@ -32,9 +32,11 @@ export default class Jumper extends Phaser.Scene {
   DOWN: Phaser.Input.Keyboard.Key;
   /* ---------- ATTACK ---------- */
 
+	grid: AlignGrid
+
   worldBounds = {
-    width: gameSettings.gameWidth,
-    height: gameSettings.gameHeight * 3,
+    width: gameSettings.gameWidth * 4,
+    height: gameSettings.gameHeight * 20,
   };
 
   y_piattaforme = gameSettings.gameHeight * 5 - 40;
@@ -125,15 +127,15 @@ export default class Jumper extends Phaser.Scene {
 
   create() {
 
-	const aGrid = new AlignGrid({
+	this.grid = new AlignGrid({
 		scene: this,
-		rows: 11,
-		cols: 11,
+		rows: 30,
+		cols: 10,
 		width: this.worldBounds.width,
 		height: this.worldBounds.height,
 	});
 
-	aGrid.showNumbers();
+	this.grid.showNumbers();
 
     const map = this.make.tilemap({ key: "map" });
 
@@ -143,9 +145,13 @@ export default class Jumper extends Phaser.Scene {
 
     const floor = map.createLayer("pavimento", tileset, 0, 0);
     const walls = map.createLayer("muro", tileset, 0, 0);
-    // const gay = map.createLayer("prova", tileset, 0, 0);
-    floor.setPosition(0, 0).setScale(4.5);
-	aGrid.placeAtIndex(60, walls);
+    const gay = map.createLayer("prova", tileset, 0, 0);
+    // walls.setScale(4.5);
+	this.grid.placeAtIndex(80, walls);
+	this.grid.placeAtIndex(110, gay);
+	this.grid.placeAtIndex(1, floor);
+	walls.setScale(8, 6);
+	gay.setScale(8	, 6);
 
     // belowLayer.rotation = Phaser.Math.DegToRad(180);
 
@@ -188,7 +194,7 @@ export default class Jumper extends Phaser.Scene {
       this.platforms.getChildren()[0].body.position.x + 100,
       this.platforms.getChildren()[0].body.position.y - 60,
       TextureKeys.Texture.player
-    );
+    ).setScale(1.6);
     this.add.existing(this.player);
 
     this.enemy = new Enemy(
@@ -202,7 +208,7 @@ export default class Jumper extends Phaser.Scene {
     );
 
     this.camera.startFollow(this.player, true, .5, .5);
-	this.camera.setZoom(1.1)
+	this.camera.setZoom(.7)
     this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.enemy, () => {
 		setTimeout(() => {
@@ -233,6 +239,10 @@ export default class Jumper extends Phaser.Scene {
     );
     this.enemy.OnGuard(this.player.getXY().x, this.player.getXY().y);
 
+
+	if(this.W.isDown) {
+		this.grid.placeAtIndex(283, this.player)
+	}
 
     // /* CLIMBING STUFF */
     // if (this.touchingRight || this.touchingLeft) {
