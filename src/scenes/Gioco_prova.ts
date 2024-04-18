@@ -9,14 +9,16 @@ import Enemy from "../game/Enemy";
 import Bullets from "../game/Bullets";
 
 export default class Gioco_prova extends Phaser.Scene {
-  /* ---------- SCENA ---------- */
-  player: Player;
-  enemy: Enemy;
-  colliderplayer: any;
-  player2: any;
-  platforms: Phaser.Physics.Arcade.StaticGroup;
-  camera: Phaser.Cameras.Scene2D.Camera;
-  /* ---------- SCENA ---------- */
+    /* ---------- SCENA ---------- */
+    player: Player;
+    enemy: Enemy;
+    hp_enemy: number = 5
+    nemico_distrutto: boolean = false
+    colliderplayer: any
+    player2: any
+    platforms: Phaser.Physics.Arcade.StaticGroup;
+    camera: Phaser.Cameras.Scene2D.Camera;
+    /* ---------- SCENA ---------- */
 
   /* ---------- MOVEMENT ---------- */
   W: Phaser.Input.Keyboard.Key; //climb up
@@ -183,6 +185,7 @@ export default class Gioco_prova extends Phaser.Scene {
 
     //this.y_piattaforme -= gameSettings.gameHeight / 1.3
 
+<<<<<<< HEAD
     //for (let i = 0; i < 10; i++) {
     //    let k = Math.floor(Math.random() * (10 - 2 + 1)) + 1
     //    switch (k) {
@@ -204,8 +207,76 @@ export default class Gioco_prova extends Phaser.Scene {
     //            this.CreatePlatform(0.73, 0.7) //right
     //            this.y_piattaforme -= gameSettings.gameHeight / 1.3
     //    }
+=======
+        //for (let i = 0; i < 10; i++) {
+        //    let k = Math.floor(Math.random() * (10 - 2 + 1)) + 1
+        //    switch (k) {
+        //        case 2, 7: //piafforma centrale 2 mini mini piattaforme al lato
+        //            this.CreatePlatform(0.29, 0.5)  //left 
+        //            this.CreatePlatform(0.5, 1)  //middle 
+        //            this.CreatePlatform(0.73, 0.5)  //right 
+        //            this.y_piattaforme -= gameSettings.gameHeight / 1.3
+        //        case 3, 8: // due piattaforme con spacco al centro
+        //            this.CreatePlatform(0.29, 1) //left 
+        //            this.CreatePlatform(0.73, 1) //right 
+        //            this.y_piattaforme -= gameSettings.gameHeight / 1.3
+        //        case 4, 9: // due piattaforme con spacco al a sinistra
+        //            this.CreatePlatform(0.29, 0.7) //left 
+        //            this.CreatePlatform(0.73, 2.3) //right 
+        //            this.y_piattaforme -= gameSettings.gameHeight / 1.3
+        //        case 5, 10: // due piattaforme con spacco al a destra
+        //            this.CreatePlatform(0.29, 2.3) //left 
+        //            this.CreatePlatform(0.73, 0.7) //right
+        //            this.y_piattaforme -= gameSettings.gameHeight / 1.3
+        //    }
+        //}
+
+        this.player = new Player(
+            this,
+            1000,
+            gameSettings.gameHeight * 5,
+            TextureKeys.player,
+            this.caterogia_collisioni
+        )
+        this.add.existing(this.player);
+
+        this.enemy = new Enemy(
+            this,
+            1050,
+            gameSettings.gameHeight * 5,
+            100,
+            50,
+            TextureKeys.SkeletonEnemy,
+            AnimationKeys.SkeletonEnemy,
+        )
+        this.add.existing(this.enemy);
+
+        //this.physics.world.addCollider(this.platforms, this.player)
+        //this.physics.world.addCollider(this.platforms, this.enemy)
+        this.physics.world.addCollider(this.player, this.enemy, () => {
+            //this.hp_enemy -= 1;
+            if (this.hp_enemy === 0) {
+                this.enemy.destroy(true)
+                this.nemico_distrutto = true
+            }
+        })
+        this.camera.startFollow(this.player, true, 1, 1);
+
+
+    }
+
+    //CreatePlatform(playerX: number, scala_immagine: number) {
+    //    this.platforms.create(
+    //        gameSettings.gameWidth * playerX,
+    //        this.y_piattaforme,
+    //        'platform'
+    //    ).setScale(scala_immagine, 1).body.updateFromGameObject();
+    //    this.platforms.setCollisionCategory(this.caterogia_collisioni)
+    //    this.platforms.setCollidesWith(this.caterogia_collisioni)
+>>>>>>> b8f6dd6 (negrop3)
     //}
 
+<<<<<<< HEAD
 	this.player = new Player(
 		this,
 		1000,
@@ -224,6 +295,19 @@ export default class Gioco_prova extends Phaser.Scene {
       AnimationKeys.SkeletonEnemy
     );
     this.add.existing(this.enemy);
+=======
+    update(time: number, delta: number): void {
+        this.player.HandleMovement(this.A, this.SHIFT, this.D)
+        this.player.HandleAttack(this.E, this.X, this.S, this.LEFT, this.RIGHT, this.UP, this.DOWN);
+        if (!this.nemico_distrutto) {
+            this.enemy.OnGuard(
+                this.player.getXY().x,
+                this.player.getXY().y
+            );
+        }
+
+		//console.log(this.player.getXY().x)
+>>>>>>> b8f6dd6 (negrop3)
 
     //this.physics.world.addCollider(this.platforms, this.player)
     //this.physics.world.addCollider(this.platforms, this.enemy)
@@ -311,6 +395,7 @@ export default class Gioco_prova extends Phaser.Scene {
     //this.SPACE.on("down", () => {
     //});
 
+<<<<<<< HEAD
     //this.SPACE.on("up", () => {
     //    this.SPACE.enabled = false;
     //    this.loadingJump = false;
@@ -328,4 +413,42 @@ export default class Gioco_prova extends Phaser.Scene {
     /* JUMP STUFF */
     // >>>>>>> 4e51291 (follow del nemico, mancano animazioni)
   }
+=======
+        //if (this.isJumping) {
+        //    this.player.setVelocityY(-this.playerSpeed * 2)
+        //    if (this.player.anims.currentAnim.key !== "doJump") {
+        //        this.player.play("doJump");
+        //    }
+        //}
+        //if (this.touchingDown || this.touchingLeft || this.touchingRight) {
+        //    this.SPACE.enabled = true;
+        //if (this.loadingJump) {
+        //    if (this.player.anims.currentAnim.key !== "loadJump") {
+        //        this.player.play("loadJump");
+        //    }
+        //} else 
+        //if (this.isMoving) {
+        //    if (this.player.anims.currentAnim.key !== "walk") {
+        //        this.startWalk(true);
+        //    }
+        //}
+        //else if (this.player.anims.currentAnim.key !== "idle") {
+        //    this.startWalk(false);
+        //}
+
+        //}// else {
+        //   this.SPACE.enabled = false;
+        //   if (!this.player.anims.isPlaying) {
+        //       this.player.setFrame("jump6.png");
+        //   }
+        //  }
+
+        //if (!this.touchingLeft && !this.touchingRight) {
+        //    this.player.setDrag(0, 0)
+        //    this.wastouching = false;
+        //}
+        //this.direzione = 0;
+        /* JUMP STUFF */
+    }
+>>>>>>> b8f6dd6 (negrop3)
 }
