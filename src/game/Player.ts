@@ -56,7 +56,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         super.preUpdate(t, dt);
     }
 
-	private  handleResetFlag(flag: boolean, timeReset: number) {
+	private handleResetFlag(flag: boolean, timeReset: number) {
 		flag = true;
 		setTimeout(() => {
 			flag = false;
