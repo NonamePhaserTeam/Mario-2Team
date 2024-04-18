@@ -7,7 +7,6 @@ import AnimationKeys from "../consts/AnimationKeys";
 import Player from "../game/Player";
 import Enemy from "../game/Enemy";
 import Bullets from "../game/Bullets";
-import { World } from "matter";
 
 export default class Gioco_prova extends Phaser.Scene {
   /* ---------- SCENA ---------- */
@@ -27,7 +26,7 @@ export default class Gioco_prova extends Phaser.Scene {
   SPACE: Phaser.Input.Keyboard.Key; // salta
   SHIFT: Phaser.Input.Keyboard.Key; //dasha
   X: Phaser.Input.Keyboard.Key; // cade in picchiata
-  E: Phaser.Input.Keyboard.Key; // colpisce melee
+  ENTER: Phaser.Input.Keyboard.Key; // colpisce melee
   playerSpeed: number = 300;
   /* ---------- MOVEMENT ---------- */
 
@@ -96,29 +95,49 @@ export default class Gioco_prova extends Phaser.Scene {
       true,
       false
     );
-    this.E = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.E,
+    this.ENTER = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER,
       true,
       false
     );
 
-    this.LEFT = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.LEFT,
+    this.W = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.W,
       true,
       false
     );
-    this.UP = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.UP,
+    this.A = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.A,
       true,
       false
     );
-    this.RIGHT = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.RIGHT,
+    this.S = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.S,
       true,
       false
     );
-    this.DOWN = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.DOWN,
+    this.D = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.D,
+      true,
+      false
+    );
+    this.SPACE = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SPACE,
+      true,
+      false
+    );
+    this.SHIFT = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.SHIFT,
+      true,
+      false
+    );
+    this.X = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.X,
+      true,
+      false
+    );
+    this.ENTER = this.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.ENTER,
       true,
       false
     );
@@ -141,7 +160,6 @@ export default class Gioco_prova extends Phaser.Scene {
     );
   }
   create() {
-    this.caterogia_collisioni = this.physics.nextCategory();
     this.camera.setBounds(
       0,
       0,
@@ -160,6 +178,8 @@ export default class Gioco_prova extends Phaser.Scene {
     this.camera.setBackgroundColor(gameSettings.bgColor);
     //this.platforms = this.physics.add.staticGroup();
     //this.CreatePlatform(0.5, 3)
+
+    //this.y_piattaforme -= gameSettings.gameHeight / 1.3
 
     //this.y_piattaforme -= gameSettings.gameHeight / 1.3
 
@@ -202,26 +222,15 @@ export default class Gioco_prova extends Phaser.Scene {
       100,
       50,
       TextureKeys.Texture.SkeletonEnemy,
-      AnimationKeys.SkeletonEnemy,
-      this.caterogia_collisioni
+      AnimationKeys.SkeletonEnemy
     );
     this.add.existing(this.enemy);
 
     //this.physics.world.addCollider(this.platforms, this.player)
     //this.physics.world.addCollider(this.platforms, this.enemy)
-    this.physics.world.addCollider(this.player, this.enemy);
+    this.physics.add.collider(this.player, this.enemy);
     this.camera.startFollow(this.player, true, 1, 1);
   }
-
-  //CreatePlatform(playerX: number, scala_immagine: number) {
-  //    this.platforms.create(
-  //        gameSettings.gameWidth * playerX,
-  //        this.y_piattaforme,
-  //        'platform'
-  //    ).setScale(scala_immagine, 1).body.updateFromGameObject();
-  //    this.platforms.setCollisionCategory(this.caterogia_collisioni)
-  //    this.platforms.setCollidesWith(this.caterogia_collisioni)
-  //}
   startWalk(walk: boolean) {
     walk ? this.player.play("walk") : this.player.play("idle");
   }
@@ -229,7 +238,7 @@ export default class Gioco_prova extends Phaser.Scene {
   update(time: number, delta: number): void {
     this.player.HandleMovement(this.A, this.D, this.SHIFT);
     this.player.HandleAttack(
-      this.E,
+      this.ENTER,
       this.X,
       this.S,
       this.LEFT,
@@ -310,35 +319,6 @@ export default class Gioco_prova extends Phaser.Scene {
     //        this.isJumping = false;
     //    }, 750)
     //});
-
-    //if (this.isJumping) {
-    //    this.player.setVelocityY(-this.playerSpeed * 2)
-    //    if (this.player.anims.currentAnim.key !== "doJump") {
-    //        this.player.play("doJump");
-    //    }
-    //}
-    //if (this.touchingDown || this.touchingLeft || this.touchingRight) {
-    //    this.SPACE.enabled = true;
-    //if (this.loadingJump) {
-    //    if (this.player.anims.currentAnim.key !== "loadJump") {
-    //        this.player.play("loadJump");
-    //    }
-    //} else
-    //if (this.isMoving) {
-    //    if (this.player.anims.currentAnim.key !== "walk") {
-    //        this.startWalk(true);
-    //    }
-    //}
-    //else if (this.player.anims.currentAnim.key !== "idle") {
-    //    this.startWalk(false);
-    //}
-
-    //}// else {
-    //   this.SPACE.enabled = false;
-    //   if (!this.player.anims.isPlaying) {
-    //       this.player.setFrame("jump6.png");
-    //   }
-    //  }
 
     //if (!this.touchingLeft && !this.touchingRight) {
     //    this.player.setDrag(0, 0)

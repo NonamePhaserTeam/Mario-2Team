@@ -131,7 +131,7 @@ export default class Jumper extends Phaser.Scene {
 
     const belowLayer = map.createLayer("pavimento", tileset, 0, 0);
     belowLayer.setPosition(-1000, 1600).setScale(4.5);
-    belowLayer.rotation = Phaser.Math.DegToRad(180);
+    // belowLayer.rotation = Phaser.Math.DegToRad(180);
 
     // console.log(belowLayer.width);
     // const aboveLayer = map.createLayer("muro", tileset, 0, 0);
