@@ -6,7 +6,6 @@ import { node } from "webpack";
 import AnimationKeys from "../consts/AnimationKeys";
 import Player from "../game/Player"
 import Enemy from "../game/Enemy"
-
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Player;
@@ -85,7 +84,7 @@ export default class Gioco_prova extends Phaser.Scene {
         this.physics.world.setBounds(
             0,
             0,
-           this.worldBounds.width,
+            this.worldBounds.width,
             this.worldBounds.height,
         );
     }
@@ -134,7 +133,7 @@ export default class Gioco_prova extends Phaser.Scene {
             this.y_piattaforme,
             100,
             50,
-            TextureKeys.Texture.SkeletonEnemy,
+            TextureKeys.SkeletonEnemy,
             AnimationKeys.SkeletonEnemy,
         )
         this.add.existing(this.enemy);
@@ -166,9 +165,10 @@ export default class Gioco_prova extends Phaser.Scene {
             this,
             1000,
             gameSettings.gameHeight * 5,
-            TextureKeys.Texture.player,
+            TextureKeys.player,
         )
-        //this.add.existing(this.player);
+        this.add.existing(this.player);
+
 
 
 

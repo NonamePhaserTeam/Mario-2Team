@@ -125,7 +125,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.isJumping) {
             this.isMoving = true;
             this.anims.play(AnimationKeys.Player.Jump, true);
-            this.setVelocityY(-this.speed * 3);
+            this.setVelocityY(-this.speed * 5);
         }
     	else if (!this.isTouchingDown) {
             this.setFrame("jumpsprite6.png");

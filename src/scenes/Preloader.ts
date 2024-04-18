@@ -65,9 +65,6 @@ export default class Preloader extends Phaser.Scene {
         );
         this.load.image("mariano", "/assets/images/mariano.png");
 
-        this.scene.stop(SceneKeys.Preloader);
-        // this.scene.start(SceneKeys.Game);
-        this.scene.start(SceneKeys.Jumper);
     }
 
     CreatePlayerAnims() {
