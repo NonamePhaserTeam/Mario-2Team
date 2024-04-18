@@ -1,0 +1,1280 @@
+{
+	"textures": [
+		{
+			"image": "demone.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 976,
+				"h": 675
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "demone29.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 21,
+						"y": 56,
+						"w": 159,
+						"h": 103
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 159,
+						"h": 103
+					}
+				},
+				{
+					"filename": "demone49.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 99,
+						"y": 34,
+						"w": 130,
+						"h": 126
+					},
+					"frame": {
+						"x": 162,
+						"y": 1,
+						"w": 130,
+						"h": 126
+					}
+				},
+				{
+					"filename": "demone46.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 98,
+						"y": 37,
+						"w": 133,
+						"h": 123
+					},
+					"frame": {
+						"x": 1,
+						"y": 106,
+						"w": 133,
+						"h": 123
+					}
+				},
+				{
+					"filename": "demone47.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 99,
+						"y": 35,
+						"w": 130,
+						"h": 125
+					},
+					"frame": {
+						"x": 1,
+						"y": 231,
+						"w": 130,
+						"h": 125
+					}
+				},
+				{
+					"filename": "demone28.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 24,
+						"y": 57,
+						"w": 156,
+						"h": 103
+					},
+					"frame": {
+						"x": 1,
+						"y": 358,
+						"w": 156,
+						"h": 103
+					}
+				},
+				{
+					"filename": "demone30.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 19,
+						"y": 61,
+						"w": 162,
+						"h": 99
+					},
+					"frame": {
+						"x": 133,
+						"y": 231,
+						"w": 162,
+						"h": 99
+					}
+				},
+				{
+					"filename": "demone59.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 156,
+						"w": 116,
+						"h": 4
+					},
+					"frame": {
+						"x": 133,
+						"y": 332,
+						"w": 116,
+						"h": 4
+					}
+				},
+				{
+					"filename": "demone60.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 156,
+						"w": 116,
+						"h": 4
+					},
+					"frame": {
+						"x": 133,
+						"y": 332,
+						"w": 116,
+						"h": 4
+					}
+				},
+				{
+					"filename": "demone58.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 73,
+						"w": 116,
+						"h": 87
+					},
+					"frame": {
+						"x": 136,
+						"y": 129,
+						"w": 116,
+						"h": 87
+					}
+				},
+				{
+					"filename": "demone4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 99,
+						"y": 64,
+						"w": 95,
+						"h": 96
+					},
+					"frame": {
+						"x": 254,
+						"y": 129,
+						"w": 95,
+						"h": 96
+					}
+				},
+				{
+					"filename": "demone48.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 99,
+						"y": 37,
+						"w": 130,
+						"h": 123
+					},
+					"frame": {
+						"x": 294,
+						"y": 1,
+						"w": 130,
+						"h": 123
+					}
+				},
+				{
+					"filename": "demone52.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 102,
+						"y": 43,
+						"w": 127,
+						"h": 117
+					},
+					"frame": {
+						"x": 1,
+						"y": 463,
+						"w": 127,
+						"h": 117
+					}
+				},
+				{
+					"filename": "demone1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 69,
+						"w": 83,
+						"h": 91
+					},
+					"frame": {
+						"x": 1,
+						"y": 582,
+						"w": 83,
+						"h": 91
+					}
+				},
+				{
+					"filename": "demone39.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 69,
+						"w": 82,
+						"h": 91
+					},
+					"frame": {
+						"x": 86,
+						"y": 582,
+						"w": 82,
+						"h": 91
+					}
+				},
+				{
+					"filename": "demone51.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 102,
+						"y": 45,
+						"w": 127,
+						"h": 115
+					},
+					"frame": {
+						"x": 130,
+						"y": 463,
+						"w": 127,
+						"h": 115
+					}
+				},
+				{
+					"filename": "demone5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 99,
+						"y": 66,
+						"w": 96,
+						"h": 94
+					},
+					"frame": {
+						"x": 170,
+						"y": 580,
+						"w": 96,
+						"h": 94
+					}
+				},
+				{
+					"filename": "demone55.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 35,
+						"w": 116,
+						"h": 125
+					},
+					"frame": {
+						"x": 251,
+						"y": 332,
+						"w": 116,
+						"h": 125
+					}
+				},
+				{
+					"filename": "demone26.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 115,
+						"y": 44,
+						"w": 90,
+						"h": 116
+					},
+					"frame": {
+						"x": 159,
+						"y": 338,
+						"w": 90,
+						"h": 116
+					}
+				},
+				{
+					"filename": "demone3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 100,
+						"y": 64,
+						"w": 94,
+						"h": 96
+					},
+					"frame": {
+						"x": 297,
+						"y": 227,
+						"w": 94,
+						"h": 96
+					}
+				},
+				{
+					"filename": "demone2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 101,
+						"y": 66,
+						"w": 91,
+						"h": 94
+					},
+					"frame": {
+						"x": 351,
+						"y": 126,
+						"w": 91,
+						"h": 94
+					}
+				},
+				{
+					"filename": "demone50.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 99,
+						"y": 49,
+						"w": 130,
+						"h": 111
+					},
+					"frame": {
+						"x": 426,
+						"y": 1,
+						"w": 130,
+						"h": 111
+					}
+				},
+				{
+					"filename": "demone53.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 42,
+						"w": 121,
+						"h": 118
+					},
+					"frame": {
+						"x": 259,
+						"y": 459,
+						"w": 121,
+						"h": 118
+					}
+				},
+				{
+					"filename": "demone6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 101,
+						"y": 67,
+						"w": 91,
+						"h": 93
+					},
+					"frame": {
+						"x": 268,
+						"y": 579,
+						"w": 91,
+						"h": 93
+					}
+				},
+				{
+					"filename": "demone7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 69,
+						"w": 64,
+						"h": 91
+					},
+					"frame": {
+						"x": 361,
+						"y": 579,
+						"w": 64,
+						"h": 91
+					}
+				},
+				{
+					"filename": "demone56.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 35,
+						"w": 116,
+						"h": 125
+					},
+					"frame": {
+						"x": 369,
+						"y": 325,
+						"w": 116,
+						"h": 125
+					}
+				},
+				{
+					"filename": "demone13.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 59,
+						"w": 89,
+						"h": 101
+					},
+					"frame": {
+						"x": 393,
+						"y": 222,
+						"w": 89,
+						"h": 101
+					}
+				},
+				{
+					"filename": "demone31.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 79,
+						"y": 56,
+						"w": 101,
+						"h": 104
+					},
+					"frame": {
+						"x": 444,
+						"y": 114,
+						"w": 101,
+						"h": 104
+					}
+				},
+				{
+					"filename": "demone14.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 104,
+						"y": 59,
+						"w": 85,
+						"h": 101
+					},
+					"frame": {
+						"x": 484,
+						"y": 220,
+						"w": 85,
+						"h": 101
+					}
+				},
+				{
+					"filename": "demone37.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 110,
+						"y": 56,
+						"w": 92,
+						"h": 104
+					},
+					"frame": {
+						"x": 547,
+						"y": 114,
+						"w": 92,
+						"h": 104
+					}
+				},
+				{
+					"filename": "demone36.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 112,
+						"y": 53,
+						"w": 104,
+						"h": 107
+					},
+					"frame": {
+						"x": 558,
+						"y": 1,
+						"w": 104,
+						"h": 107
+					}
+				},
+				{
+					"filename": "demone45.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 102,
+						"y": 40,
+						"w": 119,
+						"h": 120
+					},
+					"frame": {
+						"x": 382,
+						"y": 452,
+						"w": 119,
+						"h": 120
+					}
+				},
+				{
+					"filename": "demone40.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 61,
+						"w": 72,
+						"h": 99
+					},
+					"frame": {
+						"x": 427,
+						"y": 574,
+						"w": 72,
+						"h": 99
+					}
+				},
+				{
+					"filename": "demone41.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 110,
+						"y": 62,
+						"w": 70,
+						"h": 98
+					},
+					"frame": {
+						"x": 501,
+						"y": 574,
+						"w": 70,
+						"h": 98
+					}
+				},
+				{
+					"filename": "demone57.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 37,
+						"w": 116,
+						"h": 123
+					},
+					"frame": {
+						"x": 487,
+						"y": 323,
+						"w": 116,
+						"h": 123
+					}
+				},
+				{
+					"filename": "demone16.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 59,
+						"w": 75,
+						"h": 101
+					},
+					"frame": {
+						"x": 571,
+						"y": 220,
+						"w": 75,
+						"h": 101
+					}
+				},
+				{
+					"filename": "demone24.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 114,
+						"y": 53,
+						"w": 93,
+						"h": 107
+					},
+					"frame": {
+						"x": 641,
+						"y": 110,
+						"w": 93,
+						"h": 107
+					}
+				},
+				{
+					"filename": "demone43.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 103,
+						"y": 53,
+						"w": 93,
+						"h": 107
+					},
+					"frame": {
+						"x": 664,
+						"y": 1,
+						"w": 93,
+						"h": 107
+					}
+				},
+				{
+					"filename": "demone54.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 110,
+						"y": 37,
+						"w": 115,
+						"h": 123
+					},
+					"frame": {
+						"x": 503,
+						"y": 448,
+						"w": 115,
+						"h": 123
+					}
+				},
+				{
+					"filename": "demone42.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 106,
+						"y": 59,
+						"w": 74,
+						"h": 101
+					},
+					"frame": {
+						"x": 573,
+						"y": 573,
+						"w": 74,
+						"h": 101
+					}
+				},
+				{
+					"filename": "demone44.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 113,
+						"y": 45,
+						"w": 101,
+						"h": 115
+					},
+					"frame": {
+						"x": 605,
+						"y": 323,
+						"w": 101,
+						"h": 115
+					}
+				},
+				{
+					"filename": "demone15.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 58,
+						"w": 83,
+						"h": 102
+					},
+					"frame": {
+						"x": 648,
+						"y": 219,
+						"w": 83,
+						"h": 102
+					}
+				},
+				{
+					"filename": "demone21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 49,
+						"w": 97,
+						"h": 111
+					},
+					"frame": {
+						"x": 620,
+						"y": 440,
+						"w": 97,
+						"h": 111
+					}
+				},
+				{
+					"filename": "demone23.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 113,
+						"y": 49,
+						"w": 93,
+						"h": 111
+					},
+					"frame": {
+						"x": 708,
+						"y": 323,
+						"w": 93,
+						"h": 111
+					}
+				},
+				{
+					"filename": "demone12.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 58,
+						"w": 82,
+						"h": 102
+					},
+					"frame": {
+						"x": 733,
+						"y": 219,
+						"w": 82,
+						"h": 102
+					}
+				},
+				{
+					"filename": "demone35.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 115,
+						"y": 55,
+						"w": 87,
+						"h": 105
+					},
+					"frame": {
+						"x": 736,
+						"y": 110,
+						"w": 87,
+						"h": 105
+					}
+				},
+				{
+					"filename": "demone19.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 103,
+						"y": 53,
+						"w": 85,
+						"h": 107
+					},
+					"frame": {
+						"x": 759,
+						"y": 1,
+						"w": 85,
+						"h": 107
+					}
+				},
+				{
+					"filename": "demone25.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 115,
+						"y": 49,
+						"w": 90,
+						"h": 111
+					},
+					"frame": {
+						"x": 649,
+						"y": 553,
+						"w": 90,
+						"h": 111
+					}
+				},
+				{
+					"filename": "demone27.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 116,
+						"y": 47,
+						"w": 88,
+						"h": 113
+					},
+					"frame": {
+						"x": 719,
+						"y": 436,
+						"w": 88,
+						"h": 113
+					}
+				},
+				{
+					"filename": "demone22.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 114,
+						"y": 51,
+						"w": 90,
+						"h": 109
+					},
+					"frame": {
+						"x": 803,
+						"y": 323,
+						"w": 90,
+						"h": 109
+					}
+				},
+				{
+					"filename": "demone32.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 96,
+						"y": 56,
+						"w": 84,
+						"h": 104
+					},
+					"frame": {
+						"x": 817,
+						"y": 217,
+						"w": 84,
+						"h": 104
+					}
+				},
+				{
+					"filename": "demone38.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 55,
+						"w": 82,
+						"h": 105
+					},
+					"frame": {
+						"x": 825,
+						"y": 110,
+						"w": 82,
+						"h": 105
+					}
+				},
+				{
+					"filename": "demone34.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 103,
+						"y": 53,
+						"w": 84,
+						"h": 107
+					},
+					"frame": {
+						"x": 846,
+						"y": 1,
+						"w": 84,
+						"h": 107
+					}
+				},
+				{
+					"filename": "demone33.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 53,
+						"w": 82,
+						"h": 107
+					},
+					"frame": {
+						"x": 741,
+						"y": 551,
+						"w": 82,
+						"h": 107
+					}
+				},
+				{
+					"filename": "demone20.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 54,
+						"w": 82,
+						"h": 106
+					},
+					"frame": {
+						"x": 809,
+						"y": 434,
+						"w": 82,
+						"h": 106
+					}
+				},
+				{
+					"filename": "demone11.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 110,
+						"y": 58,
+						"w": 76,
+						"h": 102
+					},
+					"frame": {
+						"x": 825,
+						"y": 542,
+						"w": 76,
+						"h": 102
+					}
+				},
+				{
+					"filename": "demone17.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 110,
+						"y": 58,
+						"w": 71,
+						"h": 102
+					},
+					"frame": {
+						"x": 893,
+						"y": 434,
+						"w": 71,
+						"h": 102
+					}
+				},
+				{
+					"filename": "demone9.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 110,
+						"y": 60,
+						"w": 67,
+						"h": 100
+					},
+					"frame": {
+						"x": 895,
+						"y": 323,
+						"w": 67,
+						"h": 100
+					}
+				},
+				{
+					"filename": "demone10.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 116,
+						"y": 59,
+						"w": 66,
+						"h": 101
+					},
+					"frame": {
+						"x": 903,
+						"y": 217,
+						"w": 66,
+						"h": 101
+					}
+				},
+				{
+					"filename": "demone18.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 112,
+						"y": 59,
+						"w": 66,
+						"h": 101
+					},
+					"frame": {
+						"x": 909,
+						"y": 110,
+						"w": 66,
+						"h": 101
+					}
+				},
+				{
+					"filename": "demone8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 288,
+						"h": 160
+					},
+					"spriteSourceSize": {
+						"x": 112,
+						"y": 73,
+						"w": 64,
+						"h": 87
+					},
+					"frame": {
+						"x": 903,
+						"y": 538,
+						"w": 64,
+						"h": 87
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:7350b177f5ff55a205f80fadc79af5f4:40701ed9e778b7f63b765c216693958d:71c717c4cf923dc161f52d334f937cc2$"
+	}
+}

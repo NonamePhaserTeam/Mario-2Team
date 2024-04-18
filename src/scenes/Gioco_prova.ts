@@ -7,6 +7,7 @@ import AnimationKeys from "../consts/AnimationKeys";
 import Player from "../game/Player"
 import Enemy from "../game/Enemy"
 
+import AlignGrid from "../utilities/alignGrid";
 export default class Gioco_prova extends Phaser.Scene {
     /* ---------- SCENA ---------- */
     player: Player;
@@ -85,7 +86,7 @@ export default class Gioco_prova extends Phaser.Scene {
         this.physics.world.setBounds(
             0,
             0,
-           this.worldBounds.width,
+            this.worldBounds.width,
             this.worldBounds.height,
         );
     }
@@ -100,12 +101,9 @@ export default class Gioco_prova extends Phaser.Scene {
         this.physics.world.setBounds(
             350,
             0,
-            gameSettings.gameWidth-700,
+            gameSettings.gameWidth - 700,
             gameSettings.gameHeight * 5,
             true
-        )
-        console.log(
-            gameSettings.gameWidth/2
         )
 
         //let k = Math.floor(Math.random() * (10 - 2 + 1)) + 1
@@ -128,16 +126,6 @@ export default class Gioco_prova extends Phaser.Scene {
         this.y_piattaforme -= gameSettings.gameHeight / 1.3
 
 
-        this.enemy = new Enemy(
-            this,
-            1050,
-            this.y_piattaforme,
-            100,
-            50,
-            TextureKeys.Texture.SkeletonEnemy,
-            AnimationKeys.SkeletonEnemy,
-        )
-        this.add.existing(this.enemy);
 
         this.CreatePlatform(0.26, 0.8, 1.5, this.y_piattaforme) //left 
         this.CreatePlatform2(0.405, 0.9, 0.8, this.y_piattaforme - 27.5) //centrale
@@ -146,6 +134,16 @@ export default class Gioco_prova extends Phaser.Scene {
         this.y_piattaforme -= gameSettings.gameHeight / 1.3
 
 
+        this.enemy = new Enemy(
+            this,
+            1050,
+            gameSettings.gameHeight*5,
+            100,
+            50,
+            TextureKeys.Texture.SkeletonEnemy,
+            AnimationKeys.SkeletonEnemy,
+        )
+        this.add.existing(this.enemy);
 
 
 
@@ -171,6 +169,15 @@ export default class Gioco_prova extends Phaser.Scene {
         //this.add.existing(this.player);
 
 
+        const aGrid = new AlignGrid({
+            scene: this,
+            rows: 11,
+            cols: 11,
+            width: this.worldBounds.width,
+            height: this.worldBounds.height*5,
+        });
+
+        aGrid.showNumbers();
 
         this.physics.world.addCollider(this.platforms, this.player)
         this.physics.world.addCollider(this.platforms, this.enemy)
@@ -182,7 +189,7 @@ export default class Gioco_prova extends Phaser.Scene {
                 this.nemico_distrutto = true
             }
         })
-        this.camera.startFollow(this.player, true, 1, 1);
+        this.camera.startFollow(this.player, true, 0.5, 0.5,1,1);
         this.physics.world.addCollider(this.player, this.platforms_senzacollider)
         this.physics.world.addCollider(this.player, this.platforms)
         this.player.setCollisionCategory(3)
@@ -198,6 +205,7 @@ export default class Gioco_prova extends Phaser.Scene {
         this.platforms.setCollisionCategory(3)
         this.platforms.setCollidesWith(3)
     }
+
     CreatePlatform2(playerX: number, scala_immagineX: number, scala_immagineY: number, y_piattaforma: number) {
         this.platforms_senzacollider.create(
             gameSettings.gameWidth * playerX,
@@ -207,7 +215,7 @@ export default class Gioco_prova extends Phaser.Scene {
         this.platforms_senzacollider.setCollisionCategory(3)
         this.platforms_senzacollider.setCollidesWith(3)
     }
-    startWalk(walk: boolean) { walk ? this.player.play("walk") : this.player.play("idle") }
+
 
     update(time: number, delta: number): void {
         this.player.HandleMovement(this.A, this.SHIFT, this.D)

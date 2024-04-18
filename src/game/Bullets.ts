@@ -18,6 +18,7 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true)
         this.direzione_shot = direzione
 		scene.add.existing(this);
+        
 		this.create();
     }
 	
@@ -26,9 +27,12 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
 			this.Direzione(this.direzione_shot)[0],
 			this.Direzione(this.direzione_shot)[1]
 		);
+
 		setTimeout(() => {
 			this.destroy(true);
 		}, 500);
+        this.setCollisionCategory(3)
+        this.setCollidesWith(3)
 	}
 
     Direzione(dir: string): Array<number> {
@@ -69,19 +73,16 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         }
         return [xp, yp];
     }
-
-	checkCollision() {
+	 checkCollision() {
 		let t = this.body.touching;
 		let b = this.body.blocked;
 
-			console.log(t);
-			console.log(b);
-		if(
-			t.left || b.left || 
-			t.right || b.right ||
-			t.up || b.up ||
-			t.down || b.down
-		)	this.destroy(true);
+			//console.log(t);
+			//console.log(b);
+		if(t.left || b.left || t.right || b.right || t.up || b.up || t.down || b.down)	{
+            console.log("negro")
+            this.destroy(true);
+        }
 	}
 
     preUpdate(t: number, dt: number) {

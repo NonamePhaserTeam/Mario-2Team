@@ -44,24 +44,27 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setScale(3);
         this.setCollideWorldBounds(true)
         this.anims.play(this.nemico.Idle);
+        this.setCollisionCategory(3)
+        this.setCollidesWith(3)
     }
 
     OnGuard(playerx: number, playery: number) {
         let distanzaX_dal_player: number = playerx - this.x
         let distanzaY_dal_player: number = playery - this.y
         //console.log(this.y, playery, distanzaY_dal_player)
-        if (distanzaY_dal_player < -10) { // quando sta a terra
-            if (distanzaX_dal_player < this.distanza_minima && distanzaX_dal_player > 0) { // follow right
+        if (distanzaY_dal_player > -50) { // quando sta a terra
+            if (distanzaX_dal_player < this.distanza_minima && distanzaX_dal_player > 10) { // follow right
                 this.anims.play(this.nemico.Walk, true);
                 this.setFlipX(false)
                 this.setVelocityX(this.chase_speed);
                 if(this.body.touching.right){ this.setVelocityX(0)}
-            } else if (distanzaX_dal_player > -this.distanza_minima && distanzaX_dal_player < 0) { // follow left
+            } else if (distanzaX_dal_player > -this.distanza_minima && distanzaX_dal_player < -10) { // follow left
                 this.anims.play(this.nemico.Walk, true);
                 this.setFlipX(true)
                 this.setVelocityX(-this.chase_speed);
                 if(this.body.touching.left){ this.setVelocityX(0)}
-            } else if (distanzaX_dal_player > this.distanza_minima || distanzaX_dal_player < -this.distanza_minima) {
+
+            } else if (distanzaX_dal_player > this.distanza_minima || distanzaX_dal_player < -this.distanza_minima) { // patrol da fare
 
                 this.anims.play(this.nemico.Idle, true);
                 this.setVelocityX(0);
@@ -79,21 +82,20 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.anims.play(this.nemico.Idle, true);
                 this.setVelocityX(0);
-                // console.log("fermo perche' non vedo")
-                //console.log("fermo perche' non vedo")
+                console.log("fermo perche' non vedo")
             }
         } else if (
-            distanzaY_dal_player > -150 &&
+            distanzaY_dal_player > -100 &&
             (distanzaX_dal_player < this.distanza_minima - 300 && distanzaX_dal_player > 30) ||
-            (distanzaX_dal_player > -this.distanza_minima + 300 && distanzaX_dal_player < 30)
+            (distanzaX_dal_player > -this.distanza_minima + 300 && distanzaX_dal_player < -30)
         ) {
             this.anims.play(this.nemico.Idle, true); // qua ci dovrebbe stare l'animazione di attacco in aria del nemico
             this.setVelocityX(0);
-            // console.log("fermo perche' sto attaccando sopra")
+            console.log("fermo perche' sto attaccando sopra")
         }else{
             this.anims.play(this.nemico.Idle, true);
             this.setVelocityX(0);
-            // console.log("fermo perche' non vedo e sta sopra")
+             console.log("fermo perche' non vedo e sta sopra")
         }
         // tutti queste costanti sono abbastanza assolute 
         // -100 e' se il player sta piu' o meno sullo stesso layer del player 

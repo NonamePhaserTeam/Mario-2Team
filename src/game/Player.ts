@@ -230,12 +230,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.colpo = new Bullets(
                     this.scene,
                     this.body.x,
-                    this.body.y,
+                    this.body.y+40,
                     this.dirshot,
                 );
-				/* setTimeout(() => {
-					this.colpo.checkCollision()
-				}, 300); */
+                    this.colpo.checkCollision()
 			}
 
 			if(this.anims.currentAnim.key === AnimationKeys.Player.Jump) {

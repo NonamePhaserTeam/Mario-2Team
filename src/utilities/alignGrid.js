@@ -35,6 +35,7 @@ export default class AlignGrid
 
 	show()
 	{
+		//console.log("sesso")
 		this.graphics=this.scene.add.graphics();
 		this.graphics.lineStyle(2,0xff0000);
 
