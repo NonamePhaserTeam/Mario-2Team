@@ -10,7 +10,6 @@ namespace TextureKeys {
 		player = "player",
 		SkeletonEnemy = "SkeletonEnemy",
 		portale = "portale",		
-		fionda = "fionda",
 		Boss = "boss",
 		Bomb = "bomb",
   	}

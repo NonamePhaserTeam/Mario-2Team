@@ -58,11 +58,11 @@ export default class Preloader extends Phaser.Scene {
             "assets/spritesheets/portal/portali.png",
             "assets/spritesheets/portal/portali.json"
         );
-        this.load.atlas(
-            TextureKeys.Texture.fionda,
-            "assets/spritesheets/fionda.png",
-            "../assets/spritesheets/fionda.json"
-        );
+        //this.load.atlas(
+        //    TextureKeys.Texture.fionda,
+        //    "assets/spritesheets/fionda.png",
+        //    "../assets/spritesheets/fionda.json"
+        //);
         this.load.image("mariano", "/assets/images/mariano.png");
 
     }
@@ -123,8 +123,21 @@ export default class Preloader extends Phaser.Scene {
         });
 
         this.anims.create({
-            key: AnimationKeys.Player.fionda,
-            frames: this.anims.generateFrameNames(TextureKeys.Texture.fionda, {
+            key: AnimationKeys.Player.Walk_punch,
+            frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
+                start: 1,
+                end: 8,
+                zeroPad: 1,
+                prefix: "spriteinginocchio",
+                suffix: ".png",
+            }),
+            frameRate: 12,
+            repeat: 0,
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Player.Fionda,
+            frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
                 start: 1,
                 end: 3,
                 zeroPad: 1,
@@ -134,7 +147,104 @@ export default class Preloader extends Phaser.Scene {
             frameRate: 12,
             repeat: 0,
         });
+
+        this.anims.create({
+            key: AnimationKeys.Player.Walk_fionda,
+            frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
+                start: 1,
+                end: 9,
+                zeroPad: 1,
+                prefix: "fionda cammina",
+                suffix: ".png",
+            }),
+            frameRate: 12,
+            repeat: 0,
+        });
+
+
+        this.anims.create({
+            key: AnimationKeys.Player.Sword,
+            frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
+                start: 1,
+                end: 6,
+                zeroPad: 1,
+                prefix: "animazione spada",
+                suffix: ".png",
+            }),
+            frameRate: 12,
+            repeat: 0,
+        });
+
+
+        this.anims.create({
+            key: AnimationKeys.Player.Walk_sword,
+            frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
+                start: 1,
+                end: 12,
+                zeroPad: 1,
+                prefix: "muvment fight",
+                suffix: ".png",
+            }),
+            frameRate: 12,
+            repeat: -1,
+        });
+
+
+        this.anims.create({
+            key: AnimationKeys.Player.Death,
+            frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
+                start: 1,
+                end: 12,
+                zeroPad: 1,
+                prefix: "morte",
+                suffix: ".png",
+            }),
+            frameRate: 12,
+            repeat: 0,
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Player.Ginocchio,
+            frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
+                start: 1,
+                end: 8,
+                zeroPad: 1,
+                prefix: "spriteinginocchio",
+                suffix: ".png",
+            }),
+            frameRate: 12,
+            repeat: 0,
+        });
+
+        this.anims.create({
+            key: AnimationKeys.Player.Dush,
+            frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
+                start: 1,
+                end: 3,
+                zeroPad: 1,
+                prefix: "dush",
+                suffix: ".png",
+            }),
+            frameRate: 12,
+            repeat: 0,
+        });
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
     CreateEnemiesAnims() {
         this.anims.create({
             key: AnimationKeys.SkeletonEnemy.Idle,

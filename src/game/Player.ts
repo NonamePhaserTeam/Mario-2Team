@@ -114,7 +114,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.setVelocityX(-this.speed);
 				this.setFlipX(true);
 				this.handleResetFlag(this.isMovingLeft, 300);
-				if (this.enableDash && this.isTouchingDown) { this.setVelocityX(-this.speed * 15) }
+				if (this.enableDash && this.isTouchingDown) {
+                    this.anims.play(AnimationKeys.Player.Dush)
+				    this.setVelocityX(-this.speed * 15)
+				}
 
 			}
 			if (RIGHT.isDown) {
@@ -122,7 +125,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.setFlipX(false);
 				this.handleResetFlag(this.isMovingRight, 300);
 				
-				if (this.enableDash && this.isTouchingDown) { this.setVelocityX(this.speed * 15) }
+				if (this.enableDash && this.isTouchingDown) {
+                    this.anims.play(AnimationKeys.Player.Dush)
+				    this.setVelocityX(this.speed * 15)
+				}
 
 			}
 		}
@@ -173,7 +179,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.dirshot = "LEFT"
 				this.setFlipX(true)
 				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.fionda, true)
+				this.anims.play(AnimationKeys.Player.Fionda, true)
 				this.handleResetFlag(this.enableShooting, 300);
 
 			} // SINISTRA
@@ -184,7 +190,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.dirshot = "RIGHT"
 				this.setFlipX(false)
 				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.fionda, true)
+				this.anims.play(AnimationKeys.Player.Fionda, true)
 				this.handleResetFlag(this.enableShooting, 300);
 
 			} // DESTRA
@@ -193,7 +199,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.dirshot = "LEFT_DOWN"
 				this.setFlipX(true)
 				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.fionda, true)
+				this.anims.play(AnimationKeys.Player.Fionda, true)
 				this.handleResetFlag(this.enableShooting, 300);
 
 			} // BASSO SINISTRA
@@ -201,7 +207,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.dirshot = "LEFT_UP"
 				this.setFlipX(true)
 				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.fionda, true)
+				this.anims.play(AnimationKeys.Player.Fionda, true)
 				this.handleResetFlag(this.enableShooting, 300);
 
 			} //ALTO SINISTRA
@@ -210,7 +216,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.dirshot = "RIGHT_DOWN"
 				this.setFlipX(false)
 				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.fionda, true)
+				this.anims.play(AnimationKeys.Player.Fionda, true)
 				this.handleResetFlag(this.enableShooting, 300);
 
 			} // BASSO DESTRA
@@ -218,7 +224,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				this.dirshot = "RIGHT_UP"
 				this.setFlipX(false)
 				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.fionda, true)
+				this.anims.play(AnimationKeys.Player.Fionda, true)
 				this.handleResetFlag(this.enableShooting, 300);
 
 			} // ALTO DESTRA
@@ -226,7 +232,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 		this.on("animationcomplete", () => {
             this.isAttacking = false;
-            if (this.anims.currentAnim.key === "player-fionda") {
+            if (this.anims.currentAnim.key === "player-Fionda") {
 				this.colpo = new Bullets(
                     this.scene,
                     this.body.x,

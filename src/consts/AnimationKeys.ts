@@ -3,13 +3,19 @@
 
 namespace AnimationKeys {
     export enum Player {
-		Idle = "player-idle",
-		Walk = "player-run",
-		Punch = "player-punch",
-		Sword = "player-sword",
-		Jump = "player-jump",
+		Idle = "player-idle", // fatto
+		Walk = "player-run", //fatto
+		Punch = "player-punch", //fatto
+		Sword = "player-sword", //fatto
+		Jump = "player-jump", //fatto
 		Blow = "player-blow",
-		fionda = "player-fionda",
+		Fionda = "player-sparo fionda",
+        Walk_fionda = "player-fionda camminata",
+        Walk_sword = "player-spada camminata",
+        Walk_punch = "player-punch camminata",
+        Death = "player-death",
+        Ginocchio = "player-ginocchio",
+        Dush = "plyaer-dush"
 	}
 
 	export enum Boss{
