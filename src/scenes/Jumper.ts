@@ -4,6 +4,7 @@ import SceneKeys from "../consts/SceneKeys";
 import TextureKeys from "../consts/TextureKeys";
 import { Player, Enemy } from "../game/components";
 import AnimationKeys from "../consts/AnimationKeys";
+import AlignGrid from "../utilities/alignGrid";
 
 export default class Jumper extends Phaser.Scene {
   /* ---------- SCENA ---------- */
@@ -123,6 +124,17 @@ export default class Jumper extends Phaser.Scene {
   }
 
   create() {
+
+	const aGrid = new AlignGrid({
+		scene: this,
+		rows: 11,
+		cols: 11,
+		width: this.worldBounds.width,
+		height: this.worldBounds.height,
+	});
+
+	aGrid.showNumbers();
+
     const map = this.make.tilemap({ key: "map" });
 
     //primo parametro è il nome che ha il tileset del software
@@ -131,13 +143,14 @@ export default class Jumper extends Phaser.Scene {
 
     const belowLayer = map.createLayer("pavimento", tileset, 0, 0);
     belowLayer.setPosition(-1000, 1600).setScale(4.5);
+	aGrid.placeAtIndex(155, belowLayer);
     // belowLayer.rotation = Phaser.Math.DegToRad(180);
 
     // console.log(belowLayer.width);
     // const aboveLayer = map.createLayer("muro", tileset, 0, 0);
 
-    const portal = this.physics.add.sprite(0, 0, TextureKeys.Texture.portale);
-    portal.play(AnimationKeys.Portale.Opening, true);
+	// const portal = this.physics.add.sprite(0, 0, TextureKeys.Texture.portale);
+	// portal.play(AnimationKeys.Portale.Opening, true);
 
     this.camera.setBackgroundColor(gameSettings.bgColor);
     this.platforms = this.physics.add.staticGroup();
@@ -210,6 +223,8 @@ export default class Jumper extends Phaser.Scene {
       this.UP,
       this.DOWN
     );
+    this.enemy.OnGuard(this.player.getXY().x, this.player.getXY().y);
+
 
     // /* CLIMBING STUFF */
     // if (this.touchingRight || this.touchingLeft) {

@@ -5,10 +5,10 @@ import AnimationKeys from "../consts/AnimationKeys";
 
 export default class Preloader extends Phaser.Scene {
   constructor() {
-    super("preloader");
+    super(SceneKeys.Preloader);
   }
 
-  preload() {
+  	preload() {
     // preload di tutti gli asset
 
     //this.load.image(TextureKeys.Logo, 'assets/images/logo.jpg')
@@ -19,7 +19,7 @@ export default class Preloader extends Phaser.Scene {
 	    this.load.atlas(TextureKeys.Texture.platform, 'assets/images/platform.png', 'assets/images/platform.json');
 	    this.load.atlas(TextureKeys.Texture.SkeletonEnemy, 'assets/spritesheets/skeleton/skeleton.png', 'assets/spritesheets/skeleton/skeleton.json');
 		this.load.image("tiles", "/assets/tilesets/walls_rosso.png")
-		this.load.tilemapTiledJSON("map", "assets/tilesets/mappa_1.json")
+		this.load.tilemapTiledJSON("map", "assets/tilesets/mappa1.json")
         this.load.atlas(TextureKeys.Texture.portale, 'assets/spritesheets/portal/portali.png', 'assets/spritesheets/portal/portali.json');
 	    this.load.atlas(TextureKeys.Texture.fionda, 'assets/spritesheets/fionda.png', '../assets/spritesheets/fionda.json');
     }
@@ -64,9 +64,27 @@ export default class Preloader extends Phaser.Scene {
       "../assets/spritesheets/fionda.json"
     );
     this.load.image("mariano", "/assets/images/mariano.png");
+
+	this.scene.stop(SceneKeys.Preloader);
+	// this.scene.start(SceneKeys.Game);
+	this.scene.start(SceneKeys.Jumper);
   }
 
 	CreatePlayerAnims() {
+
+		this.anims.create({
+			key: AnimationKeys.Player.Idle,
+			frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
+				start: 1,
+				end: 5,
+				zeroPad: 1,
+				prefix: "fermo",
+				suffix: ".png",
+			}),
+			frameRate: 8,
+			repeat: -1,	
+		});
+
         this.anims.create({
             key: AnimationKeys.Player.Walk,
             frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
@@ -80,9 +98,6 @@ export default class Preloader extends Phaser.Scene {
             repeat: -1
         });
 
-    this.scene.stop(SceneKeys.Preloader);
-    // this.scene.start(SceneKeys.Game);
-    this.scene.start(SceneKeys.Jumper);
 
 	this.anims.create({
 		key: AnimationKeys.Player.Jump,
@@ -93,7 +108,7 @@ export default class Preloader extends Phaser.Scene {
 			prefix: 'jumpsprite',
 			suffix: '.png'
 		}),
-		frameRate: 2,
+		frameRate: 5,
 		repeat: 0,
 	});
 
@@ -109,32 +124,6 @@ export default class Preloader extends Phaser.Scene {
 		frameRate: 12,
 		repeat: 0,
 	});
-
-    this.anims.create({
-      key: AnimationKeys.Player.Jump,
-      frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
-        start: 4,
-        end: 6,
-        zeroPad: 1,
-        prefix: "jump",
-        suffix: ".png",
-      }),
-      frameRate: 2,
-      repeat: 0,
-    });
-
-    this.anims.create({
-      key: AnimationKeys.Player.Punch,
-      frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
-        start: 1,
-        end: 12,
-        zeroPad: 1,
-        prefix: "fight",
-        suffix: ".png",
-      }),
-      frameRate: 12,
-      repeat: 0,
-    });
 
     this.anims.create({
       key: AnimationKeys.Player.fionda,
@@ -206,9 +195,9 @@ export default class Preloader extends Phaser.Scene {
 
   CreateEntitiesAnims() {
     // this.anims.createFromAseprite(TextureKeys.portale);
-    /* this.anims.create({
+    this.anims.create({
 			key: AnimationKeys.Portale.Opening,
-			frames: this.anims.generateFrameNames(TextureKeys.SkeletonEnemy, {
+			frames: this.anims.generateFrameNames(TextureKeys.Texture.portale, {
 				start: 1,
 				end: 8,
 				zeroPad: 1,
@@ -217,6 +206,6 @@ export default class Preloader extends Phaser.Scene {
 			}),
 			frameRate: 6,
 			repeat: -1,
-		}); */
+		});
   }
 }

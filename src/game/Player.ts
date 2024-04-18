@@ -132,7 +132,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(this.speed);
         }
 
-        if (!this.isMoving) {
+        if (!this.isMoving && this.isTouchingDown) {
             this.anims.play(AnimationKeys.Player.Idle, true);
             this.setAccelerationY(0);
             this.setVelocityX(0);
@@ -222,7 +222,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 		this.on("animationcomplete", () => {
             this.isAttacking = false;
             if (this.anims.currentAnim.key === "player-fionda") {
-                this.colpo = new Bullets(
+				this.colpo = new Bullets(
                     this.scene,
                     this.body.x,
                     this.body.y,
@@ -231,6 +231,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 				/* setTimeout(() => {
 					this.colpo.checkCollision()
 				}, 300); */
+			}
+
+			if(this.anims.currentAnim.key === AnimationKeys.Player.Jump) {
+				console.log(this.anims.currentAnim.key)
 			}
         });
     }
