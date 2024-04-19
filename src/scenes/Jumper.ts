@@ -189,27 +189,30 @@ export default class Jumper extends Phaser.Scene {
                     this.y_piattaforme -= gameSettings.gameHeight / 1.3 */
       }
     }
-    this.player = new Player(
-      this,
-      this.platforms.getChildren()[0].body.position.x + 100,
-      this.platforms.getChildren()[0].body.position.y - 60,
-      TextureKeys.Texture.player
-    ).setScale(1.6);
-    this.add.existing(this.player);
-
+	
+	
     this.enemy = new Enemy(
-      this,
-      0,
-      0,
-      100,
-      50,
-      TextureKeys.Texture.SkeletonEnemy,
-      AnimationKeys.SkeletonEnemy
+		this,
+		0,
+		0,
+		TextureKeys.Texture.SkeletonEnemy,
+		50,
+		10,
+		100,
+		AnimationKeys.SkeletonEnemy,
     );
+	
+	this.player = new Player(
+	  this,
+	  this.platforms.getChildren()[0].body.position.x + 100,
+	  this.platforms.getChildren()[0].body.position.y - 60,
+	  TextureKeys.Texture.player,
+	  this.enemy,
+	).setScale(1.6);
 
-    this.camera.startFollow(this.player, true, .5, .5);
+	this.camera.startFollow(this.player, true, .5, .5);
 	this.camera.setZoom(.7)
-    this.physics.add.collider(this.player, this.platforms);
+	this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.player, this.enemy, () => {
 		setTimeout(() => {
 			this.player.damage();

@@ -1,6 +1,6 @@
-import Phaser, { Game, Physics } from "phaser";
+import Phaser, { Physics } from "phaser";
 import AnimationKeys from "../consts/AnimationKeys";
-import { Bullets } from "../game/components";
+import { Bullets, Enemy } from "../game/components";
 import TextureKeys from "../consts/TextureKeys";
 import { gameSettings } from "../consts/GameSettings";
 //import { gameData } from "../consts/GameData";
@@ -19,19 +19,23 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     private enableShooting = true;
     private dirshot: string;
     private colpo: Bullets;
-    private dacol: number;
+	private parent: Phaser.Scene;
+	private mob: Enemy /*| Boss*/;
 
     constructor(
         scene: Phaser.Scene,
         x: number,
         y: number,
         texture: string,
+		enemy: Enemy /*| Boss*/,
         frame?: string | number,
     ) {
         super(scene, x, y, texture, frame);
         scene.physics.world.enable(this);
         // this.setInteractive(true);
         scene.add.existing(this);
+		this.parent = scene;
+		this.mob = enemy;
         this.create();
     }
 
@@ -47,6 +51,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 }, 400);
             }
         });
+
+		this.parent.physics.add.collider(this.mob, this, () => {
+			if(this.isAttacking)
+					this.mob.OnHit(10)
+		});
         /* this.on("pointerdown", () => {
             console.log("pointerdown");
         }) */
@@ -97,22 +106,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Blow: Phaser.Input.Keyboard.Key,
     ) {
         if (this.isAttacking) {
-            if (this.anims.currentAnim.key === "player-punch") {
-                this.anims.play(AnimationKeys.Player.Walk_punch)
+            if (this.anims.currentAnim.key === AnimationKeys.Player.Walk) {
+                this.anims.play(AnimationKeys.Player.Walk_punch, true)
             }
-            else if (this.anims.currentAnim.key === "player-sword") {
-                this.anims.play(AnimationKeys.Player.Walk_sword)
-            }
-            else if (this.anims.currentAnim.key === "player-fionda") {
-                this.anims.play(AnimationKeys.Player.Walk_fionda)
+            else if (this.anims.currentAnim.key === AnimationKeys.Player.Sword) {
+                this.anims.play(AnimationKeys.Player.Walk_sword, true)
             }
             //this.setVelocity(0);
             return;
         }
 
+        this.isMoving = LEFT.isDown || RIGHT.isDown;
         this.setVelocity(0);
 
-        this.isMoving = LEFT.isDown || RIGHT.isDown;
         this.isTouchingDown = this.body.touching.down || this.body.blocked.down;
 
         if (SHIFT.isDown && this.shiftEnabled) {
@@ -257,18 +263,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                     this.dirshot,
                 );
 				this.scene.add.existing(this.colpo);
-			}
-
-			if(this.anims.currentAnim.key === AnimationKeys.Player.Jump) {
-				// console.log(this.anims	.currentAnim.key)
+				this.scene.physics.add.collider(this.colpo, this.mob, () => {
+					this.mob.OnHit(10);
+					// this.colpo.collide();
+				});
 			}
         });
     }
-    sparalello(): {Attacking:boolean, dirshot:string}{
-        return {
-            Attacking:!this.isAttacking,
-            dirshot:this.dirshot
-
-        }
-    }
+    
 }

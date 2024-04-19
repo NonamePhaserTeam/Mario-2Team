@@ -140,34 +140,20 @@ export default class Gioco_prova extends Phaser.Scene {
             this,
             1050,
             gameSettings.gameHeight * 5,
+            TextureKeys.Texture.SkeletonEnemy,
             100,
             50,
-            TextureKeys.Texture.SkeletonEnemy,
+			10,
             AnimationKeys.SkeletonEnemy,
         )
-        this.add.existing(this.enemy);
-
-
-
-
-        //piafforma centrale 2 mini mini piattaforme al lato
-        //this.CreatePlatform(0.29, 0.5, 1.8, this.y_piattaforme)  //left 
-        //this.CreatePlatform(0.5, 1, 1.8, this.y_piattaforme)  //middle 
-        //this.CreatePlatform(0.73, 0.5, 1.8, this.y_piattaforme)  //right 
-        //this.y_piattaforme -= gameSettings.gameHeight / 1.3
-
-
-        //// due piattaforme con spacco al a destra
-        //this.CreatePlatform(0.29, 2.3, 1.8, this.y_piattaforme) //left 
-        //this.CreatePlatform(0.73, 0.7, 1.8, this.y_piattaforme) //right
-        //this.y_piattaforme -= gameSettings.gameHeight / 1.3
-
+        // this.add.existing(this.enemy);
 
         this.player = new Player(
             this,
             1000,
             gameSettings.gameHeight * 5,
             TextureKeys.Texture.player,
+			this.enemy,
         )
         //this.add.existing(this.player);
 
@@ -216,21 +202,7 @@ export default class Gioco_prova extends Phaser.Scene {
         this.platforms_senzacollider.setCollidesWith(3)
     }
 
-    CreateBullets() {
-        let colpo = this.colpo.create(
-            this.player.x,
-            this.player.y,
-            TextureKeys.Texture.player
-        ).setScale(0.5);
-
-        colpo.setVelocity(
-            this.Direzione(this.dirshot)[0],
-            this.Direzione(this.dirshot)[1]
-        );
-
-        this.colpo.setCollisionCategory(3)
-        this.colpo.setCollidesWith(3)
-    }
+  
 
     Direzione(dir: string): Array<number> {
         let xp: number, yp: number;

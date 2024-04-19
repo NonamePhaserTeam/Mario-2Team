@@ -13,15 +13,18 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     private patrol_speed: number;
     private damage: number;
     private distanza_minima: number = 500;
+	private health: number;
     private nemico: EnemyClass
+	private isAlive: boolean = true;
 
     constructor(
         scene: Phaser.Scene,
         xe: number,
         ye: number,
+        texture: string,
         chase_speed: number,
         patrol_speed: number,
-        texture: string,
+		health: number,
         EnemyClass: EnemyClass,
         frame?: string,
     ) {
@@ -30,6 +33,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.nemico = EnemyClass;
         this.chase_speed = chase_speed;
         this.patrol_speed = patrol_speed;
+		this.health = health
         scene.add.existing(this);
         this.create();
     }
@@ -47,7 +51,16 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setCollidesWith(3)
     }
 
+	OnHit(damage: number) {
+		this.health -= damage
+		if(this.health <= 0) {
+			this.isAlive = false
+			this.destroy();	
+		}
+	}
+
     OnGuard(playerx: number, playery: number) {
+		if(!this.isAlive) return;
         let distanzaX_dal_player: number = playerx - this.x
         let distanzaY_dal_player: number = playery - this.y
         //console.log(this.y, playery, distanzaY_dal_player)
