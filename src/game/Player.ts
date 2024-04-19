@@ -3,22 +3,23 @@ import AnimationKeys from "../consts/AnimationKeys";
 import { Bullets } from "../game/components";
 import TextureKeys from "../consts/TextureKeys";
 import { gameSettings } from "../consts/GameSettings";
+//import { gameData } from "../consts/GameData";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-  private speed = 450;
-  private isMoving = false;
-  private isMovingLeft = false;
-  private isMovingRight = false;
-  private isAttacking = false;
-  private isTouchingDown = true;
-  private isJumping = false;
-  private enableDash = false;
-  private shiftEnabled = true;
-  private health = 100;
-  private enableShooting = true;
-  private dirshot: string;
-  private colpo: Bullets;
-  private dacol: number;
+    private speed = 450;
+    private isMoving = false;
+    private isMovingLeft = false;
+    private isMovingRight = false;
+    private isAttacking = false;
+    private isTouchingDown = true;
+    private isJumping = false;
+    private enableDash = false;
+    private shiftEnabled = true;
+    private health = 100;
+    private enableShooting = true;
+    private dirshot: string;
+    private colpo: Bullets;
+    private dacol: number;
 
     constructor(
         scene: Phaser.Scene,
@@ -29,15 +30,22 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     ) {
         super(scene, x, y, texture, frame);
         scene.physics.world.enable(this);
-		// this.setInteractive(true);
+        // this.setInteractive(true);
         scene.add.existing(this);
         this.create();
     }
-	
+
     private create() {
+<<<<<<< HEAD
 		this.setCollideWorldBounds(true)
 		this.anims.play(AnimationKeys.Player.Idle);
 		this.scene.input.keyboard.on('keydown-SPACE', () => {
+=======
+        this.setCollideWorldBounds(true)
+        this.anims.play(AnimationKeys.Player.Idle);
+        this.setScale(1.5);
+        this.scene.input.keyboard.on('keydown-SPACE', () => {
+>>>>>>> fa0cfdf (prove non andate a buon fine)
             if (this.isTouchingDown) {
                 this.isJumping = true;
                 setTimeout(() => {
@@ -45,9 +53,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 }, 400);
             }
         });
-		/* this.on("pointerdown", () => {
-			console.log("pointerdown");
-		}) */
+        /* this.on("pointerdown", () => {
+            console.log("pointerdown");
+        }) */
     }
 
     preUpdate(t: number, dt: number) {
@@ -55,31 +63,38 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         super.preUpdate(t, dt);
     }
 
-	private handleResetFlag(flag: boolean, timeReset: number) {
-		flag = true;
-		setTimeout(() => {
-			flag = false;
-		}, timeReset);
-	}
+    handleResetFlag(flag: boolean, timeReset: number) {
+        flag = true;
+        setTimeout(() => {
+            flag = false;
+        }, timeReset);
+    }
 
-	getXY(): {x: number, y: number} {
-		return {
-			x: this.body.x,
-			y: this.body.y
-		};
-	}
+    getXY(): { x: number, y: number } {
+        return {
+            x: this.body.x,
+            y: this.body.y
+        };
+    }
 
-	BossDamaged() {
-		if (this.isAttacking) {
-		  return true;
-		} else {
-		  return false;
-		}
-	}
+    Moving(): {isMovingLeft:boolean, isMovingRight:boolean, isMoving:boolean}{
+        return {
 
-	damage() {
-		// TODO: codice thommy
-	}
+            isMovingRight:this.isMovingRight,
+            isMovingLeft:this.isMovingLeft,
+            isMoving:this.isMoving,
+        }
+    } 
+    BossDamaged() {
+        if (this.isAttacking) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    damage() {
+    }
 
     HandleMovement(
         LEFT: Phaser.Input.Keyboard.Key,
@@ -88,7 +103,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Blow: Phaser.Input.Keyboard.Key,
     ) {
         if (this.isAttacking) {
-            this.setVelocity(0);
+            if (this.anims.currentAnim.key === "player-punch") {
+                this.anims.play(AnimationKeys.Player.Walk_punch)
+            }
+            else if (this.anims.currentAnim.key === "player-sword") {
+                this.anims.play(AnimationKeys.Player.Walk_sword)
+            }
+            else if (this.anims.currentAnim.key === "player-fionda") {
+                this.anims.play(AnimationKeys.Player.Walk_fionda)
+            }
+            //this.setVelocity(0);
             return;
         }
 
@@ -107,39 +131,56 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 this.shiftEnabled = false;
             }, 150);
         }
-		if(this.isMoving) {
-			if(this.isTouchingDown) this.anims.play(AnimationKeys.Player.Walk, true);
-			if (LEFT.isDown) {
-				this.setVelocityX(-this.speed);
-				this.setFlipX(true);
-				this.handleResetFlag(this.isMovingLeft, 300);
-				if (this.enableDash && this.isTouchingDown) {
+        if (this.isMoving) {
+            if (this.isTouchingDown) this.anims.play(AnimationKeys.Player.Walk, true);
+            if (LEFT.isDown) {
+                this.setVelocityX(-this.speed);
+                this.setFlipX(true);
+                this.handleResetFlag(this.isMovingLeft, 300);
+                if (this.enableDash && this.isTouchingDown) {
                     this.anims.play(AnimationKeys.Player.Dush)
+<<<<<<< HEAD
 				    this.setVelocityX(-this.speed * 10)
 				}
+=======
+                    this.setVelocityX(-this.speed * 15)
+                }
+>>>>>>> fa0cfdf (prove non andate a buon fine)
 
-			}
-			if (RIGHT.isDown) {
-				this.setVelocityX(this.speed);
-				this.setFlipX(false);
-				this.handleResetFlag(this.isMovingRight, 300);
-				
-				if (this.enableDash && this.isTouchingDown) {
+            }
+            if (RIGHT.isDown) {
+                this.setVelocityX(this.speed);
+                this.setFlipX(false);
+                this.handleResetFlag(this.isMovingRight, 300);
+
+                if (this.enableDash && this.isTouchingDown) {
                     this.anims.play(AnimationKeys.Player.Dush)
+<<<<<<< HEAD
 				    this.setVelocityX(this.speed * 10)
 				}
+=======
+                    this.setVelocityX(this.speed * 15)
+                }
+>>>>>>> fa0cfdf (prove non andate a buon fine)
 
-			}
-		}
+            }
+        }
         if (this.isJumping) {
             this.isMoving = true;
             this.anims.play(AnimationKeys.Player.Jump, true);
             this.setVelocityY(-this.speed * 3);
         }
+<<<<<<< HEAD
     	else if (!this.isTouchingDown) {
 			this.setFrame("jumpsprite6.png");
 			this.setVelocityY(this.speed * 1.8);
 			
+=======
+        else if (!this.isTouchingDown) {
+            this.setFrame("jumpsprite6.png");
+            this.setVelocityY(this.speed * 1.7);
+
+>>>>>>> fa0cfdf (prove non andate a buon fine)
         }
 
         if (!this.isMoving && this.isTouchingDown) {
@@ -148,12 +189,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityX(0);
         }
     }
-
     HandleAttack(
         Key1?: Phaser.Input.Keyboard.Key, // cazzotto
         Key2?: Phaser.Input.Keyboard.Key, // blow
         Key3?: Phaser.Input.Keyboard.Key, // spada
-		Key4?: Phaser.Input.Keyboard.Key, // left
+        Key4?: Phaser.Input.Keyboard.Key, // left
         Key5?: Phaser.Input.Keyboard.Key, // right
         Key6?: Phaser.Input.Keyboard.Key, // up
         Key7?: Phaser.Input.Keyboard.Key, // down
@@ -167,83 +207,96 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocityY(this.speed * 20);
             // this.isAttacking = true;
             // this.anims.play(AnimationKeys.Player.Blow, true);
-        } else if ( Key3.isDown) {
-            // this.anims.play(AnimationKeys.Player.Sword, true)
+        } else if (Key3.isDown) {
+            this.isAttacking = true;
+            this.anims.play(AnimationKeys.Player.Sword, true)
         }
 
-		if(this.enableShooting) {
-			if ((Key4.isDown) &&
-				(!Key6.isDown && !Key7.isDown && !Key5.isDown)
-				&& !this.isMovingRight) {
-				this.dirshot = "LEFT"
-				this.setFlipX(true)
-				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.Fionda, true)
-				this.handleResetFlag(this.enableShooting, 300);
+        if (this.enableShooting) {
+            if ((Key4.isDown) &&
+                (!Key6.isDown && !Key7.isDown && !Key5.isDown)
+                && !this.isMovingRight) {
+                this.dirshot = "LEFT"
+                this.setFlipX(true)
+                this.isAttacking = true;
+                this.anims.play(AnimationKeys.Player.Fionda, true)
+                this.handleResetFlag(this.enableShooting, 300);
 
-			} // SINISTRA
+            } // SINISTRA
 
-			if ((Key5.isDown) &&
-				(!Key6.isDown && !Key7.isDown && !Key4.isDown)
-				&& !this.isMovingLeft) {
-				this.dirshot = "RIGHT"
-				this.setFlipX(false)
-				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.Fionda, true)
-				this.handleResetFlag(this.enableShooting, 300);
+            if ((Key5.isDown) &&
+                (!Key6.isDown && !Key7.isDown && !Key4.isDown)
+                && !this.isMovingLeft) {
+                this.dirshot = "RIGHT"
+                this.setFlipX(false)
+                this.isAttacking = true;
+                this.anims.play(AnimationKeys.Player.Fionda, true)
+                this.handleResetFlag(this.enableShooting, 300);
 
-			} // DESTRA
+            } // DESTRA
 
-			if (Key7.isDown && this.flipX) {
-				this.dirshot = "LEFT_DOWN"
-				this.setFlipX(true)
-				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.Fionda, true)
-				this.handleResetFlag(this.enableShooting, 300);
+            if (Key7.isDown && this.flipX) {
+                this.dirshot = "LEFT_DOWN"
+                this.setFlipX(true)
+                this.isAttacking = true;
+                this.anims.play(AnimationKeys.Player.Fionda, true)
+                this.handleResetFlag(this.enableShooting, 300);
 
-			} // BASSO SINISTRA
-			else if (Key6.isDown && this.flipX) {
-				this.dirshot = "LEFT_UP"
-				this.setFlipX(true)
-				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.Fionda, true)
-				this.handleResetFlag(this.enableShooting, 300);
+            } // BASSO SINISTRA
+            else if (Key6.isDown && this.flipX) {
+                this.dirshot = "LEFT_UP"
+                this.setFlipX(true)
+                this.isAttacking = true;
+                this.anims.play(AnimationKeys.Player.Fionda, true)
+                this.handleResetFlag(this.enableShooting, 300);
 
-			} //ALTO SINISTRA
+            } //ALTO SINISTRA
 
-			if (Key7.isDown && !this.flipX) {
-				this.dirshot = "RIGHT_DOWN"
-				this.setFlipX(false)
-				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.Fionda, true)
-				this.handleResetFlag(this.enableShooting, 300);
+            if (Key7.isDown && !this.flipX) {
+                this.dirshot = "RIGHT_DOWN"
+                this.setFlipX(false)
+                this.isAttacking = true;
+                this.anims.play(AnimationKeys.Player.Fionda, true)
+                this.handleResetFlag(this.enableShooting, 300);
 
-			} // BASSO DESTRA
-			else if (Key6.isDown && !this.flipX) {
-				this.dirshot = "RIGHT_UP"
-				this.setFlipX(false)
-				this.isAttacking = true;
-				this.anims.play(AnimationKeys.Player.Fionda, true)
-				this.handleResetFlag(this.enableShooting, 300);
+            } // BASSO DESTRA
+            else if (Key6.isDown && !this.flipX) {
+                this.dirshot = "RIGHT_UP"
+                this.setFlipX(false)
+                this.isAttacking = true;
+                this.anims.play(AnimationKeys.Player.Fionda, true)
+                this.handleResetFlag(this.enableShooting, 300);
 
-			} // ALTO DESTRA
-		}
+            } // ALTO DESTRA
+        }
 
-		this.on("animationcomplete", () => {
+        this.on("animationcomplete", () => {
             this.isAttacking = false;
-            if (this.anims.currentAnim.key === "player-Fionda") {
-				this.colpo = new Bullets(
-                    this.scene,
-                    this.body.x,
-                    this.body.y+40,
-                    this.dirshot,
-                );
-                    this.colpo.checkCollision()
-			}
+            
+            //if (this.anims.currentAnim.key === AnimationKeys.Player.Fionda) {
+            //    this.colpo = new Bullets(
+            //        this.scene,
+            //        this.body.x-20,
+            //        this.body.y + 40,
+            //        this.dirshot,
+            //    );
+            //    console.log("gay")
+            //    //this.colpo.checkCollision(enemyx,enemyy)
+            //}
 
+<<<<<<< HEAD
 			if(this.anims.currentAnim.key === AnimationKeys.Player.Jump) {
 				// console.log(this.anims	.currentAnim.key)
 			}
+=======
+>>>>>>> fa0cfdf (prove non andate a buon fine)
         });
+    }
+    sparalello(): {Attacking:boolean, dirshot:string}{
+        return {
+            Attacking:!this.isAttacking,
+            dirshot:this.dirshot
+
+        }
     }
 }

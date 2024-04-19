@@ -14,7 +14,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     private damage: number;
     private distanza_minima: number = 500;
     private nemico: EnemyClass
-    private movingRight: boolean = false;
 
     constructor(
         scene: Phaser.Scene,
