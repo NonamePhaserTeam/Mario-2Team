@@ -9,3 +9,8 @@ interface GameSettings {
     debug: boolean,
     zoom: number
 };
+
+interface GameData {
+    playerHealth: number,
+    angelHealth: number
+};

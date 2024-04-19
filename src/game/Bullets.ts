@@ -2,35 +2,35 @@ import AnimationKeys from "../consts/AnimationKeys";
 import TextureKeys from "../consts/TextureKeys";
 import { Player, Enemy } from "../game/components";
 export default class Bullets extends Phaser.Physics.Arcade.Sprite {
-  private direzione_shot: string;
+    private direzione_shot: string;
 
-  constructor(
-    scene: Phaser.Scene,
-    playerx: number,
-    playery: number,
-    direzione: string,
-    dacollidere?: number
-    // texture: string,
-  ) {
-    super(scene, playerx, playery, TextureKeys.Texture.player);
+    constructor(
+        scene: Phaser.Scene,
+        playerx: number,
+        playery: number,
+        direzione: string,
+        // texture: string,
+        dacollidere?: number,
+    ) {
+        super(scene, playerx, playery, TextureKeys.Texture.player);
 
         scene.physics.world.enable(this);
         this.setCollideWorldBounds(true)
         this.direzione_shot = direzione
-		scene.add.existing(this);
-		this.create();
+        scene.add.existing(this);
+        this.create();
     }
-	
-	private create() {
-		this.setVelocity(
-			this.Direzione(this.direzione_shot)[0],
-			this.Direzione(this.direzione_shot)[1]
-		);
 
-		// setTimeout(() => {
-		// 	this.destroy(true);
-		// }, 500);
-	}
+    private create() {
+        this.setVelocity(
+            this.Direzione(this.direzione_shot)[0],
+            this.Direzione(this.direzione_shot)[1]
+        );
+
+        setTimeout(() => {this.destroy(true);}, 700);
+        this.setCollisionCategory(3)
+        this.setCollidesWith(3)
+    }
 
     Direzione(dir: string): Array<number> {
         let xp: number, yp: number;
@@ -70,17 +70,20 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         }
         return [xp, yp];
     }
-	 checkCollision() {
-		let t = this.body.touching;
-		let b = this.body.blocked;
+    checkCollision(enemyx:number, enemyy: number) {
+        let t = this.body.touching;
+        let b = this.body.blocked;
 
-			//console.log(t);
-			//console.log(b);
-		if(t.left || b.left || t.right || b.right || t.up || b.up || t.down || b.down)	{
-            console.log("negro")
-            this.destroy(true);
-        }
-	}
+        //console.log(t);
+        //console.log(b);
+        //if(t.left || b.left || t.right || b.right || t.up || b.up || t.down || b.down)	{
+            console.log(this.body.x)
+            console.log(enemyx)
+            if (this.body.x === enemyx) {
+                console.log("negro")
+                this.destroy(true);
+            }
+    }
 
     preUpdate(t: number, dt: number) {
         // update per tutte le componenti dello sprite compless

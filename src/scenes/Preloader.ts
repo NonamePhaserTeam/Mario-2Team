@@ -44,8 +44,8 @@ export default class Preloader extends Phaser.Scene {
         this.CreateEntitiesAnims();
 
         this.scene.stop(SceneKeys.Preloader);
-        this.scene.start(SceneKeys.Jumper)
-        // this.scene.start(SceneKeys.Game);
+        //this.scene.start(SceneKeys.Jumper)
+        this.scene.start(SceneKeys.Game);
 
         this.load.atlas(
             TextureKeys.Texture.Boss,
@@ -57,11 +57,6 @@ export default class Preloader extends Phaser.Scene {
             "assets/spritesheets/portal/portali.png",
             "assets/spritesheets/portal/portali.json"
         );
-        //this.load.atlas(
-        //    TextureKeys.Texture.fionda,
-        //    "assets/spritesheets/fionda.png",
-        //    "../assets/spritesheets/fionda.json"
-        //);
         this.load.image("mariano", "/assets/images/mariano.png");
 
     }
@@ -125,9 +120,9 @@ export default class Preloader extends Phaser.Scene {
             key: AnimationKeys.Player.Walk_punch,
             frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
                 start: 1,
-                end: 8,
+                end: 12,
                 zeroPad: 1,
-                prefix: "spriteinginocchio",
+                prefix: "muvment fight",
                 suffix: ".png",
             }),
             frameRate: 12,
@@ -143,7 +138,7 @@ export default class Preloader extends Phaser.Scene {
                 prefix: "sparo fionda",
                 suffix: ".png",
             }),
-            frameRate: 12,
+            frameRate: 7,
             repeat: 0,
         });
 
@@ -170,7 +165,7 @@ export default class Preloader extends Phaser.Scene {
                 prefix: "animazione spada",
                 suffix: ".png",
             }),
-            frameRate: 12,
+            frameRate: 5,
             repeat: 0,
         });
 
@@ -179,13 +174,13 @@ export default class Preloader extends Phaser.Scene {
             key: AnimationKeys.Player.Walk_sword,
             frames: this.anims.generateFrameNames(TextureKeys.Texture.player, {
                 start: 1,
-                end: 12,
+                end: 6,
                 zeroPad: 1,
-                prefix: "muvment fight",
+                prefix: "cammina spada",
                 suffix: ".png",
             }),
-            frameRate: 12,
-            repeat: -1,
+            frameRate: 5,
+            repeat: 0,
         });
 
 
@@ -198,7 +193,7 @@ export default class Preloader extends Phaser.Scene {
                 prefix: "morte",
                 suffix: ".png",
             }),
-            frameRate: 12,
+            frameRate: 5,
             repeat: 0,
         });
 
@@ -211,7 +206,7 @@ export default class Preloader extends Phaser.Scene {
                 prefix: "spriteinginocchio",
                 suffix: ".png",
             }),
-            frameRate: 12,
+            frameRate: 5,
             repeat: 0,
         });
 
@@ -224,26 +219,10 @@ export default class Preloader extends Phaser.Scene {
                 prefix: "dush",
                 suffix: ".png",
             }),
-            frameRate: 12,
+            frameRate: 5,
             repeat: 0,
         });
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
     CreateEnemiesAnims() {
         this.anims.create({
             key: AnimationKeys.SkeletonEnemy.Idle,
@@ -258,7 +237,7 @@ export default class Preloader extends Phaser.Scene {
             repeat: -1,
         });
 
-        this.anims.create({
+     this.anims.create({
             key: AnimationKeys.SkeletonEnemy.Walk,
             frames: this.anims.generateFrameNames(TextureKeys.Texture.SkeletonEnemy, {
                 start: 1,
