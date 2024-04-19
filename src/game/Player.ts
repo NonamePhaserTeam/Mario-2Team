@@ -231,14 +231,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
 		this.on("animationcomplete", () => {
             this.isAttacking = false;
-            if (this.anims.currentAnim.key === "player-Fionda") {
+            if (this.anims.currentAnim.key === AnimationKeys.Player.Fionda) {
 				this.colpo = new Bullets(
                     this.scene,
                     this.body.x,
                     this.body.y+40,
                     this.dirshot,
                 );
-                    this.colpo.checkCollision()
+				this.scene.add.existing(this.colpo);
 			}
 
 			if(this.anims.currentAnim.key === AnimationKeys.Player.Jump) {

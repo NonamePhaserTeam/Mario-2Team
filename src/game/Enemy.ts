@@ -31,7 +31,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.nemico = EnemyClass;
         this.chase_speed = chase_speed;
         this.patrol_speed = patrol_speed;
-        // scene.add.existing(this);
+        scene.add.existing(this);
         this.create();
     }
 

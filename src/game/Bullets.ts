@@ -18,7 +18,6 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true)
         this.direzione_shot = direzione
 		scene.add.existing(this);
-        
 		this.create();
     }
 	
@@ -28,11 +27,9 @@ export default class Bullets extends Phaser.Physics.Arcade.Sprite {
 			this.Direzione(this.direzione_shot)[1]
 		);
 
-		setTimeout(() => {
-			this.destroy(true);
-		}, 500);
-        this.setCollisionCategory(3)
-        this.setCollidesWith(3)
+		// setTimeout(() => {
+		// 	this.destroy(true);
+		// }, 500);
 	}
 
     Direzione(dir: string): Array<number> {
